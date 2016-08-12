@@ -1,0 +1,42 @@
+<div ng-controller="SettingCtrl">
+
+    <h2 class="page-header">个人设置</h2>
+    <div class="pro-wrap">
+    	<div class="row">
+    		<div class="col-md-5">
+    			<h4>账号信息</h4>
+				<hr>
+				<div class="row">
+					<div class="col-md-12">
+						<p>用户账号：<span>546381923@qq.com</span></p>
+						<p>账号类型：<span>管理员</span></p>
+						<p>登录密码： <a href="">修改</a></p>
+						<p>邮箱配置：<a href="">检查配置</a> <a href="">修改配置</a></p>
+					</div>
+				</div>
+    		</div>
+    		<div class="col-md-7">
+    			<h4>个人资料</h4>
+				<hr>
+				<div class="row">
+						<div class="col-md-12 set-item">
+							<div class="msg-btn">
+					        <span ng-class="{true: 'fa-edit', false: 'fa-check'}[isEdit]" class="fa dis fa-2x" ng-click="isEdit=!isEdit" ng-model="people.isEdit" ></span>
+					    </div>
+							<p>账号：<input type="text" class="form-control set-input" ng-model="user.account" ng-disabled="isEdit"></p>
+						<p>昵称：<input type="text" class="form-control set-input" ng-model="user.name" ng-disabled="isEdit"></p>
+						<p>公司：<input type="text" class="form-control set-input" ng-model="user.company" ng-disabled="isEdit"></p>
+						<p>部门：<input type="text" class="form-control set-input" ng-model="user.section" ng-disabled="isEdit"></p>
+						<p>职位：<input type="text" class="form-control set-input" ng-model="user.position" ng-disabled="isEdit"></p>
+						<p>部门电话：<input type="text" class="form-control set-input" ng-model="user.tel" ng-disabled="isEdit"></p>
+						<p>个人手机：<input type="text" class="form-control set-input" ng-model="user.phone" ng-disabled="isEdit"></p>
+						<p>传真：<input type="text" class="form-control set-input" ng-model="user.fax" ng-disabled="isEdit"></p>
+						<p>性别：<input type="text" class="form-control set-input" ng-model="user.sex" ng-disabled="isEdit"></p>
+						<p>生日：<input type="text" class="form-control set-input" ng-model="user.birthday" ng-disabled="isEdit"></p>
+						<p>地区：<input type="text" class="form-control set-input" ng-model="user.city" ng-disabled="isEdit"></p>
+						</div>
+				</div>
+    		</div>
+    	</div>
+    </div>
+</div>

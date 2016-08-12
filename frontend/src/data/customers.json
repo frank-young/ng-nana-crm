@@ -1,0 +1,96 @@
+{
+	"customers": [
+		{	
+			"id":0,
+            "isTop":true,
+            "isChecked":false,
+            "group":"0",
+            "name":"Nana Tech",
+            "progress":0,
+            "task":"于7月28日在赛象酒店会面",
+            "tags": ["0","1"],
+            "star": 4,
+            "people":"Jason Link",
+            "position":"市场经理",
+            "email":"Jasonlink@gmail.com",
+            "country":"美国",
+            "date":140928374632,
+            "schedule":[
+                {
+                    "selectPerson":"1",
+                    "fromDate":1509846400000,
+                    "untilDate":1519846400000,
+                    "time":"2016-06-12 12:30",
+                    "name":"李总",
+                    "content":"于7月28日在赛象酒店会面",
+                    "remind":[
+                        {
+                            "date":512846400000
+                        },
+                        {
+                            "date":514846400000
+                        }
+                    ]
+                },
+                {
+                    "selectPerson":"0",
+                    "fromDate":209846400000,
+                    "untilDate":219846400000,
+                    "name":"李总",
+                    "content":"第二条发机卡分离2",
+                    "remind":[
+                        {
+                            "date":214846400000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+        	"id":1,
+            "isTop":false,
+            "isChecked":false,
+            "group":"0",
+            "name":"GEC tech",
+            "progress":0,
+            "task":"于8月1日在香格里拉酒店喝茶",
+            "tags": ["1","2"],
+            "star": 1,
+            "people":"Frank",
+            "position":"CEO",
+            "email":"frankbyicon@gmail.com",
+            "country":"美国",
+            "date":1141231198432,
+            "schedule":[
+                {
+                    "selectPerson":"1",
+                    "fromDate":1309846400000,
+                    "untilDate":139846400000,
+                    "time":"2016-06-12 12:30",
+                    "name":"李总",
+                    "content":"于8月1日在香格里拉酒店喝茶",
+                    "remind":[
+                        {
+                            "date":512846400000
+                        },
+                        {
+                            "date":514846400000
+                        }
+                    ]
+                },
+                {
+                    "selectPerson":"0",
+                    "fromDate":209846400000,
+                    "untilDate":219846400000,
+                    "name":"李总",
+                    "content":"于8月1日在香格里拉酒店喝茶",
+                    "remind":[
+                        {
+                            "date":214846400000
+                        }
+                    ]
+                }
+            ]
+        }
+	]
+}

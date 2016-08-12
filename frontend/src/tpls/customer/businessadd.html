@@ -1,0 +1,12 @@
+
+
+<div ng-controller="BusinessAddCtrl">
+	<h2 class="page-header">添加项目
+	<button class="btn btn-success ml-20" ng-disabled="customerForm.$invalid" ng-click="saveData(customer)"><i class="fa fa-save"></i> 保存</button>
+	</h2>
+    <form class="form-horizontal" name="customerForm" novalidate>
+		<!-- 日程 -->
+			<div ng-include="'tpls/common/customerbusinessadd.html'"></div>
+
+    </form>
+</div>

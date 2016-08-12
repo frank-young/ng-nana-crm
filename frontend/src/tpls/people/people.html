@@ -1,0 +1,171 @@
+<div ng-controller="PeopleCtrl">
+    <h2 class="page-header">
+        联系人
+        <button class="btn btn-primary ml-20" ng-click="pinSortFunc({isTop:true});pinShowFunc()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="选择固定位置" ng-class="{true: 'pro-show', false: 'pro-hide'}[!pinShow]"> <i class="fa fa-thumb-tack fa-lg" ></i>
+        </button>
+        <button class="btn btn-primary ml-20" ng-click="pinSortFunc();pinShowFunc()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="取消固定位置" ng-class="{true: 'pro-show', false: 'pro-hide'}[pinShow]"> <i class="fa fa-thumb-tack fa-lg rotate-45"></i>
+        </button>
+        <!-- <a ui-sref="web.peopleAdd()" class="btn btn-danger ml-10"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="新建联系人"> <i class="fa fa-plus fa-lg"></i>
+        </a> -->
+    </h2>
+
+    <div class="select-h select-h-close" ng-class="{true: 'select-h-active', false: 'select-h-close'}[checkArr.length!=0]">
+        <div class="col-sm-2 col-xs-3">
+            <p ng-click="isCheckedNo()" style="overflow: hidden;">
+                <i class="fa fa-angle-left fa-2x top-icon"></i>
+                返回
+            </p>
+        </div>
+        <!-- /.col-xs-1 -->
+        <div class="col-sm-7 hidden-xs">
+            <p>
+                已选: {{checkArr.length}}
+                <a href="" style="margin-left: 20px;" ng-click="isCheckedAll()">全选</a>
+                <a href="" style="margin-left: 20px;" ng-click="isCheckedNo()">取消全选</a>
+            </p>
+        </div>
+        <!-- /.col-xs-9 -->
+        <div class="col-sm-3 col-xs-9" >
+            <div class="row">
+                <div class="col-xs-2">
+                    <p>
+                        <a href="" ng-click="surePin(checkArr)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="固定位置">
+                            <i class="fa fa-thumb-tack fa-2x top-icon"></i>
+                        </a>
+                    </p>
+                </div>
+                <!-- /.col-xs-2 -->
+                <div class="col-xs-2">
+                    <p>
+                        <a href="" ng-click="cancelPin(checkArr)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="取消固定位置">
+                            <i class="fa fa-thumb-tack fa-2x top-icon rotate-45"></i>
+                        </a>
+                    </p>
+                </div>
+                <!-- /.col-xs-2 -->
+                <div class="col-xs-2">
+                    <p>
+                        <a href="" ng-click="deletePeople(checkArr)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除">
+                            <i class="fa fa-trash fa-2x top-icon"></i>
+                        </a>
+                    </p>
+                </div>
+                <!-- /.col-xs-2 --> </div>
+            <!-- /.row --> </div>
+        <!-- /.col-xs-2 --> </div>
+
+    <div class="row hidden-xs hidden-sm">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-1">
+                            <div class="checkbox">
+                                <!-- <label>
+                                <input type="checkbox" ng-click="isCheckedAll()">
+
+                                <span></span>
+                            </label>
+                            -->
+                        </div>
+                    </div>
+                    <!-- /.col-xs-1 -->
+                    <div class="col-xs-3">
+                        <span class="h-sort" ng-click="col='name';desc=!desc">
+                            联系人
+                            <i class="fa fa-sort"></i>
+                        </span>
+                    </div>
+                    <!-- /.col-xs-6 -->
+                    <div class="col-xs-4">所属客户</div>
+                    <!-- /.col-xs-3 -->
+                    <div class="col-xs-3">职位</div>
+                    <!-- /.col-md-2 --> </div>
+
+                <!-- /.row --> </div>
+
+            <div class="col-md-2 col-xs-12" >来源</div>
+            <!-- /.col-md-1 -->
+            <div class="col-md-2 col-xs-6">
+                <p style="cursor:pointer;">负责人</p>
+            </div>
+            <!-- /.col-md-1 -->
+            <div class="col-md-2 col-xs-12">创建时间</div>
+            <!-- /.col-md-1 --> </div>
+    </div>
+    <!-- /.col-md-12 -->
+</div>
+<!-- /.row -->
+<hr>
+
+<div class="row cus-item fade-pin" ng-repeat="peopleItem in people | orderBy:col:desc | filter: {tags:tagSort} | filter: pinSort">
+  <!-- | offset: (currentPage-1)*itemsPerPage |  limitTo:itemsPerPage-->
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-change="isChecked(peopleItem)" ng-model="peopleItem.isChecked">
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col-xs-2 -->
+                    <div class="col-xs-3">
+                        <a href="" ui-sref="web.peopleDetail({id:peopleItem.id})" ng-bind="peopleItem.name"></a>
+                    </div>
+                    <!-- /.col-xs-4 -->
+                    <div class="col-xs-4">
+                        <p ng-bind="company[peopleItem.company].label"></p>
+                    </div>
+                    <!-- /.col-xs-3 -->
+                    <div class="col-xs-3">
+                        <p ng-bind="peopleItem.position"></p>
+                    </div>
+                    <!-- /.col-xs-3 --> </div>
+                <!-- /.row --> </div>
+            <!-- /.col-md-4 -->
+            <div class="col-md-2 col-xs-12">
+                <p ng-bind="origins[peopleItem.origins].label"></p>
+            </div>
+            <!-- /.col-md-2 -->
+            <div class="col-md-2 col-xs-3">
+                <p ng-bind="peopleItem.people"></p>
+            </div>
+            <!-- /.col-md-2 -->
+            <div class="col-md-2 col-xs-5">
+                <p ng-bind="peopleItem.date | time"></p>
+            </div>
+            <!-- /.col-md-2 -->
+            <div class="col-md-2 col-xs-12 cus-ctrl">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p><a href="" style="margin-right: 5px;" ng-click="pinItem(peopleItem)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="固定/取消">
+                            <i class="fa fa-thumb-tack fa-lg  top-icon" ng-class="{true: 'pin-icon', false: 'unpin-icon'}[peopleItem.isTop]"></i>
+                        </a></p>
+                    </div>
+                    <!-- /.col-xs-4 -->
+                    <div class="col-xs-4">
+                        <p><a href="" ui-sref="web.peopleDetail({id:peopleItem.id})" style="margin-right: 5px;" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="编辑">
+                            <i class="fa fa-edit fa-lg top-icon"></i>
+                        </a></p>
+                    </div>
+                    <!-- /.col-xs-4 -->
+                    <div class="col-xs-4">
+                        <p><a href="" ng-click="deletePeople(peopleItem)" style="margin-right: 5px;" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除">
+                            <i class="fa fa-trash fa-lg top-icon"></i>
+                        </a></p>
+                    </div>
+                    <!-- /.col-xs-4 --> </div>
+                <!-- /.row --> </div>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+<!-- <uib-pagination total-items="people.length" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" items-per-page="itemsPerPage" num-pages="numPages" ng-show="people.length>
+    itemsPerPage" next-text="下一页" previous-text="上一页" first-text="首页" last-text="尾页">
+</uib-pagination> -->
+
+</div>

@@ -1,0 +1,41 @@
+<div ng-controller="ProductsCateCtrl">
+	<h2 class="page-header" >全部分类</h2>
+	<div class="row mt-40">
+		<div class="col-sm-11 col-md-5 col-md-offset-3">
+			<form name="productForm">
+				<ul ng-sortable="{animation:150}" class="list-group">
+					<li class="list-group-item" ng-repeat="ca in cate" >
+						<div class="row">
+							<div class="col-xs-8" ng-class="{'has-danger': productForm.ca{{ca.value}}.$invalid}">
+								<input name="ca{{ca.value}}" type="text" class="form-control has-danger"   ng-disabled="ca.isEdit" ng-model="ca.label" required ng-maxlength="50" ></div>
+							<div class="col-xs-1">
+								<p>
+									<a href="" ng-click="ca.isEdit=!ca.isEdit;saveCate(ca)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="修改" ng-disabled="productForm.$invalid"> <i class="fa set-icon group-icon"  ng-class="{true: 'fa-edit', false: 'fa-check'}[ca.isEdit]"></i>
+									</a>
+								</p>
+							</div>
+							<div class="col-xs-1">
+								<p>
+									<a href="" ng-click="deleteCate(ca)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除"> <i class="fa fa-trash set-icon"></i>
+									</a>
+								</p>
+							</div>
+							<div class="col-xs-1">
+								<p>
+									<a data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="拖拽" style="cursor: move">
+										<i class="fa fa-arrows-alt set-icon"></i>
+									</a>
+								</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</form>
+		</div>
+		<div class="col-sm-1 col-md-1">
+			<div class="set-btn-add" ng-click="addCate()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加分组">
+				<i class="fa fa-plus fa-2x" ></i>
+			</div>
+		</div>
+	</div>
+</div>

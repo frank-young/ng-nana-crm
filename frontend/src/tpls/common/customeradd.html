@@ -1,0 +1,557 @@
+ <!-- 日程 -->
+ <div class="row cus-border">
+     <div class="col-sm-12 cus-txt">
+         <h4>日程</h4>
+     </div>
+     <!--<div class="col-sm-2"> 
+     <button class="btn btn-success" ng-click="comuadd($index)">添加日程</button>
+ </div>
+ -->
+ <div class="col-md-12">
+     <div class="row cus-sche" style="cursor:pointer" data-animation="am-fade-and-scale" placement="center" data-template-url="schedule.tpl.html" bs-modal>
+         <div class="col-sm-12 sche-add"  >
+             <a href="" > <i class="fa fa-plus fa-lg"></i>
+             </a>
+         </div>
+         <!-- /.col-sm-12 --> </div>
+     <!-- /.row cus-sche --> 
+     <div class="row cus-sche" ng-repeat="schedule in customer.schedule" >
+         <div class="col-sm-4">
+             <p> <i class="fa fa-calendar" style="width:2em"></i>
+                 {{schedule.fromDate | schetime}}
+                 <i class="fa fa-arrows-h" style="width:1.5em;margin-left: .5em"></i>
+                 <i class="fa fa-calendar" style="width:2em"></i>
+                 {{schedule.untilDate | schetime}}
+             </p>
+         </div>
+         <!-- /.col-sm-4 --> 
+         <div class="col-sm-6">
+             <p ng-bind="schedule.content"></p>
+         </div>
+         <!-- /.col-sm-6 --> 
+         <div class="col-sm-2">
+             <div class="row">
+                 <div class="col-sm-4">
+                     <a href="" ng-click="schecomp($index,'schedule')">
+                         <i class="fa fa-check fa-lg"></i>
+                     </a>
+                 </div>
+                 <!-- /.col-sm-4 --> 
+                 <div class="col-sm-4">
+                     <a href="" ng-click="editSchedule(schedule)" data-animation="am-fade-and-scale" placement="center" data-template-url="scheduleEdit.tpl.html" bs-modal>
+                         <i class="fa fa-edit fa-lg"></i>
+                     </a>
+
+                 </div>
+                 <!-- /.col-sm-4 --> 
+                 <div class="col-sm-4">
+                     <a href="" ng-click="schedel($index,'schedule')">
+                         <i class="fa fa-trash fa-lg"></i>
+                     </a>
+
+                 </div>
+                 <!-- /.col-sm-4 --> </div>
+             <!-- /.row --> </div>
+         <!-- /.col-sm-3 --> </div>
+     <!-- /.row --> 
+     <div class="row" ng-show="!customer.schedule_expired.length==0">
+         <div class="col-sm-12">
+             <h4 class="btn btn-danger">已过期</h4>
+
+         </div>
+     </div>
+     <div class="row cus-sche" ng-repeat="schedule in customer.schedule_expired" >
+         <div class="col-sm-4">
+             <p>
+                 <i class="fa fa-calendar" style="width:2em"></i>
+                 {{schedule.fromDate | schetime}}
+                 <i class="fa fa-arrows-h" style="width:1.5em;margin-left: .5em"></i>
+                 <i class="fa fa-calendar" style="width:2em"></i>
+                 {{schedule.untilDate | schetime}}
+             </p>
+         </div>
+         <!-- /.col-sm-4 --> 
+         <div class="col-sm-6">
+             <p ng-bind="schedule.content"></p>
+         </div>
+         <!-- /.col-sm-6 --> 
+         <div class="col-sm-2">
+             <div class="row">
+                 <div class="col-sm-4">
+                     <a href="" ng-click="schecomp($index,'schedule_expired')">
+                         <i class="fa fa-check fa-lg"></i>
+                     </a>
+                 </div>
+                 <!-- /.col-sm-4 --> 
+                 <div class="col-sm-4">
+                     <a href="" ng-click="schereply($index,'schedule_expired')">
+                         <i class="fa fa-reply fa-lg"></i>
+                     </a>
+
+                 </div>
+                 <!-- /.col-sm-4 --> 
+                 <div class="col-sm-4">
+                     <a href="" ng-click="schedel($index,'schedule_expired')">
+                         <i class="fa fa-trash fa-lg"></i>
+                     </a>
+
+                 </div>
+                 <!-- /.col-sm-4 --> </div>
+             <!-- /.row --> </div>
+         <!-- /.col-sm-3 --> </div>
+     <!-- /.row --> 
+     <div class="row" ng-show="!customer.schedule_complete.length==0">
+         <div class="col-sm-12">
+             <h4 class="btn btn-success">已完成</h4>
+         </div>
+     </div>
+     <div class="row cus-sche" ng-repeat="schedule in customer.schedule_complete" >
+         <div class="col-sm-4">
+             <p>
+                 <i class="fa fa-calendar" style="width:2em"></i>
+                 {{schedule.fromDate | schetime}}
+                 <i class="fa fa-arrows-h" style="width:1.5em;margin-left: .5em"></i>
+                 <i class="fa fa-calendar" style="width:2em"></i>
+                 {{schedule.untilDate | schetime}}
+             </p>
+         </div>
+         <!-- /.col-sm-4 --> 
+         <div class="col-sm-4">
+             <p ng-bind="schedule.content"></p>
+         </div>
+         <div class="col-sm-2">
+             <p>完成于：{{schedule.nowDate | time}}</p>
+         </div>
+         <!-- /.col-sm-2 --> 
+         <div class="col-sm-2">
+             <div class="row">
+                 <!-- /.col-sm-4 --> 
+                 <div class="col-sm-4 col-sm-offset-4">
+                     <a href="" ng-click="schereply($index,'schedule_complete')">
+                         <i class="fa fa-reply fa-lg"></i>
+                     </a>
+                 </div>
+                 <!-- /.col-sm-4 --> 
+                 <div class="col-sm-4">
+                     <a href="" ng-click="schedel($index,'schedule_complete')">
+                         <i class="fa fa-trash fa-lg"></i>
+                     </a>
+
+                 </div>
+                 <!-- /.col-sm-4 --> </div>
+             <!-- /.row --> </div>
+         <!-- /.col-sm-3 --> </div>
+     <!-- /.row --> </div>
+ <!-- /.col-md-12 --> </div>
+ <!-- /.row --> 
+
+ <script type="text/ng-template" id="schedule.tpl.html">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" style="margin-top: 100px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="cancleSchedule();$hide()">&times;</button>
+                    <h4 class="modal-title">添加日程</h4>
+                </div>
+                <div class="modal-body" >
+                    <form name="scheduleForm">
+                        <div class="row">
+                            <div class="col-sm-12" style="margin-bottom:20px;line-height: 34px;">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">关联联系人</label>
+                                    <div class="col-sm-5">
+                                        <button type="button" class="form-control form-select" ng-model="schedule.selectPerson" data-html="1" data-toggle="true" bs-options="per.value as per.label for per in person" placeholder="请选择联系人" data-animation="am-flip-x" bs-select required>
+                                            <span class="caret"></span>
+                                        </button>
+                                    </div>
+                                    <!-- <div class="col-sm-4">         
+                                    <div class="checkbox" style="margin-top: 6px;line-height: 20px;">
+                                        <label>
+                                            <input type="checkbox">         
+                                            全天日程
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                -->
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-bottom:20px; line-height: 34px;">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">起止日期</label>
+                                <div class="col-sm-4" ng-class="{'has-danger': scheduleForm.fromDate.$invalid}">
+                                    <input type="text" name="fromDate" class="form-control" ng-model="schedule.fromDate" data-max-date="{{schedule.untilDate}}" placeholder="开始日期" data-date-format="yyyy-MM-dd" data-date-type="number" data-animation="am-flip-x" required bs-datepicker></div>
+                                <div class="col-sm-1">
+                                    <p class="text-center">至</p>
+                                </div>
+                                <div class="col-sm-4" ng-class="{'has-danger': scheduleForm.untilDate.$invalid}">
+                                    <input type="text" name="untilDate" class="form-control" ng-model="schedule.untilDate" data-min-date="{{schedule.fromDate}}" placeholder="结束日期" data-date-format="yyyy-MM-dd" data-date-type="number" data-animation="am-flip-x" required bs-datepicker></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="margin-bottom:20px; line-height: 34px;">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">提醒日期</label>
+
+                                <div class="col-sm-10">
+                                    <div class="row" ng-repeat="remind in schedule.remind">
+                                        <div class="col-xs-10" style="margin-bottom:15px;" ng-class="{'has-danger': scheduleForm.remindDate{{$index}}.$invalid}">
+                                            <input type="text" name="remindDate{{$index}}" class="form-control" ng-model="remind.date" data-min-date="{{schedule.fromDate}}" data-max-date="{{schedule.untilDate}}" placeholder="提醒日期" data-date-format="yyyy-MM-dd" data-date-type="number" data-animation="am-flip-x" required bs-datepicker></div>
+                                        <!-- /.col-xs-10 -->            
+                                        <div class="col-xs-1">
+                                            <a href="" ng-click="remindadd()"> <i class="fa fa-plus fa-lg" style="cursor:pointer"></i>
+                                            </a>
+                                        </div>
+                                        <!-- /.col-xs-1 -->         
+                                        <div class="col-xs-1">
+                                            <a href="" ng-click="reminddel()"> <i class="fa fa-minus fa-lg" style="cursor:pointer"></i>
+                                            </a>
+                                        </div>
+                                        <!-- /.col-xs-1 --> </div>
+                                    <!-- /.row --> </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">日程内容</label>
+                                <div class="col-sm-10" ng-class="{'has-danger': scheduleForm.scheContent.$invalid}">
+                                    <textarea name="scheContent" cols="20" rows="5" class="form-control" placeholder="请输入日程" ng-model="schedule.content" required ng-maxlength="200"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancleSchedule();$hide()">关闭</button>
+                <button type="button" class="btn btn-primary" ng-click="saveSchedule(customer);$hide()" ng-disabled="scheduleForm.$invalid">保存</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</script>
+
+ <script type="text/ng-template" id="scheduleEdit.tpl.html">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" style="margin-top: 100px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="cancleEditSchedule();$hide()">&times;</button>
+                    <h4 class="modal-title">添加日程</h4>
+                </div>
+                <div class="modal-body" >
+                    <form name="scheduleModalForm">
+                        <div class="row">
+                            <div class="col-sm-12" style="margin-bottom:20px;line-height: 34px;">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">关联联系人</label>
+                                    <div class="col-sm-5">
+                                        <button type="button" class="form-control form-select" ng-model="scheduleModal.selectPerson" data-html="1" data-toggle="true" bs-options="per.value as per.label for per in person" placeholder="请选择联系人" data-animation="am-flip-x" bs-select required>
+                                            <span class="caret"></span>
+                                        </button>
+                                    </div>
+                                    <!-- <div class="col-sm-4">         
+                                    <div class="checkbox" style="margin-top: 6px;line-height: 20px;">
+                                        <label>
+                                            <input type="checkbox">         
+                                            全天日程
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                -->
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12" style="margin-bottom:20px; line-height: 34px;">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">起止日期</label>
+                                <div class="col-sm-4" ng-class="{'has-danger': scheduleModalForm.fromDate.$invalid}">
+                                    <input type="text" name="fromDate" class="form-control" ng-model="scheduleModal.fromDate" data-max-date="{{scheduleModal.untilDate}}" placeholder="开始日期" data-date-format="yyyy-MM-dd" data-date-type="number" data-animation="am-flip-x" required bs-datepicker></div>
+                                <div class="col-sm-1">
+                                    <p class="text-center">至</p>
+                                </div>
+                                <div class="col-sm-4" ng-class="{'has-danger': scheduleModalForm.untilDate.$invalid}">
+                                    <input type="text" name="untilDate" class="form-control" ng-model="scheduleModal.untilDate" data-min-date="{{scheduleModal.fromDate}}" placeholder="结束日期" data-date-format="yyyy-MM-dd" data-date-type="number" data-animation="am-flip-x" required bs-datepicker></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="margin-bottom:20px; line-height: 34px;">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">提醒日期</label>
+
+                                <div class="col-sm-10">
+                                    <div class="row" ng-repeat="remind in scheduleModal.remind">
+                                        <div class="col-xs-10" style="margin-bottom:15px;" ng-class="{'has-danger': scheduleModalForm.remindDate{{$index}}.$invalid}">
+                                            <input type="text" name="remindDate{{$index}}" class="form-control" ng-model="remind.date" data-min-date="{{scheduleModal.fromDate}}" data-max-date="{{scheduleModal.untilDate}}" placeholder="提醒日期" data-date-format="yyyy-MM-dd" data-date-type="number" data-animation="am-flip-x" required bs-datepicker></div>
+                                        <!-- /.col-xs-10 -->            
+                                        <div class="col-xs-1">
+                                            <a href="" ng-click="remindaddModal()"> <i class="fa fa-plus fa-lg" style="cursor:pointer"></i>
+                                            </a>
+                                        </div>
+                                        <!-- /.col-xs-1 -->         
+                                        <div class="col-xs-1">
+                                            <a href="" ng-click="reminddelModal()"> <i class="fa fa-minus fa-lg" style="cursor:pointer"></i>
+                                            </a>
+                                        </div>
+                                        <!-- /.col-xs-1 --> </div>
+                                    <!-- /.row --> </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">日程内容</label>
+                                <div class="col-sm-10" ng-class="{'has-danger': scheduleModalForm.scheContent.$invalid}">
+                                    <textarea name="scheContent" cols="20" rows="5" class="form-control" placeholder="请输入日程" ng-model="scheduleModal.content" required ng-maxlength="200"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancleEditSchedule();$hide()">关闭</button>
+                <button type="button" class="btn btn-primary" ng-click="saveEditSchedule(customer);$hide()" ng-disabled="scheduleModalForm.$invalid">保存</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</script>
+
+<!-- 客户资料 -->
+<div class="row cus-border">
+ <!--    <div class="msg-btn">
+        <span ng-class="{true: 'fa-edit', false: 'fa-check'}[customer.isEdit]" class="fa dis fa-2x" ng-click="customer.isEdit=!customer.isEdit" ng-model="people.isEdit" ></span>
+    </div> -->
+    <div class="col-sm-12 cus-txt">
+        <h4>客户资料</h4>
+    </div>
+    <!-- /.col-md-12 -->
+    <div class="col-sm-5">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">公司名称</label>
+            <div class="col-sm-9 " ng-class="{'has-danger': customerForm.companyName.$invalid}" >
+                <input type="text" class="form-control " placeholder="公司名称（必填）" ng-model="customer.companyName" name="companyName" required ng-trim="true" ng-maxlength="50" required>
+            </div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">网站</label>
+            <div class="col-sm-9"  ng-class="{'has-danger': customerForm.website.$invalid}" >
+                <input type="text" name="website" class="form-control" placeholder="网站" ng-model="customer.website" ng-maxlength="50"></div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">分组</label>
+            <div class="col-sm-9">
+                <button type="button" class="form-control form-select" ng-model="customer.group" data-html="1" data-toggle="true" bs-options="group.value as group.label for group in groups" placeholder="分组" data-animation="am-flip-x" bs-select>
+                    分组<span class="caret"></span>
+                </button>
+            </div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">客户来源</label>
+            <div class="col-sm-9">
+                <button type="button" class="form-control form-select" ng-model="customer.origin" data-html="1" data-toggle="true" bs-options="origin.value as origin.label for origin in origins" placeholder="客户来源" data-animation="am-flip-x" bs-select>
+                    客户来源<span class="caret"></span> <!-- <i class="fa fa-sort-down fa-lg"></i> -->
+                </button>
+            </div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">国家/地区</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" ng-model="customer.country" bs-options="state for state in states" placeholder="国家/地区" data-animation="am-flip-x" bs-typeahead >
+            </div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">联系地址</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="联系地址" ng-model="customer.address" ></div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">主营业务</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" ng-model="customer.st" bs-options="st for st in sts" placeholder="主营业务" data-animation="am-flip-x" bs-typeahead >
+            </div>
+        </div>
+        <!-- /.form-group --> </div>
+    <!-- /.col-md-5 -->
+
+    <div class="col-sm-5 col-md-offset-1">
+        <div class="form-group">
+            <button class="col-sm-3 control-label" data-animation="am-flip-x" data-placement="top-left" title="客户星级" data-content="点击选择客户星级" data-trigger="focus" bs-popover >
+                客户星级
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+            </button>
+            <div class="col-sm-9">
+                <div class="cus-star">
+                    <div star-rating ng-model="customer.star" max="5"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">客户标签</label>
+            <div class="col-sm-9">
+                <button type="button" class="form-control form-select" ng-model="customer.tags" data-html="1" data-multiple="1" data-toggle="true" bs-options="tag.value as tag.text for tag in tags" placeholder="客户标签" max-length="4"  max-length-html="个标签" all-text="全选" none-text="取消全选" all-none-buttons="1"  data-animation="am-flip-x" bs-select>
+                    客户标签<span class="caret"></span>
+                </button>
+
+            </div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">客户状态</label>
+            <div class="col-sm-9">
+                <button type="button" class="form-control form-select" ng-model="customer.progress" data-html="1" data-toggle="true" bs-options="progre.value as progre.label for progre in progress" placeholder="客户状态" data-animation="am-flip-x" bs-select>
+                    客户状态<span class="caret"></span>
+                </button>
+            </div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">联系电话</label>
+            <div class="col-sm-9" ng-class="{'has-danger': customerForm.mobile.$invalid}">
+                <input type="text" name="mobile" class="form-control" placeholder="联系电话" ng-model="customer.mobile" ng-maxlength="20"></div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">邮箱</label>
+            <div class="col-sm-9" ng-class="{'has-danger': customerForm.email.$invalid}">
+                <input type="email" name="email" class="form-control" placeholder="邮箱" ng-model="customer.email" required ng-maxlength="50"></div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">传真</label>
+            <div class="col-sm-9" ng-class="{'has-danger': customerForm.fax.$invalid}">
+                <input type="text" name="fax" class="form-control" placeholder="传真" ng-model="customer.fax" ng-maxlength="20"></div>
+        </div>
+        <!-- /.form-group -->
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label">客户类型</label>
+            <div class="col-sm-9">
+                <button type="button" class="form-control form-select" ng-model="customer.class" data-html="1" data-toggle="true" bs-options="cls.value as cls.label for cls in class" placeholder="客户类型" data-animation="am-flip-x" bs-select>
+                    客户类型<span class="caret"></span>
+                </button>
+            </div>
+        </div>
+        <!-- /.form-group --> </div>
+    <!-- /.col-md-5 -->
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">备注</label>
+            <div class="col-sm-10" style="padding-left:45px;">
+                <textarea name="" id="" cols="30" rows="5" class="form-control" ng-model="customer.remark"></textarea>
+            </div>
+        </div>
+        <!-- /.form-group --> </div>
+    
+</div>
+<!-- /.row -->
+
+<!-- 联系人 -->
+<div class="row cus-border">
+    <div class="col-md-12 cus-txt">
+        <h4>联系人</h4>
+    </div>
+    <div class="col-md-12 "  ng-repeat="people in customer.peoples">
+        <div class="cus-people">
+            <div class="cus-btn">
+                <span  ng-class="{true: 'fa-star', false: 'fa-star-o'}[people.isImportant]" class="fa col" ng-click="people.isImportant = !people.isImportant" ng-model="people.isImportant"></span>
+
+                <span class="fa fa-minus del" ng-click="cusdel($index)"></span>
+                <span class="fa fa-plus add" ng-click="cusadd()"></span>
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">姓名</label>
+                        <div class="col-sm-9" ng-class="{'has-danger': customerForm.personName{{$index}}.$invalid}">
+                            <input type="text" name="personName{{$index}}" class="form-control" placeholder="姓名" ng-model="people.name" required ng-maxlength="50"></div>
+                    </div>
+                </div>
+                <!-- /.col-sm-5 -->
+                <div class="col-sm-5 col-sm-offset-1">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">邮箱</label>
+                        <div class="col-sm-9" ng-class="{'has-danger': customerForm.personMail{{$index}}.$invalid}">
+                            <input type="email" name="personMail{{$index}}" class="form-control" placeholder="邮箱" ng-model="people.email" required ng-maxlength="50"></div>
+                    </div>
+                </div>
+                <!-- /.col-sm-5 -->
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">性别</label>
+                        <div class="col-sm-9">
+                            <button type="button" class="form-control form-select" ng-model="people.sex" data-html="1" data-toggle="true" bs-options="sex.value as sex.label for sex in sexs" placeholder="请选择性别" data-animation="am-flip-x" bs-select>
+                                <span class="caret"></span> <!-- <i class="fa fa-sort-down fa-lg"></i> -->
+                            </button>
+<!--                             <div class="radio">
+                                <label>
+                                    <input type="radio" class="" name="sex{{$index}}" checked="{{people.sex}}">
+                                    男
+                                    <span></span>
+                                </label>
+                            </div> -->
+                        </div>
+<!--                         <div class="col-xs-2">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" class="" name="sex{{$index}}" checked="{{!people.sex}}">
+                                    女
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <!-- /.col-sm-5 -->
+                <div class="col-sm-5 col-sm-offset-1">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">生日</label>
+                        <div class="col-sm-9" ng-class="{'has-danger': customerForm.personBirthed{{$index}}.$invalid}">
+                             <input type="text" name="personBirthed{{$index}}" class="form-control"  data-date-format="yyyy-MM-dd" data-date-type="number" data-min-date="02/10/86" data-max-date="today" data-autoclose="1"  ng-model="people.birthed" placeholder="生日" data-animation="am-flip-x" bs-datepicker>
+                         </div>
+                    </div>
+                </div>
+                <!-- /.col-sm-5 -->
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">联系方式</label>
+                        <div class="col-sm-9" ng-class="{'has-danger': customerForm.personMobile{{$index}}.$invalid}">
+                            <input type="text" name="personMobile{{$index}}" class="form-control" placeholder="联系方式" ng-model="people.phone" ng-maxlength="20"></div>
+                    </div>
+                </div>
+                <!-- /.col-sm-5 -->
+                <div class="col-sm-5 col-sm-offset-1">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">职位</label>
+                        <div class="col-sm-9" ng-class="{'has-danger': customerForm.personPosition{{$index}}.$invalid}">
+                            <input type="text" name="personPosition{{$index}}" class="form-control" placeholder="职位" ng-model="people.position" ng-maxlength="50"></div>
+                    </div>
+                </div>
+                <!-- /.col-sm-5 -->
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">备注</label>
+                        <div class="col-sm-10"  style="padding-left:45px;">
+                            <textarea name="" id="" cols="20" rows="5" class="form-control" ng-model="people.remark"></textarea>
+                        </div>
+                    </div>
+                    <!-- /.col-sm-11 --> </div>
+                
+                <!-- /.row --> </div>
+        </div>
+    </div>
+    <!-- /.col-md-12 -->
+</div>
+<!-- /.row -->
+
+
+
+
+    

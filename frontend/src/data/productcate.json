@@ -1,0 +1,7 @@
+{
+	"cates":[
+            {"value":"0","label":"分类1","isEdit":true},
+            {"value":"1","label":"分类2","isEdit":true},
+            {"value":"2","label":"分类3","isEdit":true}
+        ]
+}

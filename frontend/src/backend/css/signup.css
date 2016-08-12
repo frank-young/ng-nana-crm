@@ -1,0 +1,172 @@
+body{
+    text-align: center;
+    background-color: #F7FAFC;
+    overflow-x: hidden;
+    min-height: 500px;
+    -webkit-font-smoothing: antialiased; 
+}
+canvas{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.container{
+    padding-top: 150px;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+@media screen and (max-width:768px) {
+    .container{
+        padding-top: 20px;
+    }
+}
+.sign-wrap{
+    background-color: #fff;
+    max-width: 400px;
+    // min-height: 446px;
+    padding: 10px 20px 20px 20px;
+    margin: 20px auto;
+    -webkit-box-shadow: 0px 0px 1px #ccc, 4px 5px 6px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 1px #ccc, 4px 5px 6px rgba(0, 0, 0, 0.2);
+    -ms-box-shadow: 0px 0px 1px #ccc, 4px 5px 6px rgba(0, 0, 0, 0.2);
+    -o-box-shadow: 0px 0px 1px #ccc, 4px 5px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 1px #ccc, 4px 5px 6px rgba(0, 0, 0, 0.2);
+    -webkit-font-smoothing: antialiased; 
+}
+h2{
+    font-family: '微软雅黑';
+    font-weight: 300;
+    line-height: 2.2em;
+    font-size: 22px;
+}
+h3,p{
+    font-family: '微软雅黑';
+    font-weight: 300;
+    line-height: 2em;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+input[type=text],
+input[type=email],
+input[type=password]{
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    -ms-border-radius: 1px;
+    -o-border-radius: 1px;
+    border-radius: 1px;
+    font-family: '微软雅黑';
+    font-weight: 300;
+    font-size: 14px;
+    padding: 20px 15px;
+    -webkit-font-smoothing: antialiased; 
+}
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=password]:focus{
+    outline: none;
+    border-color: #56abe4;
+    box-shadow: none;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+}
+.has-danger input[type=text]:focus,
+.has-danger input[type=email]:focus,
+.has-danger input[type=password]:focus{
+    border-color:#eb4f38; 
+}
+.form-group{
+    position: relative;
+}
+span.name,
+span.phone,
+span.email,
+span.password{
+    position: absolute;
+    right: 12px;
+    top: 5px;
+    width: 32px;
+    height: 32px;
+    background-repeat: no-repeat;
+}
+span.name{
+    background-image: url(../img/icon/user-w.png);
+}
+span.phone{
+    background-image: url(../img/icon/phone-w.png);
+}
+span.email{
+    background-image: url(../img/icon/email-w.png);
+}
+span.password{
+    background-image: url(../img/icon/password-w.png);
+}
+#inputName:focus + span.name {
+     background-image: url(../img/icon/user-b.png);
+}
+#inputPhone:focus + span.phone {
+     background-image: url(../img/icon/phone-b.png);
+}
+#inputEmail:focus + span.email {
+     background-image: url(../img/icon/email-b.png);
+}
+#inputPassword:focus + span.password {
+     background-image: url(../img/icon/password-b.png);
+}
+
+.has-danger #inputName:focus + span.name {
+     background-image: url(../img/icon/user-d.png);
+}
+.has-danger #inputPhone:focus + span.phone {
+     background-image: url(../img/icon/phone-d.png);
+}
+.has-danger #inputEmail:focus + span.email {
+     background-image: url(../img/icon/email-d.png);
+}
+.has-danger #inputPassword:focus + span.password {
+     background-image: url(../img/icon/password-d.png);
+}
+button.btn-primary{
+    background-color: #F77B6F;
+    border-radius: 1px;
+    font-family: '微软雅黑';
+    font-weight: 300;
+    border: 0;
+    -webkit-transition: background-color .3s;
+    -moz-transition: background-color .3s;
+    -ms-transition: background-color .3s;
+    -o-transition: background-color .3s;
+    transition: background-color .3s;
+}
+button.btn-primary:active,
+button.btn-primary:active:hover,
+button.btn-primary:active:focus,
+button.btn-primary:hover,
+button.btn-primary:focus{
+    outline: none;
+    background-color: #FC675A;
+}
+.mt-20{
+    margin-top: 20px;
+}
+.footer{
+    position: absolute;
+    margin-top: 30px;
+    font-family: '微软雅黑';
+    color: #999;
+    font-weight: 300;
+    left: 50%;
+    -webkit-transform: translate3d(-50%,0,0);
+    -moz-transform: translate3d(-50%,0,0);
+    -ms-transform: translate3d(-50%,0,0);
+    -o-transform: translate3d(-50%,0,0);
+    transform: translate3d(-50%,0,0);
+}
+.red{
+    font-weight: normal;
+    color: #FC675A; 
+    font-size: 20px;
+}

@@ -1,0 +1,178 @@
+<div ng-controller="QuotationAddCtrl">
+	<form name="quotationForm">
+		<h2 class="page-header">新建报价单</h2>
+		<div class="pro-wrap">
+			<h4>基本信息</h4>
+			<hr>
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1">
+					<div class="form-group row">
+						<label class="col-sm-2 control-label">报价单名称</label>
+						<div class="col-sm-10 " ng-class="{'has-danger': quotationForm.name.$invalid}" >
+							<input type="text" class="form-control " placeholder="报价单名称" ng-model="quotation.name" name="name" required ng-maxlength="50"></div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 control-label">计量单位</label>
+						<div class="col-sm-4 ">
+							<button type="button" class="form-control form-select" ng-model="quotation.units" data-html="1" data-toggle="true" bs-options="unit.value as unit.label for unit in units"  placeholder="计量单位" data-animation="am-flip-x" bs-select>
+			                    计量单位<span class="caret"></span> 
+			                </button>	
+						</div>
+						<label class="col-sm-2  control-label text-right">客户</label>
+						<div class="col-sm-4 ">
+							<button type="button" class="form-control form-select" ng-model="quotation.company" data-html="1" data-toggle="true" bs-options="com.value as com.label for com in company"  placeholder="选择客户" data-animation="am-flip-x" bs-select>
+			                    客户<span class="caret"></span>
+			                </button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<h4>头部信息</h4>
+			<hr>
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1">
+					<div class="form-group row">
+						<label class="col-sm-2 control-label">报价单头部信息</label>
+						<div class="col-sm-2 col-sm-offset-8">
+							
+							<a href="" data-animation="am-flip-x" bs-dropdown aria-haspopup="true" aria-expanded="false" placement="bottom">
+								{{heads[quotation.head].text}}
+	                            <i class="fa fa-edit fa-lg  ml-10"></i>
+	                        </a>
+	                        <ul class="dropdown-menu" role="menu">
+	                            <li ng-repeat="head in heads">
+	                                <a href="" ng-click="selectHead($index)">
+	                                    <i class="fa fa-angle-right mr-10"></i>
+	                                    {{head.text}}
+	                                </a>
+	                            </li>
+	                        </ul>
+						</div>
+
+						<div class="col-sm-12 mt-10" ng-class="{'has-danger': quotationForm.head.$invalid}" >
+							<textarea type="text" rows="10" class="form-control " placeholder="报价单头部信息"  name="head" ng-disabled="true">Company: {{heads[quotation.head].cname}}&#13;&#10;Address: {{heads[quotation.head].address}}&#13;&#10;Phone: {{heads[quotation.head].phone}}&#13;&#10;Contact: {{heads[quotation.head].people}}&#13;&#10;Email: {{heads[quotation.head].email}}&#13;&#10;Tel: {{heads[quotation.head].mobile}} &#13;&#10;Quotation valid: {{heads[quotation.head].fromDate | schetime}} From {{heads[quotation.head].untilDate | schetime}}</textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<h4>产品报价</h4>
+			<hr>
+			<div class="row mb-20">
+				<div class="col-md-10 col-md-offset-1 mb-10">
+                    <button type="button" class="btn btn-primary" data-animation="am-flip-x" bs-dropdown aria-haspopup="true" aria-expanded="false" placement="bottom">
+						选择添加产品
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-repeat="product in products">
+                            <a href="" ng-click="selectProduct(product)">
+                                <i class="fa fa-angle-right mr-10"></i>
+                                {{product.name}}
+                            </a>
+                        </li>
+                    </ul>
+				</div>
+				<div class="col-md-10 col-md-offset-1">
+					<div class="qua-pro-item">
+						<div ng-repeat="product in quotation.products">
+							<div class="form-group row">
+								<div class="col-xs-10">
+									<span class="btn btn-success mr-10">{{$index+1}}</span>
+									<span ng-bind="products[product.value].name"></span>
+								</div>
+								<div class="col-xs-1">
+									<button class="btn btn-danger" ng-click="deleteProduct(product)">删除</button>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-1 col-sm-offset-1 control-label text-right">数量</label>
+								<div class="col-sm-2" >
+									<input class="form-control " placeholder="0" ng-model="product.num" type="text">
+								</div>
+								<label class="col-sm-1 control-label  text-right">单价</label>
+								<div class="col-sm-2" >
+									<input class="form-control " placeholder="0.00" ng-model="product.price">
+								</div>
+								<label class="col-sm-1 control-label  text-right">小计</label>
+								<div class="col-sm-2" >
+									<div class="form-control " ng-bind="product.total = product.num*product.price" ></div>
+								</div>
+							</div>
+							<hr>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-1 col-sm-offset-1 control-label  text-right">总数量</label>
+							<div class="col-sm-2" >
+								<div class="form-control " ng-bind="totalNum"></div>
+							</div>
+							<label class="col-sm-1 col-sm-offset-3 control-label  text-right">总价</label>
+							<div class="col-sm-2" >
+								<div class="form-control " ng-bind="totalPrice" ></div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<h4>尾部信息</h4>
+			<hr>
+			<div class="row ">
+				<div class="col-md-10 col-md-offset-1">
+					<div class="form-group row">
+						<label class="col-sm-2 control-label">报价单尾部信息</label>
+						<div class="col-sm-2 col-sm-offset-8">
+							<a href="" data-animation="am-flip-x" bs-dropdown aria-haspopup="true" aria-expanded="false" placement="bottom">
+								{{foots[quotation.foot].text}}
+	                            <i class="fa fa-edit fa-lg ml-10"></i>
+	                        </a>
+	                        <ul class="dropdown-menu" role="menu">
+	                            <li ng-repeat="foot in foots">
+	                                <a href="" ng-click="selectFoot($index)">
+	                                    <i class="fa fa-angle-right mr-10"></i>
+	                                    {{foot.text}}
+	                                </a>
+	                            </li>
+	                        </ul>
+						</div>
+
+						<div class="col-sm-12 mt-10" ng-class="{'has-danger': quotationForm.foot.$invalid}" >
+							<textarea type="text" rows="10" class="form-control " placeholder="报价单尾部信息"  name="foot" ng-disabled="true" ng-bind="foots[quotation.foot].content"></textarea>
+						</div>
+					</div>
+ 
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-1 col-md-offset-1" style="margin-top: 20px;margin-bottom: 10px;">
+					<button type="button" class="btn btn-success" ng-click="" ng-disabled="quotationForm.$invalid">保存</button>
+				</div>
+				<div class="col-md-1" style="margin-top: 20px;margin-bottom: 10px;">
+					<button type="button" class="btn btn-primary" ng-click="" onclick="window.print()">打印</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- 选择产品弹窗 -->
+<script type="text/ng-template" id="selectProduct.tpl.html">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" style="margin-top: 100px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$hide()">&times;</button>
+                    <h4 class="modal-title">选择产品</h4>
+                </div>
+                <div class="modal-body" >
+					
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success btn-block" ng-click="">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

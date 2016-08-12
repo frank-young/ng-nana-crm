@@ -1,0 +1,59 @@
+<div class="row cus-border">
+    <div class="col-sm-12 cus-txt"><h4>项目</h4></div>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-md-2">
+                <h5>项目名</h5>
+            </div>
+            <!-- /.col-md-2 -->
+            <div class="col-md-2">
+                <h5>状态</h5>
+            </div>
+            <!-- /.col-md-2 -->
+            <div class="col-md-2">
+                <h5>负责人</h5>
+            </div>
+            <!-- /.col-md-2 -->
+            <div class="col-md-2">
+                <h5>修改时间</h5>
+            </div>
+            <!-- /.col-md-2 -->
+
+        </div>
+        <!-- /.row -->
+        <hr>
+
+        <div class="row cus-business" ng-repeat="business in customer.business">
+            <div class="col-sm-2">
+                <a href="" ui-sref="web.businessdetial({id:business.id})">{{business.bname}}</a>
+            </div>
+            <!-- /.col-sm-2 -->
+            <div class="col-sm-2">
+                {{status[business.status].label}}
+            </div>
+            <!-- /.col-sm-2 -->
+            <div class="col-sm-2">
+                {{business.people}}
+            </div>
+            <!-- /.col-sm-2 -->
+            <div class="col-sm-2">
+                {{business.meta.updateAt | time}}
+            </div>
+            <!-- /.col-sm-2 -->
+<!--             <div class="col-sm-2">
+                {{person[business.selectPerson].label}}
+            </div> -->
+
+            <div class="col-sm-2">
+                <a href="" ng-click="pushBusiness(business)">推进项目</a>
+            </div>
+            <div class="col-sm-2">
+                <a href="" ng-click="delBusiness($index)">删除</a>
+            </div>
+            <!-- /.col-sm-1 -->
+        </div>
+        <!-- /.row -->
+
+    </div>
+</div>
+<!-- /.row --> 

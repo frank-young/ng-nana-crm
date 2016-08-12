@@ -1,0 +1,38 @@
+{
+        "isTop":false,
+        "isChecked":false,
+        "companyName":"",
+        "website":"",
+        "group":"",
+        "origins":"",
+        "country":"",
+        "address":"",
+        "star": 1,
+        "tags":[],
+        "progress":"",     
+        "mobile":"",
+        "email":"",
+        "fax":"",
+        "class":"",        
+        "st":"",     
+        "remark":"",
+        "date":"",
+        "isEdit": true,
+        "peoples":[
+            {
+                "name":"",
+                "email":"",
+                "sex":"",   
+                "birthed":"",
+                "phone":"",
+                "position":"",
+                "remark":"",
+                "isImportant":true,
+                "isEdit":true
+            }
+        ],
+        "schedule":[],
+        "schedule_expired":[],
+        "schedule_complete":[],
+        "business":[]
+    }

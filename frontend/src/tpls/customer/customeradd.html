@@ -1,0 +1,9 @@
+
+<div ng-controller="CustomerAddCtrl">
+	<h2 class="page-header">添加客户
+		<button class="btn btn-success ml-20" ng-click="saveData(customer)" ng-disabled="customerForm.$invalid"><i class="fa fa-save"></i> 保存</button>
+	</h2>
+    <form class="form-horizontal" name="customerForm" novalidate>
+         <div ng-include="'tpls/common/customeradd.html'"></div>
+    </form>
+</div>

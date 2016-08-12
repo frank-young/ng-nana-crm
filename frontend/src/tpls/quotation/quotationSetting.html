@@ -1,0 +1,288 @@
+<h2 class="page-header">报价单设置 </h2>
+
+<div ng-controller="QuotationSettingCtrl">
+    <div data-bs-active-pane="" bs-tabs="">
+        <div data-title="报价单标签" name="" bs-pane="">
+            <hr>
+            <div class="row">
+                <div class="col-sm-11 col-md-5 col-md-offset-3">
+                    <form name="tagForm">
+                        <ul ng-sortable="{animation:150}" class="list-group">
+                            <li class="list-group-item" ng-repeat="tag in tags" >
+                                <div class="row">
+
+                                    <div class="col-xs-6" ng-class="{'has-danger': tagForm.tag{{tag.value}}.$invalid}">
+                                        <input name="tag{{tag.value}}" type="text" class="form-control has-danger" ng-disabled="tag.isEdit" ng-model="tag.text" required ng-maxlength="50" >
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button type="button" class="form-control form-select" ng-model="tag.color" data-html="1" data-toggle="true" bs-options="color.value as color.label for color in colors" placeholder="" data-animation="am-flip-x"  ng-disabled="tag.isEdit" bs-select>
+                                            <span class="caret"></span>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <a href="" ng-click="tag.isEdit=!tag.isEdit;saveTag(tag)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="修改" ng-disabled="tagForm.$invalid"><i class="fa set-icon tag-icon"  ng-class="{true: 'fa-edit', false: 'fa-check'}[tag.isEdit]"></i></a>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <a href="" ng-click="deleteTag(tag)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除"><i class="fa fa-trash set-icon"></i></a>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <a data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="拖拽" style="cursor: move"><i class="fa fa-arrows-alt set-icon"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div class="col-sm-1 col-md-1">
+                    <div class="set-btn-add" ng-click="addTag()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加分组"><i class="fa fa-plus fa-2x" ></i></div>
+                </div>
+            </div>
+        </div>
+            
+        <div data-title="报价单阶段" name="" bs-pane="">
+            <hr>
+            <div class="row">
+                <div class="col-sm-11 col-md-5 col-md-offset-3">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="pha in phase" >
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="no-drag-p">
+                                        {{pha.label}}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> 
+
+        <div data-title="报价单头部" name="" bs-pane="">
+            <hr>
+            <div class="row">
+                <div class="col-sm-11 col-md-5 col-md-offset-3">
+                    <form name="headForm">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="head in heads" >
+                                <div class="row">
+
+                                    <div class="col-xs-9" ng-class="{'has-danger': headForm.head{{head.value}}.$invalid}">
+                                        <p class="no-drag-p" ng-bind="head.text"> </p>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <a href="" ng-click="editHead(head);editHeadBtn=true" data-animation="am-fade-and-scale" placement="center" data-template-url="quotationhead.tpl.html" bs-modal><i class="fa set-icon fa-edit foot-icon"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="修改"></i></a>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <a href="" ng-click="deleteHead(head)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除"><i class="fa fa-trash set-icon"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div class="col-sm-1 col-md-1">
+                    <div class="set-btn-add" ng-click="editHeadBtn=false;headMsg={};" data-animation="am-fade-and-scale" placement="center" data-template-url="quotationhead.tpl.html" bs-modal ><i class="fa fa-plus fa-2x" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加报价单头部"></i></div>
+                </div>
+            </div>
+        </div> 
+
+        <div data-title="报价单尾部" name="" bs-pane="">
+            <hr>
+            <div class="row">
+                <div class="col-sm-11 col-md-5 col-md-offset-3">
+                    <form name="footForm">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="foot in foots" >
+                                <div class="row">
+
+                                    <div class="col-xs-9">
+                                        <p class="no-drag-p" ng-bind="foot.text"> </p>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <a href="" ng-click="editFoot(foot);editFootBtn=true" data-animation="am-fade-and-scale" placement="center" data-template-url="quotationfoot.tpl.html" bs-modal><i class="fa set-icon fa-edit foot-icon"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="修改"></i></a>
+
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <a href="" ng-click="deleteFoot(foot)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除"><i class="fa fa-trash set-icon"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div class="col-sm-1 col-md-1">
+                    <div class="set-btn-add" data-animation="am-fade-and-scale" placement="center" data-template-url="quotationfoot.tpl.html" bs-modal ng-click="editFootBtn=false;footMsg={};"><i class="fa fa-plus fa-2x" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加报价单尾部"></i></div>
+                </div>
+            </div>
+        </div>    
+
+    </div>
+</div>
+
+<!-- 报价单尾 -->
+<script type="text/ng-template" id="quotationfoot.tpl.html">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" style="margin-top: 100px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$hide()">&times;</button>
+                    <h4 class="modal-title">修改报价单尾部</h4>
+                </div>
+                <div class="modal-body" >
+                    <form name="footModalForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">名称</label>
+                                    <div class="col-sm-10" ng-class="{'has-danger': footModalForm.text.$invalid}">
+                                        <input name="text" class="form-control" placeholder="请输入名称..." ng-model="footMsg.text" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">内容</label>
+                                    <div class="col-sm-10">
+                                        <!-- <textarea cols="20" rows="5" class="form-control" placeholder="请输入内容..." ng-model="footMsg.content"></textarea> -->
+                                        <ng-simditor content="footMsg.content"></ng-simditor>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                    <button type="button" class="btn btn-success" ng-show="editFootBtn" ng-click="saveFoot(footMsg);$hide()" ng-disabled="footModalForm.$invalid">保存</button>
+                    <button type="button" class="btn btn-primary" ng-show="!editFootBtn" ng-click="saveFootAdd(footMsg);$hide()" ng-disabled="footModalForm.$invalid">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- 报价单头部信息 -->
+<script type="text/ng-template" id="quotationhead.tpl.html">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" style="margin-top: 100px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$hide()">&times;</button>
+                    <h4 class="modal-title">修改报价单头部</h4>
+                </div>
+                <div class="modal-body" >
+                    <form name="headModalForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">名称</label>
+                                    <div class="col-sm-10" ng-class="{'has-danger': headModalForm.text.$invalid}">
+                                        <input name="text" class="form-control" placeholder="请输入名称..." ng-model="headMsg.text" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">项目名称</label>
+                                    <div class="col-sm-10" ng-class="{'has-danger': headModalForm.business.$invalid}">
+                                        <button name="business" type="button" class="form-control form-select" ng-model="headMsg.business" data-html="1" data-toggle="true" bs-options="busines.value as busines.label for busines in business" placeholder="项目名称" data-animation="am-flip-x" bs-select reqiured>
+                                            项目名称<span class="caret"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+
+                        <div class="row mt-20">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">公司名称</label>
+                                    <div class="col-sm-10" ng-class="{'has-danger': headModalForm.cname.$invalid}">
+                                        <input name="cname" class="form-control" placeholder="公司名称" ng-model="headMsg.cname" ng-maxlength="200">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">地址</label>
+                                    <div class="col-sm-10" ng-class="{'has-danger': headModalForm.address.$invalid}">
+                                        <input name="address" class="form-control" placeholder="地址" ng-model="headMsg.address" ng-maxlength="200">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">电话</label>
+                                    <div class="col-sm-10" ng-class="{'has-danger': headModalForm.phone.$invalid}">
+                                        <input name="phone" class="form-control" placeholder="电话" ng-model="headMsg.phone" ng-maxlength="20">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">邮箱</label>
+                                    <div class="col-sm-10" ng-class="{'has-danger': headModalForm.email.$invalid}">
+                                        <input name="email" type="email" class="form-control" placeholder="邮箱" ng-model="headMsg.email" ng-maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">联系人</label>
+                                    <div class="col-sm-10" ng-class="{'has-danger': headModalForm.people.$invalid}">
+                                        <input name="people" class="form-control" placeholder="联系人" ng-model="headMsg.people" ng-maxlength="20">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">手机</label>
+                                    <div class="col-sm-10" ng-class="{'has-danger': headModalForm.mobile.$invalid}">
+                                        <input name="mobile" class="form-control" placeholder="手机" ng-model="headMsg.mobile" ng-maxlength="20">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-20">
+                            <div class="col-sm-12" style="margin-bottom:20px; line-height: 34px;">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">起止日期</label>
+                                    <div class="col-sm-4" ng-class="{'has-danger': headModalForm.fromDate.$invalid}">
+                                        <input type="text" name="fromDate" class="form-control" ng-model="headMsg.fromDate" data-max-date="{{headMsg.untilDate}}" placeholder="开始日期" data-date-format="yyyy-MM-dd" data-date-type="number" data-animation="am-flip-x" bs-datepicker></div>
+                                    <div class="col-sm-1">
+                                        <p class="text-center">至</p>
+                                    </div>
+                                    <div class="col-sm-4" ng-class="{'has-danger': headModalForm.untilDate.$invalid}">
+                                        <input type="text" name="untilDate" class="form-control" ng-model="headMsg.untilDate" data-min-date="{{headMsg.fromDate}}" placeholder="结束日期" data-date-format="yyyy-MM-dd" data-date-type="number" data-animation="am-flip-x" bs-datepicker></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                    <button type="button" class="btn btn-success" ng-show="editHeadBtn" ng-click="saveHead(headMsg);$hide()" ng-disabled="headModalForm.$invalid">保存</button>
+                    <button type="button" class="btn btn-primary" ng-show="!editHeadBtn" ng-click="saveHeadAdd(headMsg);$hide()" ng-disabled="headModalForm.$invalid">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

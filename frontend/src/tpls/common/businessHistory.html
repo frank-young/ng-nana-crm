@@ -1,0 +1,56 @@
+<div class="row cus-border">
+    <div class="col-sm-12 cus-txt"><h4>推进历史</h4></div>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-md-2">
+                <h5>项目名</h5>
+            </div>
+            <!-- /.col-md-2 -->
+            <div class="col-md-2">
+                <h5>状态</h5>
+            </div>
+            <!-- /.col-md-2 -->
+            <div class="col-md-2">
+                <h5>负责人</h5>
+            </div>
+            <!-- /.col-md-2 -->
+            <div class="col-md-3">
+                <h5>修改时间</h5>
+            </div>
+            <!-- /.col-md-2 -->
+            <div class="col-md-2">
+                <h5>主要联系人</h5>
+            </div>
+            <!-- /.col-md-2 -->
+
+        </div>
+        <!-- /.row -->
+        <hr>
+
+        <div class="row cus-business" ng-repeat="business in customer.business">
+            <div class="col-sm-2">
+                <p><a href="" ng-bind="business.bname"></a></p>
+            </div>
+            <!-- /.col-sm-2 -->
+            <div class="col-sm-2">
+            <p ng-bind="status[business.status].label"></p>
+            </div>
+            <!-- /.col-sm-2 -->
+            <div class="col-sm-2">
+            <p ng-bind="business.people"></p>
+            </div>
+            <!-- /.col-sm-2 -->
+            <div class="col-sm-3">
+            <p ng-bind="business.time | schetime"></p>
+            </div>
+            <!-- /.col-sm-2 -->
+            <div class="col-sm-2">
+            <p ng-bind="person[business.selectPerson].label"></p>
+            </div>
+            <!-- /.col-sm-2 -->
+        </div>
+        <!-- /.row -->
+
+    </div>
+</div>
+<!-- /.row --> 

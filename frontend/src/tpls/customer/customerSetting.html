@@ -1,0 +1,181 @@
+<h2 class="page-header">客户设置</h2>
+
+<div ng-controller="CustomerSettingCtrl">
+        <div data-bs-active-pane="" bs-tabs="">
+            <div data-title="分组设置" name="" bs-pane>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-11 col-md-5 col-md-offset-3">
+                        <form name="groupForm">
+                            <ul ng-sortable="{animation:150}" class="list-group">
+                                <li class="list-group-item" ng-repeat="group in groups" >
+                                    <div class="row">
+                                        <div class="col-xs-8" ng-class="{'has-danger': groupForm.group{{group.value}}.$invalid}">
+                                            <input name="group{{group.value}}" type="text" class="form-control has-danger"   ng-disabled="group.isEdit" ng-model="group.label" required ng-maxlength="50" >
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <p><a href="" ng-click="group.isEdit=!group.isEdit;saveGroup(group)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="修改" ng-disabled="groupForm.$invalid"><i class="fa set-icon group-icon"  ng-class="{true: 'fa-edit', false: 'fa-check'}[group.isEdit]"></i></a></p>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <p><a href="" ng-click="deleteGroup(group)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除"><i class="fa fa-trash set-icon"></i></a></p>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <p><a data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="拖拽" style="cursor: move"><i class="fa fa-arrows-alt set-icon"></i></a></p>
+                                        </div>
+                                    </div>
+                                    
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="col-sm-1 col-md-1">
+                        <div class="set-btn-add" ng-click="addGroup()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加分组"><i class="fa fa-plus fa-2x" ></i></div>
+                    </div>
+                </div>
+            </div>
+            <div data-title="客户来源" name="" bs-pane="">
+                <hr>
+                <div class="row">
+                    <div class="col-sm-11 col-md-5 col-md-offset-3">
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="origin in origins" >
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p class="no-drag-p">
+                                                {{origin.label}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="$index==0" style="margin-left: .5em;">
+                                        <div class="col-md-12">
+                                            <p><i class="fa fa-angle-right"></i> 付费流量</p>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <p><i class="fa fa-angle-right"></i> 自然流量</p>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <p><i class="fa fa-angle-right"></i> SNS社交</p>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-show="$index==1" style="margin-left: .5em;">
+                                        <div class="col-md-12">
+                                            <p><i class="fa fa-angle-right"></i> 电话营销</p>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <p><i class="fa fa-angle-right"></i> 海关数据</p>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <p><i class="fa fa-angle-right"></i> 展会</p>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <p><i class="fa fa-angle-right"></i> 黄页</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+            <div data-title="客户类型" name="" bs-pane="">
+                <hr>
+                <div class="row">
+                    <div class="col-sm-11 col-md-5 col-md-offset-3">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="cls in class" >
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="no-drag-p">
+                                            {{cls.label}}
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div data-title="客户状态" name="" bs-pane>
+               <hr>
+                <div class="row">
+                    <div class="col-sm-12 col-md-5 col-md-offset-3">
+                        <h4>客户状态</h4>
+                    </div>
+                    <div class="col-sm-11 col-md-5 col-md-offset-3">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="progres in progress" >
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="no-drag-p">
+                                            {{progres.label}}
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-5 col-md-offset-3">
+                        <h4>项目状态</h4>
+                    </div>
+                    <div class="col-sm-11 col-md-5 col-md-offset-3">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="statu in status" >
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="no-drag-p">
+                                            {{statu.label}}
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div data-title="客户标签" name="" bs-pane="">
+                <hr>
+                <div class="row">
+                    <div class="col-sm-11 col-md-5 col-md-offset-3">
+                        <form name="tagForm">
+                            <ul ng-sortable="{animation:150}" class="list-group">
+                                <li class="list-group-item" ng-repeat="tag in tags" >
+                                    <div class="row">
+
+                                        <div class="col-xs-6" ng-class="{'has-danger': tagForm.tag{{tag.value}}.$invalid}">
+                                            <input name="tag{{tag.value}}" type="text" class="form-control has-danger" ng-disabled="tag.isEdit" ng-model="tag.text" required ng-maxlength="50" >
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <button type="button" class="form-control form-select" ng-model="tag.color" data-html="1" data-toggle="true" bs-options="color.value as color.label for color in colors" placeholder="" data-animation="am-flip-x"  ng-disabled="tag.isEdit" bs-select>
+                                                <span class="caret"></span>
+                                            </button>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <a href="" ng-click="tag.isEdit=!tag.isEdit;saveTag(tag)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="修改" ng-disabled="tagForm.$invalid"><i class="fa set-icon tag-icon"  ng-class="{true: 'fa-edit', false: 'fa-check'}[tag.isEdit]"></i></a>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <a href="" ng-click="deleteTag(tag)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除"><i class="fa fa-trash set-icon"></i></a>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <a data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="拖拽" style="cursor: move"><i class="fa fa-arrows-alt set-icon"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="col-sm-1 col-md-1">
+                        <div class="set-btn-add" ng-click="addTag()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加分组"><i class="fa fa-plus fa-2x" ></i></div>
+                    </div>
+                </div>
+            </div>
+            <div data-title="客户导入" name="" bs-pane="">
+                
+            </div>
+        </div>
+
+</div>

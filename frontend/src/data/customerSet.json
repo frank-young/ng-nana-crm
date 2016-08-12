@@ -1,0 +1,54 @@
+{
+    "groups": [
+            {"value":"0","label":"基本会员","isEdit":true},
+            {"value":"1","label":"高级会员","isEdit":true},
+            {"value":"2","label":"钻石会员","isEdit":true}
+        ],
+    "origins":[
+            {"value":"0","label":"网络营销"},
+            {"value":"1","label":"自主开发"},
+            {"value":"2","label":"口碑效应"},
+            {"value":"3","label":"合作交换"},
+            {"value":"4","label":"其他"}
+        ],
+    "states":["美国","中国","澳大利亚","越南"],
+    "sts":["手机生产","电脑生产","蓝牙设备"],
+    "progress":[
+            {"value":"0","label":"意向客户"},
+            {"value":"1","label":"初步沟通"},
+            {"value":"2","label":"深度沟通"},
+            {"value":"3","label":"长期合作"}
+        ],
+    "class":[
+            {"value":"0","label":"原材料供应商"},
+            {"value":"1","label":"生产商"},
+            {"value":"2","label":"贸易商"},
+            {"value":"2","label":"零售商"},
+            {"value":"2","label":"机构/团体消费者"},
+            {"value":"2","label":"个人消费者"},
+            {"value":"2","label":"其他"}
+        ],
+    "person": [
+            {"value":"0","label":"frank"},
+            {"value":"1","label":"json"},
+            {"value":"2","label":"联系人3"}
+        ],
+    "tags":[
+            {"value":"0","text":"平板","color":"primary","isEdit":true},
+            {"value":"1","text":"手机","color":"danger","isEdit":true},
+            {"value":"2","text":"电脑","color":"success","isEdit":true}
+        ],
+    "status":[
+            {"value":"0","label":"签订合同"},
+            {"value":"1","label":"进行中"},
+            {"value":"2","label":"项目失败"},
+            {"value":"3","label":"项目完成"}
+        ],
+    "colors":[
+        {"value":"primary","label":"<span class='set-tag label-primary'></span>"},
+        {"value":"success","label":"<span class='set-tag label-success'></span>"},
+        {"value":"danger","label":"<span class='set-tag label-danger'></span>"},
+        {"value":"info","label":"<span class='set-tag label-info'></span>"},
+        {"value":"warning","label":"<span class='set-tag label-warning'></span>"}
+    ]
+}

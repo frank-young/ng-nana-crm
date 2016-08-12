@@ -1,0 +1,19 @@
+<div ng-controller="BusinessDetialCtrl">
+    <h2 class="page-header">项目详情
+        <a href="javascript:window.history.go(-1)" type="button" class="btn btn-primary ml-20"><i class="fa fa-angle-left"></i> 返回</a>
+    </h2>
+    <form class="form-horizontal" name="customerForm" novalidate>
+
+        <div data-bs-active-pane="" bs-tabs="">
+            <div data-title="日程" name="schedule" bs-pane>
+                <div ng-include="'tpls/common/customerSchedule.html'"></div>
+            </div>
+            <div data-title="项目详情" name="message" bs-pane="">
+                <div ng-include="'tpls/common/businessMessage.html'"></div>
+            </div>
+            <div data-title="推进历史" name="people" bs-pane="">
+                <div ng-include="'tpls/common/businessHistory.html'"></div>
+            </div>
+        </div>
+    </form>
+</div>

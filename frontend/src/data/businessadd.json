@@ -1,0 +1,17 @@
+{
+    "company":"",
+    "bname":"",
+    "origin":"",
+    "status":"",     
+    "mobile":"",
+    "email":"",
+    "class":"",
+    "amount":"",
+    "remark":"",
+    "isEdit": true,
+    "people":"",
+    "schedule":[],
+    "schedule_expired":[],
+    "schedule_complete":[],
+    "business":[]
+}

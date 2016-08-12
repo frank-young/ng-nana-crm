@@ -1,0 +1,13 @@
+
+
+<div ng-controller="ClueAddCtrl">
+	<h2 class="page-header">添加潜在客户<button class="btn btn-success ml-20" ng-click="saveData(customer)" ng-disabled="customerForm.$invalid"><i class="fa fa-save"></i> 保存</button></h2>
+    <form class="form-horizontal" name="customerForm" novalidate>
+
+        <div ng-include="'tpls/common/customeradd.html'"></div>
+		
+		<div class="col-md-11 col-md-offset-1">
+        	<button class="btn btn-success" ng-click="saveData(customer)" ng-disabled="customerForm.$invalid"><i class="fa fa-save"></i> 保存</button>
+    	</div>
+    </form>
+</div>
