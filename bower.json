@@ -1,0 +1,25 @@
+{
+  "name": "My Movie",
+  "authors": [
+    "Frank Young <yangjunalns@qq.com>"
+  ],
+  "description": "0.0.1",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "125478"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
