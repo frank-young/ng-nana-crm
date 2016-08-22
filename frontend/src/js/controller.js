@@ -173,6 +173,10 @@ angular.module("businessMoudle", []).controller('BusinessCtrl',
     $scope.pinItem = function(value){
         value.isTop = !value.isTop;
         businessData.updateData(value)
+    } 
+    /* 选择查看固定位置 */
+    $scope.pinSortFunc = function(value){
+        $scope.pinSort = value;
     }
     /* 删除栏目 */
     $scope.deleteBusines = function(value){
@@ -470,7 +474,7 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     }
     /* 清空日程弹出框数据 */
     $scope.cancleEditSchedule = function(){  
-        $scope.schedule = {"fromDate":today,"untilDate":today+172800000,"remind":[{"date":today+86400000,}]};     //初始空数据
+        $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null}]};     //初始空数据
     }
     
 }]);;/********************************************************************************************************************

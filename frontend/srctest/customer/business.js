@@ -73,6 +73,10 @@ angular.module("businessMoudle", []).controller('BusinessCtrl',
     $scope.pinItem = function(value){
         value.isTop = !value.isTop;
         businessData.updateData(value)
+    } 
+    /* 选择查看固定位置 */
+    $scope.pinSortFunc = function(value){
+        $scope.pinSort = value;
     }
     /* 删除栏目 */
     $scope.deleteBusines = function(value){

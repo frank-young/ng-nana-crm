@@ -1,4 +1,6 @@
 {
+    "isTop":false,
+    "isChecked":false,
     "company":"",
     "bname":"",
     "origin":"",

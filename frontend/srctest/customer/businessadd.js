@@ -174,7 +174,7 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     }
     /* 清空日程弹出框数据 */
     $scope.cancleEditSchedule = function(){  
-        $scope.schedule = {"fromDate":today,"untilDate":today+172800000,"remind":[{"date":today+86400000,}]};     //初始空数据
+        $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null}]};     //初始空数据
     }
     
 }]);

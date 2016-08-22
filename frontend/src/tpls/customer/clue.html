@@ -1,15 +1,17 @@
 <div ng-controller="ClueCtrl">
-            <h2 class="page-header">
-                潜在客户
-                <button class="btn btn-primary ml-20" ng-click="pinSortFunc({isTop:true});pinShowFunc()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="选择固定位置" ng-class="{true: 'pro-show', false: 'pro-hide'}[!pinShow]"> <i class="fa fa-thumb-tack fa-lg" ></i>
-                </button>
-                <button class="btn btn-primary ml-20" ng-click="pinSortFunc();pinShowFunc()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="取消固定位置" ng-class="{true: 'pro-show', false: 'pro-hide'}[pinShow]"> <i class="fa fa-thumb-tack fa-lg rotate-45"></i>
-                </button>
-                <button class="btn btn-primary ml-10" ng-click='tagSortFuc()' data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="显示全部"> <i class="fa fa-tag fa-lg"></i>
-                </button>
-                <a ui-sref="web.clueadd()" class="btn btn-danger ml-10"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加客户"> <i class="fa fa-plus fa-lg"></i>
-                </a>
-            </h2>
+    <h2 class="page-header">
+        潜在客户
+        <button class="btn btn-primary ml-20" ng-click="pinSortFunc({isTop:true});pinShowFunc()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="选择固定位置" ng-class="{true: 'pro-show', false: 'pro-hide'}[!pinShow]"> <i class="fa fa-thumb-tack fa-lg" ></i>
+        </button>
+
+        <button class="btn btn-primary ml-20" ng-click="pinSortFunc();pinShowFunc()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="取消固定位置" ng-class="{true: 'pro-show', false: 'pro-hide'}[pinShow]"> <i class="fa fa-thumb-tack fa-lg rotate-45"></i>
+        </button>
+        
+        <button class="btn btn-primary ml-10" ng-click='tagSortFuc()' data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="显示全部"> <i class="fa fa-tag fa-lg"></i>
+        </button>
+        <a ui-sref="web.clueadd()" class="btn btn-danger ml-10"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加客户"> <i class="fa fa-plus fa-lg"></i>
+        </a>
+    </h2>
 
             
 

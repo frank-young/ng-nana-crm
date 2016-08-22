@@ -44,6 +44,9 @@ module.exports = function(app){
   app.delete('/business/delete', Business.del)
   app.get('/business/detial/:id', Business.detail)
 
+  //设置
+  app.get('/customerSetting', Customersetting.list)
+
   // app.get('/admin/customer/update/:id',User.adminRequired,Customer.update)
   // app.post('/admin/customer', User.adminRequired,Customer.save)
   // app.get('/admin/customer/list',User.adminRequired,Customer.list)
