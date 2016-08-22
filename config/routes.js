@@ -3,6 +3,7 @@ var User = require('../app/controllers/user')
 var Customer = require('../app/controllers/customer')
 var Clue = require('../app/controllers/clue')
 var Business = require('../app/controllers/business')
+var Customerset = require('../app/controllers/customerset')
 
 module.exports = function(app){
 	app.use(function(req, res, next) {
@@ -45,7 +46,7 @@ module.exports = function(app){
   app.get('/business/detial/:id', Business.detail)
 
   //设置
-  app.get('/customerSetting', Customersetting.list)
+  app.get('/customerset', Customerset.list)
 
   // app.get('/admin/customer/update/:id',User.adminRequired,Customer.update)
   // app.post('/admin/customer', User.adminRequired,Customer.save)
