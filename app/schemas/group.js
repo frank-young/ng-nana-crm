@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')	
-var CustomersetSchema = new mongoose.Schema({
+var GroupSchema = new mongoose.Schema({
 	value:String,
 	label:String,
 	isEdit:Boolean,
@@ -15,7 +15,7 @@ var CustomersetSchema = new mongoose.Schema({
 	}
 })
 
-CustomersetSchema.pre('save',function(next){	//每次存数据之前都要调用这个方法
+GroupSchema.pre('save',function(next){	//每次存数据之前都要调用这个方法
 	if(this.isNew){
 		//数据是否是新加的，创建的时间和更新时间设置为当前时间
 		this.meta.createAt = this.meta.updateAt = Date.now()
@@ -25,7 +25,7 @@ CustomersetSchema.pre('save',function(next){	//每次存数据之前都要调用
 	next()
 })
 
-CustomersetSchema.statics = {
+GroupSchema.statics = {
 	fetch:function(cb){		//取出目前数据库所有的数据
 		return this
 			.find({})	//查找全部数据
@@ -39,4 +39,4 @@ CustomersetSchema.statics = {
 	}
 }
 
-module.exports = CustomersetSchema
+module.exports = GroupSchema

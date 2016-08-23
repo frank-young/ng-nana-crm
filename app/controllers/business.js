@@ -1,7 +1,7 @@
 var Business = require('../models/business')	//引入模型
 var _ = require('underscore')
 	
-	//客户列表页
+	//项目列表页
 	exports.list = function(req,res){
 		Business.fetch(function(err,businesss){
 			res.json({
@@ -10,7 +10,7 @@ var _ = require('underscore')
 			})
 		})
 	}
-	//客户更新、新建
+	//项目更新、新建
 	exports.save = function(req,res){
 		var businessObj = req.body.business 	//从路由传过来的 business对象
 		var _business
@@ -40,7 +40,7 @@ var _ = require('underscore')
 				res.json({status:"添加成功",success: 1})
 			})
 	}
-	//客户更新、新建
+	//项目更新、新建
 	exports.update = function(req,res){
 		var id = req.body.business._id
 		var businessObj = req.body.business 	//从路由传过来的 business对象
@@ -62,17 +62,17 @@ var _ = require('underscore')
 		}
 		
 	}
-	//客户详情页
+	//项目详情页
 	exports.detail = function(req,res){
 		var id = req.params.id		//拿到id的值
 		Business.findById(id,function(err,business){
 			res.json({
-				title:'客户详情页',
+				title:'项目详情页',
 				business:business
 			})
 		})
 	}
-	//删除客户
+	//删除项目
 	exports.del = function(req,res){
 		var id = req.query.id
 		if(id){

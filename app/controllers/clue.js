@@ -1,7 +1,7 @@
 var Clue = require('../models/clue')	//引入模型
 var _ = require('underscore')
 	
-	//客户列表页
+	//潜在客户列表页
 	exports.list = function(req,res){
 
 		Clue.fetch(function(err,clues){
@@ -11,7 +11,7 @@ var _ = require('underscore')
 			})
 		})
 	}
-	//客户更新、新建
+	//潜在客户更新、新建
 	exports.save = function(req,res){
 		var clueObj = req.body.clue 	//从路由传过来的 clue对象
 		var _clue
@@ -46,7 +46,7 @@ var _ = require('underscore')
 				res.json({status:"添加成功",success: 1})
 			})
 	}
-	//客户更新、新建
+	//潜在客户更新、新建
 	exports.update = function(req,res){
 		var id = req.body.clue._id
 		var clueObj = req.body.clue 	//从路由传过来的 clue对象
@@ -68,17 +68,17 @@ var _ = require('underscore')
 		}
 		
 	}
-	//客户详情页
+	//潜在客户详情页
 	exports.detail = function(req,res){
 		var id = req.params.id		//拿到id的值
 		Clue.findById(id,function(err,clue){
 			res.json({
-				title:'客户详情页',
+				title:'潜在客户详情页',
 				clue:clue
 			})
 		})
 	}
-	//删除客户
+	//删除潜在客户
 	exports.del = function(req,res){
 		var id = req.query.id
 		if(id){

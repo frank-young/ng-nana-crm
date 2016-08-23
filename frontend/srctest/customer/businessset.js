@@ -2,7 +2,9 @@
  *                                                      客户设置页面
  ********************************************************************************************************************/
 
-angular.module("customerSettingMoudle", ['ng-sortable']).controller('CustomerSettingCtrl', function($scope, $http, $state) {
+angular.module("customerSettingMoudle", ['ng-sortable'])
+.controller('CustomerSettingCtrl', ['$scope', '$http', '$state','groupData','$alert',
+    function($scope, $http, $state,groupData,$alert) {
     /* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -10,14 +12,12 @@ angular.module("customerSettingMoudle", ['ng-sortable']).controller('CustomerSet
                 return i;
             }
         }
-    }  
+    }   
     /****************************** 客户设置************************************/
     $http({
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-        /* 分组 */
-        $scope.groups = data.groups;
         /* 客户来源 */
         $scope.origins = data.origins;
         /* 项目状态 */
@@ -34,17 +34,31 @@ angular.module("customerSettingMoudle", ['ng-sortable']).controller('CustomerSet
         $scope.colors = data.colors;
 
     })
+
+    /* 分组 */
+    groupData.getData().then(function (data) {
+        $scope.groups = data.groups;
+
+    });
+
     /****************************** 客户分组 ************************************/
     /* 添加分组信息 */
     $scope.addGroup = function(){
         var value = $scope.groups.length
         $scope.groups.push({"value":value,"isEdit":false});
+        groupData.addData(value);
     }
     /* 保存单条分组信息 */
     $scope.saveGroup = function(value){
         if(value.isEdit == true){
-            console.log('保存成功！')
+            groupData.updateData(value).then(function (data) {
+                $scope.changeAlert('操作成功！','');
+            });
         }
+    }
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
     }
     /* 删除单条分组信息 */
     $scope.deleteGroup = function(value){
@@ -52,6 +66,9 @@ angular.module("customerSettingMoudle", ['ng-sortable']).controller('CustomerSet
         if(deleteConfirm){
             var index = findIndex(value,$scope.groups);
             $scope.groups.splice(index,1);   //删除
+            groupData.deleteData(value).then(function(data){
+                $scope.changeAlert('删除成功！');
+            })
         }
     }
     /* 监听items ，发送数据 */
@@ -90,4 +107,4 @@ angular.module("customerSettingMoudle", ['ng-sortable']).controller('CustomerSet
            console.log(newVal)
         }
     }, true);
-});
+}]);
