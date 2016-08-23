@@ -46,14 +46,16 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     $scope.addGroup = function(){
         var value = $scope.groups.length
         $scope.groups.push({"value":value,"isEdit":false});
-        groupData.addData(value);
+        
     }
     /* 保存单条分组信息 */
     $scope.saveGroup = function(value){
         if(value.isEdit == true){
-            groupData.updateData(value).then(function (data) {
-                $scope.changeAlert('操作成功！','');
-            });
+            groupData.addData(value);
+            // value.value = $scope.groups.length;
+            // groupData.updateData(value).then(function (data) {
+            //     $scope.changeAlert('操作成功！','');
+            // });
         }
     }
     /*提示框*/

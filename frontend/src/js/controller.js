@@ -740,14 +740,16 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     $scope.addGroup = function(){
         var value = $scope.groups.length
         $scope.groups.push({"value":value,"isEdit":false});
-        groupData.addData(value);
+        
     }
     /* 保存单条分组信息 */
     $scope.saveGroup = function(value){
         if(value.isEdit == true){
-            groupData.updateData(value).then(function (data) {
-                $scope.changeAlert('操作成功！','');
-            });
+            groupData.addData(value);
+            // value.value = $scope.groups.length;
+            // groupData.updateData(value).then(function (data) {
+            //     $scope.changeAlert('操作成功！','');
+            // });
         }
     }
     /*提示框*/
@@ -805,8 +807,8 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
  *                                                      潜在客户列表页
  ********************************************************************************************************************/
 angular.module('clueMoudle',[]).controller('ClueCtrl',
-    ['$scope','$http','$alert','clueData','customerData',
-    function ($scope,$http,$alert,clueData,customerData) {
+    ['$scope','$http','$alert','clueData','customerData','groupData',
+    function ($scope,$http,$alert,clueData,customerData,groupData) {
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -833,14 +835,17 @@ angular.module('clueMoudle',[]).controller('ClueCtrl',
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-        /* 分组 */
-        $scope.groups = data.groups;
         /*客户状态*/
         $scope.progress = data.progress;
         /* 客户标签*/
         $scope.tags = data.tags;
 
     })
+    /* 分组 */
+    groupData.getData().then(function (data) {
+        $scope.groups = data.groups;
+
+    });
     /* 潜在客户 */
     clueData.getData().then(function (data) {
        $scope.clues=data.clues; 
