@@ -707,6 +707,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             }
         }
     }   
+
     /****************************** 客户设置************************************/
     $http({
         url:'data/customerSet.json',
@@ -737,19 +738,24 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
 
     /****************************** 客户分组 ************************************/
     /* 添加分组信息 */
+    
     $scope.addGroup = function(){
         var value = $scope.groups.length
-        $scope.groups.push({"value":value,"isEdit":false});
-        
+        groupData.addData({"value":value,"isEdit":true,"label":'分组名称'});
+        groupData.getData().then(function (data) {
+            $scope.groups = data.groups;
+        });
     }
     /* 保存单条分组信息 */
     $scope.saveGroup = function(value){
+
         if(value.isEdit == true){
-            groupData.addData(value);
-            // value.value = $scope.groups.length;
-            // groupData.updateData(value).then(function (data) {
-            //     $scope.changeAlert('操作成功！','');
-            // });
+            
+            value.value = $scope.groups.length;
+            console.log(value._id)
+            groupData.updateData(value).then(function (data) {
+                $scope.changeAlert('操作成功！','');
+            });
         }
     }
     /*提示框*/
@@ -771,7 +777,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     $scope.$watch('groups', function(newVal, oldVal) {
         if (newVal !== oldVal) {
            //向服务器发请求，顺序已改变
-           console.log(newVal)
+           // console.log(newVal)
         }
     }, true);
 
@@ -2100,7 +2106,7 @@ angular.module("addImgMoudle", ['ngFileUpload']).controller('AddImgCtrl', functi
     $scope.id = "123";
 
 })
-;/********************************************************************************************************************
+;    /********************************************************************************************************************
  *                                                      全部产品页面
  ********************************************************************************************************************/
 

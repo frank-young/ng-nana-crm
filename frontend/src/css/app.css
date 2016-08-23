@@ -15,6 +15,7 @@
 	-webkit-transition: all  .6s;
     -o-transition: all  .6s;
     transition: all  .6s;
+    min-height: 300px;
 }
 
 
