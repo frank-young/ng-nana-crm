@@ -331,4 +331,87 @@ angular.module('serviceData', [])
             }
         }
     }])
+    .factory('tagData', ['$q','$http',function($q,$http){
+        return {
+            getData: function () {
+                var defer = $q.defer();
+                $http({
+                    url: '/tag',
+                    method: 'get' 
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            updateData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/tag/update',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        tag:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            addData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/tag/add',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        tag:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            getIdData: function (id) {
+                var defer = $q.defer();
+                $http({
+                    url: '/tag/detial/'+id,
+                    method: 'get'
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            deleteData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'DELETE',
+                    url: '/tag/delete?id='+value._id,
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            }
+        }
+    }])
 

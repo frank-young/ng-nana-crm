@@ -49,16 +49,7 @@ var _ = require('underscore')
 		}
 		
 	}
-	//分组详情页
-	exports.detail = function(req,res){
-		var id = req.params.id		//拿到id的值
-		Customer.findById(id,function(err,customer){
-			res.json({
-				title:'分组详情页',
-				customer:customer
-			})
-		})
-	}
+
 	//删除分组
 	exports.del = function(req,res){
 		var id = req.query.id
@@ -73,14 +64,5 @@ var _ = require('underscore')
 		}
 	}
 
-	//admin page
-	exports.new = function(req,res){
-		res.render('admin',{
-			title:'后台页面',
-			customer:{
-
-			}
-		})
-	}
 
 	

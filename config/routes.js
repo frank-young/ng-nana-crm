@@ -1,9 +1,10 @@
-var Index = require('../app/controllers/index')
-var User = require('../app/controllers/user')
-var Customer = require('../app/controllers/customer')
-var Clue = require('../app/controllers/clue')
-var Business = require('../app/controllers/business')
-var Group = require('../app/controllers/group')
+var Index = require('../app/controllers/index'),
+    User = require('../app/controllers/user'),
+    Customer = require('../app/controllers/customer'),
+    Clue = require('../app/controllers/clue'),
+    Business = require('../app/controllers/business'),
+    Group = require('../app/controllers/group'),
+    Tag = require('../app/controllers/tag')
 
 module.exports = function(app){
 	app.use(function(req, res, next) {
@@ -45,11 +46,17 @@ module.exports = function(app){
   app.delete('/business/delete', Business.del)
   app.get('/business/detial/:id', Business.detail)
 
-  //设置
+  //设置-group
   app.get('/group', Group.list)
   app.post('/group/update', Group.update)
   app.post('/group/add', Group.save)
   app.delete('/group/delete', Group.del)
+
+  //设置-tag
+  app.get('/tag', Tag.list)
+  app.post('/tag/update', Tag.update)
+  app.post('/tag/add', Tag.save)
+  app.delete('/tag/delete', Tag.del)
 
   // app.get('/admin/customer/update/:id',User.adminRequired,Customer.update)
   // app.post('/admin/customer', User.adminRequired,Customer.save)

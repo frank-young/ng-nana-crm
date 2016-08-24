@@ -697,8 +697,8 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
  ********************************************************************************************************************/
 
 angular.module("customerSettingMoudle", ['ng-sortable'])
-.controller('CustomerSettingCtrl', ['$scope', '$http', '$state','groupData','$alert',
-    function($scope, $http, $state,groupData,$alert) {
+.controller('CustomerSettingCtrl', ['$scope', '$http', '$state','groupData','tagData','$alert',
+    function($scope, $http, $state,groupData,tagData,$alert) {
     /* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -723,8 +723,6 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
-        /* 客户标签*/
-        $scope.tags = data.tags;
         /* 客户标签 颜色*/
         $scope.colors = data.colors;
 
@@ -736,11 +734,17 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
 
     });
 
+    /* 客户标签 */
+    tagData.getData().then(function (data) {
+        $scope.tags = data.tags;
+
+    });
+
     /****************************** 客户分组 ************************************/
     /* 添加分组信息 */
     
     $scope.addGroup = function(){
-        var value = $scope.groups.length
+        var value = $scope.groups.length;
         groupData.addData({"value":value,"isEdit":true,"label":'分组名称'});
         groupData.getData().then(function (data) {
             $scope.groups = data.groups;
@@ -785,13 +789,19 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
 
     /* 添加标签信息 */
     $scope.addTag = function(){
-        var value = $scope.tags.length
-        $scope.tags.push({"value":value,"isEdit":false,"color":"primary"});
+        var value = $scope.tags.length;
+        tagData.addData({"value":value,"isEdit":true,"text":"标签名称","color":"primary"});
+        
+        tagData.getData().then(function (data) {
+            $scope.tags = data.tags;
+        });
     }
     /* 保存单条标签信息 */
     $scope.saveTag = function(value){
         if(value.isEdit == true){
-            console.log('保存成功！')
+            tagData.updateData(value).then(function (data) {
+                $scope.changeAlert('操作成功！','');
+            });
         }
     }
     /* 删除单条标签信息 */
@@ -800,6 +810,9 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
         if(deleteConfirm){
             var index = findIndex(value,$scope.tags);
             $scope.tags.splice(index,1);   //删除
+            tagData.deleteData(value).then(function(data){
+                $scope.changeAlert('删除成功！');
+            })
         }
     }
     /* 监听items ，发送数据 */
