@@ -60,7 +60,7 @@
 				if(isMatch){
 					console.log('登录成功')
 					req.session.user = user
-					return res.redirect('/success')
+					return res.redirect('/domain/add')
 
 				}else{
 					console.log('登录失败')
@@ -73,7 +73,7 @@
 	exports.logout = function(req,res){
 		delete req.session.user
 		// delete app.locals.user
-		res.redirect('/')
+		res.redirect('/signin')
 	}
 
 	//userlist page

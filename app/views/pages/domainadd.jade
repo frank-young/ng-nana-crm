@@ -6,15 +6,15 @@ head
     |     
     meta(http-equiv='x-ua-compatible', content='ie=edge')
     |     
-    link(rel='stylesheet', href='../backend/libs/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='../frontend/src/backend/libs/bootstrap/dist/css/bootstrap.min.css')
     |     
-    link(rel='stylesheet', href='../backend/css/signup.css')
+    link(rel='stylesheet', href='../frontend/src/backend/css/signup.css')
   body
     canvas#Mycanvas
     .container
       .row
         .sign-wrap
-          form(method="POST", action="/domain/add")
+          form(method="POST", action="/domain/addctrl")
             h2 添加域名
             h3 添加您的个性域名，在浏览器输入  yourdomain.nanacrm.com 就能访问了。
             |                                         

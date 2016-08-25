@@ -2,14 +2,14 @@ var Domain = require('../models/domain'),	//引入模型
 	User = require('../models/user'),
 	_ = require('underscore')
 
-	exports.addshow = function(req, res) {
+	exports.add = function(req, res) {
 		res.render('domainadd', {
 	  	  	title: '添加域名页面'
 	  	})
 	}
 
 	//添加
-	exports.add = function(req,res){
+	exports.addctrl = function(req,res){
 		var _domain = req.body.domain,
 			userObj = req.session.user,
 			_user

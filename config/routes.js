@@ -13,16 +13,18 @@ module.exports = function(app){
     app.locals.user = _user
     next()
   })
+
   app.get('/', function(req, res) {
     var user = req.session.user
     if(!user){
       return res.redirect('/signin')
     }else{
-      res.sendfile('./frontend/src/index.html');
+      res.sendfile('./frontend/src/index.html')
     }
-    
-});
-	// app.get('/', Index.index)
+  })
+
+	app.get('/', Index.index)
+
   // 用户信息
   app.post('/user/signup', User.signup)
   app.post('/user/signin', User.signin)
@@ -33,8 +35,8 @@ module.exports = function(app){
   app.get('/admin/user/list', User.signinRequired,User.adminRequired, User.list)
 
   // 域名信息设置
-  app.get('/domain/addshow',User.signinRequired,Domain.domainRequired, Domain.addshow )
-  app.post('/domain/add',User.signinRequired,Domain.domainRequired, Domain.add )
+  app.get('/domain/add',User.signinRequired,Domain.domainRequired, Domain.add )
+  app.post('/domain/addctrl',User.signinRequired,Domain.domainRequired, Domain.addctrl )
 
 
   // 客户
