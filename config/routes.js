@@ -14,7 +14,13 @@ module.exports = function(app){
     next()
   })
   app.get('/', function(req, res) {
-    res.sendfile('./frontend/src/index.html');
+    var user = req.session.user
+    if(!user){
+      return res.redirect('/signin')
+    }else{
+      res.sendfile('./frontend/src/index.html');
+    }
+    
 });
 	// app.get('/', Index.index)
   // 用户信息
