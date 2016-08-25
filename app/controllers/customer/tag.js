@@ -1,4 +1,4 @@
-var Tag = require('../models/tag')	//引入模型
+var Tag = require('../../models/customer/tag')	//引入模型
 var _ = require('underscore')
 	
 	//分组列表页

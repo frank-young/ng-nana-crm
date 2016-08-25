@@ -1,4 +1,4 @@
-var Clue = require('../models/clue')	//引入模型
+var Clue = require('../../models/customer/clue')	//引入模型
 var _ = require('underscore')
 	
 	//潜在客户列表页

@@ -5,6 +5,12 @@
     border: 1px solid rgb(212, 212, 212);
     height: 300px
 }
+.container-fluid{
+  height: inherit;
+}
+.container-fluid .row{
+  height: inherit;
+}
 
 /**
  * ************************************************************************************************
@@ -15,7 +21,6 @@
 	-webkit-transition: all  .6s;
     -o-transition: all  .6s;
     transition: all  .6s;
-    min-height: 300px;
 }
 
 

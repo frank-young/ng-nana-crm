@@ -11,6 +11,7 @@ var UserSchema = new mongoose.Schema({
 		unique:true,
 		type:String
 	},
+	domain:String,
 	password:String,
 	//0: 基本
 	//1: 验证用户

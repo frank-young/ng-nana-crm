@@ -1,4 +1,4 @@
-var Customer = require('../models/customer')	//引入模型
+var Customer = require('../models/customer/customer')	//引入模型
 
 //首页
 exports.index = function(req,res){

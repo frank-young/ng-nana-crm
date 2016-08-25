@@ -13,6 +13,7 @@
 	}
 	//注册
 	exports.signup = function(req,res){
+
 		var _user = req.body.user
 		
 		User.findOne({email:_user.email},function(err,user){
@@ -41,9 +42,9 @@
 
 	//登录
 	exports.signin = function(req,res){
-		var _user = req.body.user
-		var email = _user.email
-		var password = _user.password
+		var _user = req.body.user,
+		 	email = _user.email,
+		 	password = _user.password
 
 		User.findOne({email: email},function(err,user){
 			if(err){

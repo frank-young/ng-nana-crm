@@ -1,10 +1,11 @@
 var Index = require('../app/controllers/index'),
     User = require('../app/controllers/user'),
-    Customer = require('../app/controllers/customer'),
-    Clue = require('../app/controllers/clue'),
-    Business = require('../app/controllers/business'),
-    Group = require('../app/controllers/group'),
-    Tag = require('../app/controllers/tag')
+    Domain = require('../app/controllers/domain'),
+    Customer = require('../app/controllers/customer/customer'),
+    Clue = require('../app/controllers/customer/clue'),
+    Business = require('../app/controllers/customer/business'),
+    Group = require('../app/controllers/customer/group'),
+    Tag = require('../app/controllers/customer/tag')
 
 module.exports = function(app){
 	app.use(function(req, res, next) {
@@ -24,6 +25,11 @@ module.exports = function(app){
   app.get('/logout', User.logout)
   app.get('/success', User.signSuccess)
   app.get('/admin/user/list', User.signinRequired,User.adminRequired, User.list)
+
+  // 域名信息设置
+  app.get('/domain/addshow',User.signinRequired,Domain.domainRequired, Domain.addshow )
+  app.post('/domain/add',User.signinRequired,Domain.domainRequired, Domain.add )
+
 
   // 客户
   app.get('/customer', Customer.list)

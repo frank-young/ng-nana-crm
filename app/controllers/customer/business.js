@@ -1,4 +1,4 @@
-var Business = require('../models/business')	//引入模型
+var Business = require('../../models/customer/business')	//引入模型
 var _ = require('underscore')
 	
 	//项目列表页

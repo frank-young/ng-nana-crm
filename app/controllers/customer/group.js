@@ -1,4 +1,4 @@
-var Group = require('../models/group')	//引入模型
+var Group = require('../../models/customer/group')	//引入模型
 var _ = require('underscore')
 	
 	//分组列表页

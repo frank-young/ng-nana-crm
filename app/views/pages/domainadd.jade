@@ -1,0 +1,31 @@
+doctype html(lang='en')
+head
+    meta(charset='utf-8')
+    |     
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    |     
+    meta(http-equiv='x-ua-compatible', content='ie=edge')
+    |     
+    link(rel='stylesheet', href='../backend/libs/bootstrap/dist/css/bootstrap.min.css')
+    |     
+    link(rel='stylesheet', href='../backend/css/signup.css')
+  body
+    canvas#Mycanvas
+    .container
+      .row
+        .sign-wrap
+          form(method="POST", action="/domain/add")
+            h2 添加域名
+            h3 添加您的个性域名，在浏览器输入  yourdomain.nanacrm.com 就能访问了。
+            |                                         
+            .form-group                
+              input#inputEmail.form-control(name="domain[name]",type='text', placeholder='yourdomain', required='', autofocus='')
+              |                         
+              span nana.com
+            |                                         
+            .form-group.mt-20
+              button.btn.btn-lg.btn-primary.btn-block(type='submit') 添加
+      .footer
+        .text-center
+          © 2016 呐呐科技 
+  script(src='backend/js/line.js')
