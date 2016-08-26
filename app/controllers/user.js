@@ -28,7 +28,7 @@
 					if(err){
 						console.log(err)
 					}
-					res.redirect("/success")
+					res.redirect("/signin")
 				})
 			}
 		})
@@ -60,8 +60,7 @@
 				if(isMatch){
 					console.log('登录成功')
 					req.session.user = user
-					return res.redirect('/domain/add')
-
+					return res.redirect('/')	// 跳转至程序主入口，由主入口来判断域名验证
 				}else{
 					console.log('登录失败')
 					return res.redirect('/signin')

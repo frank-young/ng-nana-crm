@@ -53,7 +53,7 @@ UserSchema.pre('save',function(next){	//每次存数据之前都要调用这个�
 	      user.password = hash
 	      next()
 	    })
-	  })
+	})
 })
 
 UserSchema.methods = {

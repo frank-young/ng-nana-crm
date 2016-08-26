@@ -14,15 +14,7 @@ module.exports = function(app){
     next()
   })
 
-  app.get('/', function(req, res) {
-    var user = req.session.user
-    if(!user){
-      return res.redirect('/signin')
-    }else{
-      res.sendfile('./frontend/src/index.html')
-    }
-  })
-
+  //首页
 	app.get('/', Index.index)
 
   // 用户信息
@@ -37,7 +29,6 @@ module.exports = function(app){
   // 域名信息设置
   app.get('/domain/add',User.signinRequired,Domain.domainRequired, Domain.add )
   app.post('/domain/addctrl',User.signinRequired,Domain.domainRequired, Domain.addctrl )
-
 
   // 客户
   app.get('/customer', Customer.list)

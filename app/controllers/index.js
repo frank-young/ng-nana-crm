@@ -1,20 +1,19 @@
-var Customer = require('../models/customer/customer')	//引入模型
-
 //首页
-exports.index = function(req,res){
-	// var _user = req.session.user
-	// if(_user){
-	// 	app.locals.user = _user
-	// }
-	Customer.fetch(function(err,customers){
-		if(err){
-			console.log(err)
-		}
-		res.render('index',{
-			title:'My web',
-			customers: customers
-		})
-	})
-	// return res.redirect('/register')
-	
+exports.index = function(req, res) {
+    var user = req.session.user,             //session信息			
+        domain = req.subdomains
+
+    if(!user){                              // 未登录状态
+      	return res.redirect('/signin')
+    }else if(!user.domain){                 //未添加域名状态
+      	return res.redirect('/domain/add')
+    }else{                                  //程序主入口
+	    /* 需要判断用户输入的二级域名和用户保存的二级域名是否一致*/
+	    if(domain == user.domain){
+	        res.sendfile('./frontend/src/index.html')
+	    }else{
+	        console.log('账户信息不匹配,域名是'+domain)
+	        return res.redirect('http://'+user.domain+'.nanacrm.com')
+	    }
+    }
 }

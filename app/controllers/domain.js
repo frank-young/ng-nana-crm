@@ -11,34 +11,19 @@ var Domain = require('../models/domain'),	//引入模型
 	//添加
 	exports.addctrl = function(req,res){
 		var _domain = req.body.domain,
-			userObj = req.session.user,
-			_user
-
-		userObj.domain = _domain.name 		//更新域名
+			userObj = req.session.user
 
 		Domain.findOne({name:_domain.name},function(err,domain){
 			if(domain){
 				res.json({status:"添加失败"})		//添加失败
 			}else{
-
 				var domain = new Domain(_domain)
 				domain.save(function(err,domain){
-
-					User.findOne({email:userObj.email},function(err,user){
-						// if(!user.domain){
-							
-							_user = _.extend(user,userObj)	
-							_user.save(function(err,user){
-
-								res.redirect("/")	//添加成功
-
-							})
-						// }else{
-						// 	res.json({status:"您已经注册了个性域名",domain: user.domain})
-
-						// }
-					})
-					
+					User.update({_id:userObj._id},
+						{$set:{domain:_domain.name}},function(err){
+							req.session.user.domain = _domain.name 		//更新session,添加domain来模拟存在
+							res.redirect("/")
+						})
 				})
 			}
 		})
