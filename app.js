@@ -18,7 +18,7 @@ app.set('view engine','jade')	//设置默认的模板引擎
 app.use(bodyParser.urlencoded({extended: true}))	//这里转换后才能使用  req.body里的内容
 app.use(bodyParser.json())
 
-app.use(express.static(path.join(__dirname,'')))
+app.use(express.static(path.join(__dirname,'frontend/src')))
 
 // app.use(multer())
 app.use(cookieParser())

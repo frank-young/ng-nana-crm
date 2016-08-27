@@ -62,108 +62,108 @@ app.config(function($stateProvider, $urlRouterProvider) {
         //     url: '/index',
         //     views: {
         //         '': {
-        //             templateUrl: 'frontend/src/tpls/home.html'
+        //             templateUrl: 'tpls/home.html'
         //         },
         //         'main@index': {
-        //             templateUrl: 'frontend/src/tpls/loginForm.html'
+        //             templateUrl: 'tpls/loginForm.html'
         //         }
         //     }
         // })
         .state('web', {
             url: '/index',
-            templateUrl: 'frontend/src/tpls/nav.html'
+            templateUrl: 'tpls/nav.html'
         })
         .state('web.home', {
             url: '/home',
-            templateUrl: 'frontend/src/tpls/home/index.html'
+            templateUrl: 'tpls/home/index.html'
         })
         .state('web.clue', {
             url: '/clue',
-            templateUrl: 'frontend/src/tpls/customer/clue.html'
+            templateUrl: 'tpls/customer/clue.html'
         })
         .state('web.clueadd', {
             url: '/clueadd',
-            templateUrl: 'frontend/src/tpls/customer/clueadd.html'
+            templateUrl: 'tpls/customer/clueadd.html'
         })
         .state('web.cluedetial', {
             url: '/cluedetial/:id',
-            templateUrl: 'frontend/src/tpls/customer/cluedetial.html'
+            templateUrl: 'tpls/customer/cluedetial.html'
         })
         .state('web.customer', {
             url: '/customer',
-            templateUrl: 'frontend/src/tpls/customer/customer.html'
+            templateUrl: 'tpls/customer/customer.html'
         })
         .state('web.customeradd', {
             url: '/customeradd',
-            templateUrl: 'frontend/src/tpls/customer/customeradd.html'
+            templateUrl: 'tpls/customer/customeradd.html'
         })
         .state('web.customerdetial', {
             url: '/customerdetial/:id',
-            templateUrl: 'frontend/src/tpls/customer/customerdetial.html'
+            templateUrl: 'tpls/customer/customerdetial.html'
         })
         .state('web.business', {
             url: '/business',
-            templateUrl: 'frontend/src/tpls/customer/business.html'
+            templateUrl: 'tpls/customer/business.html'
         })
         .state('web.businessadd', {
             url: '/businessadd',
-            templateUrl: 'frontend/src/tpls/customer/businessadd.html'
+            templateUrl: 'tpls/customer/businessadd.html'
         })
         .state('web.businessdetial', {
             url: '/businessdetial/:id',
-            templateUrl: 'frontend/src/tpls/customer/businessdetial.html'
+            templateUrl: 'tpls/customer/businessdetial.html'
         })
         .state('web.customerSetting', {
             url: '/customerSetting',
-            templateUrl: 'frontend/src/tpls/customer/customerSetting.html'
+            templateUrl: 'tpls/customer/customerSetting.html'
         })
         .state('web.products', {
             url: '/products',
-            templateUrl: 'frontend/src/tpls/products/products.html'
+            templateUrl: 'tpls/products/products.html'
         })
         .state('web.productsCate', {
             url: '/productsCate',
-            templateUrl: 'frontend/src/tpls/products/productsCate.html'
+            templateUrl: 'tpls/products/productsCate.html'
         })
         .state('web.productsAdd', {
             url: '/productsAdd',
-            templateUrl: 'frontend/src/tpls/products/productsAdd.html'
+            templateUrl: 'tpls/products/productsAdd.html'
         })
         .state('web.productsDetail', {
             url: '/productsDetail/:id',
-            templateUrl: 'frontend/src/tpls/products/productsDetail.html'
+            templateUrl: 'tpls/products/productsDetail.html'
         })
         .state('web.addimg', {
             url: '/addimg',
-            templateUrl: 'frontend/src/tpls/products/addimg.html'
+            templateUrl: 'tpls/products/addimg.html'
         })
         .state('web.quotation', {
             url: '/quotation',
-            templateUrl: 'frontend/src/tpls/quotation/quotation.html'
+            templateUrl: 'tpls/quotation/quotation.html'
         })
         .state('web.quotationAdd', {
             url: '/quotationAdd',
-            templateUrl: 'frontend/src/tpls/quotation/quotationAdd.html'
+            templateUrl: 'tpls/quotation/quotationAdd.html'
         })
         .state('web.quotationDetail', {
             url: '/quotationDetail/:id',
-            templateUrl: 'frontend/src/tpls/quotation/quotationDetail.html'
+            templateUrl: 'tpls/quotation/quotationDetail.html'
         })
         .state('web.quotationSetting', {
             url: '/quotationSetting',
-            templateUrl: 'frontend/src/tpls/quotation/quotationSetting.html'
+            templateUrl: 'tpls/quotation/quotationSetting.html'
         })
         .state('web.people', {
             url: '/people',
-            templateUrl: 'frontend/src/tpls/people/people.html'
+            templateUrl: 'tpls/people/people.html'
         })
         .state('web.peopleDetail', {
             url: '/peopleDetail/:id',
-            templateUrl: 'frontend/src/tpls/people/peopleDetail.html'
+            templateUrl: 'tpls/people/peopleDetail.html'
         })
         .state('web.setting', {
             url: '/setting',
-            templateUrl: 'frontend/src/tpls/setting/setting.html'
+            templateUrl: 'tpls/setting/setting.html'
         })
         
 });
