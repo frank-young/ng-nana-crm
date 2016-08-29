@@ -54,15 +54,13 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
         groupData.addData({"value":value,"isEdit":true,"label":'分组名称'});
         groupData.getData().then(function (data) {
             $scope.groups = data.groups;
+            console.log($scope.groups);
         });
     }
     /* 保存单条分组信息 */
     $scope.saveGroup = function(value){
 
         if(value.isEdit == true){
-            
-            value.value = $scope.groups.length;
-            console.log(value._id)
             groupData.updateData(value).then(function (data) {
                 $scope.changeAlert('操作成功！','');
             });
@@ -80,7 +78,13 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             $scope.groups.splice(index,1);   //删除
             groupData.deleteData(value).then(function(data){
                 $scope.changeAlert('删除成功！');
+                console.log($scope.groups);
             })
+            /* 更新数据value索引值 */
+            $scope.groups.forEach( function(element, index) {
+                element.value = index;
+                groupData.updateData(element);
+            });
         }
     }
     /* 监听items ，发送数据 */
@@ -96,8 +100,8 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     /* 添加标签信息 */
     $scope.addTag = function(){
         var value = $scope.tags.length;
+
         tagData.addData({"value":value,"isEdit":true,"text":"标签名称","color":"primary"});
-        
         tagData.getData().then(function (data) {
             $scope.tags = data.tags;
         });
@@ -119,6 +123,11 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             tagData.deleteData(value).then(function(data){
                 $scope.changeAlert('删除成功！');
             })
+            /* 更新数据value索引值 */
+            $scope.tags.forEach( function(element, index) {
+                element.value = index;
+                tagData.updateData(element);
+            });
         }
     }
     /* 监听items ，发送数据 */

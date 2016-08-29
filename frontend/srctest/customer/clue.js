@@ -2,8 +2,8 @@
  *                                                      潜在客户列表页
  ********************************************************************************************************************/
 angular.module('clueMoudle',[]).controller('ClueCtrl',
-    ['$scope','$http','$alert','clueData','customerData','groupData',
-    function ($scope,$http,$alert,clueData,customerData,groupData) {
+    ['$scope','$http','$alert','clueData','customerData','groupData','tagData',
+    function ($scope,$http,$alert,clueData,customerData,groupData,tagData) {
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -32,13 +32,16 @@ angular.module('clueMoudle',[]).controller('ClueCtrl',
     }).success(function(data){
         /*客户状态*/
         $scope.progress = data.progress;
-        /* 客户标签*/
-        $scope.tags = data.tags;
 
     })
     /* 分组 */
     groupData.getData().then(function (data) {
         $scope.groups = data.groups;
+
+    });
+    /* 客户标签*/
+    tagData.getData().then(function (data) {
+        $scope.tags = data.tags;
 
     });
     /* 潜在客户 */

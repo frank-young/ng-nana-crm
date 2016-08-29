@@ -29,7 +29,7 @@ GroupSchema.statics = {
 	fetch:function(cb){		//取出目前数据库所有的数据
 		return this
 			.find({})	//查找全部数据
-			.sort('meta.updateAt')		//按照更新时间排序
+			.sort('value')		//按照更新时间排序
 			.exec(cb)
 	},
 	findById:function(id,cb){		//取出目前数据库所有的数据

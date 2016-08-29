@@ -3,8 +3,8 @@
  ********************************************************************************************************************/
 
 angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl', 
-    ['$scope', '$http','$state','$stateParams','clueData',
-    function($scope, $http, $state,$stateParams,clueData) {
+    ['$scope', '$http','$state','$stateParams','clueData','groupData','tagData',
+    function($scope, $http, $state,$stateParams,clueData,groupData,tagData) {
     $scope.isEdit = true;
     $scope.sexs = [
             {"value":"0","label":"男"},
@@ -16,8 +16,6 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-        /* 分组 */
-        $scope.groups = data.groups;
         /* 客户来源 */
         $scope.origins = data.origins;
         /* 国家/地区 */
@@ -30,10 +28,18 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
-        /* 客户标签*/
-        $scope.tags = data.tags;
 
     })
+    /* 分组 */
+    groupData.getData().then(function (data) {
+        $scope.groups = data.groups;
+
+    });
+    /* 客户标签*/
+    tagData.getData().then(function (data) {
+        $scope.tags = data.tags;
+
+    });
     /* 客户详情对象 */
     clueData.getIdData($stateParams.id).then(function(data){
         $scope.customer=data.clue;
@@ -53,6 +59,9 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
             }
         }
     }
+    $scope.editCustomer = function(value){
+        clueData.updateData(value);
+    }
     /* 添加日程 */
     $scope.scheadd = function(){
         $scope.customer.schedule.unshift({remind:[{date:''}]});
@@ -63,7 +72,9 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         var deleteConfirm = confirm('您确定要删除此日程？');
         if(deleteConfirm){
             $scope.customer[type].splice(index,1);
+            clueData.updateData(value);
         }
+
     }
     /* 完成日程 */
     $scope.schecomp = function(index,type,value){

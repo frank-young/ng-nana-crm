@@ -748,15 +748,13 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
         groupData.addData({"value":value,"isEdit":true,"label":'分组名称'});
         groupData.getData().then(function (data) {
             $scope.groups = data.groups;
+            console.log($scope.groups);
         });
     }
     /* 保存单条分组信息 */
     $scope.saveGroup = function(value){
 
         if(value.isEdit == true){
-            
-            value.value = $scope.groups.length;
-            console.log(value._id)
             groupData.updateData(value).then(function (data) {
                 $scope.changeAlert('操作成功！','');
             });
@@ -774,7 +772,13 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             $scope.groups.splice(index,1);   //删除
             groupData.deleteData(value).then(function(data){
                 $scope.changeAlert('删除成功！');
+                console.log($scope.groups);
             })
+            /* 更新数据value索引值 */
+            $scope.groups.forEach( function(element, index) {
+                element.value = index;
+                groupData.updateData(element);
+            });
         }
     }
     /* 监听items ，发送数据 */
@@ -790,8 +794,8 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     /* 添加标签信息 */
     $scope.addTag = function(){
         var value = $scope.tags.length;
+
         tagData.addData({"value":value,"isEdit":true,"text":"标签名称","color":"primary"});
-        
         tagData.getData().then(function (data) {
             $scope.tags = data.tags;
         });
@@ -813,6 +817,11 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             tagData.deleteData(value).then(function(data){
                 $scope.changeAlert('删除成功！');
             })
+            /* 更新数据value索引值 */
+            $scope.tags.forEach( function(element, index) {
+                element.value = index;
+                tagData.updateData(element);
+            });
         }
     }
     /* 监听items ，发送数据 */
@@ -826,8 +835,8 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
  *                                                      潜在客户列表页
  ********************************************************************************************************************/
 angular.module('clueMoudle',[]).controller('ClueCtrl',
-    ['$scope','$http','$alert','clueData','customerData','groupData',
-    function ($scope,$http,$alert,clueData,customerData,groupData) {
+    ['$scope','$http','$alert','clueData','customerData','groupData','tagData',
+    function ($scope,$http,$alert,clueData,customerData,groupData,tagData) {
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -856,13 +865,16 @@ angular.module('clueMoudle',[]).controller('ClueCtrl',
     }).success(function(data){
         /*客户状态*/
         $scope.progress = data.progress;
-        /* 客户标签*/
-        $scope.tags = data.tags;
 
     })
     /* 分组 */
     groupData.getData().then(function (data) {
         $scope.groups = data.groups;
+
+    });
+    /* 客户标签*/
+    tagData.getData().then(function (data) {
+        $scope.tags = data.tags;
 
     });
     /* 潜在客户 */
@@ -1042,8 +1054,8 @@ angular.module('clueMoudle',[]).controller('ClueCtrl',
  ********************************************************************************************************************/
 
 angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl', 
-    ['$scope', '$http', 'clueData','$alert',
-    function($scope, $http,clueData,$alert) {
+    ['$scope', '$http', 'clueData','$alert','groupData','tagData',
+    function($scope, $http,clueData,$alert,groupData,tagData) {
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
@@ -1054,8 +1066,6 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-        /* 分组 */
-        $scope.groups = data.groups;
         /* 客户来源 */
         $scope.origins = data.origins;
         /* 国家/地区 */
@@ -1068,14 +1078,19 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
-        /* 客户标签*/
-        $scope.tags = data.tags;
-
-        /* 客户标签*/
-        $scope.tags = data.tags;
 
     })
 
+    /* 分组 */
+    groupData.getData().then(function (data) {
+        $scope.groups = data.groups;
+
+    });
+    /* 客户标签*/
+    tagData.getData().then(function (data) {
+        $scope.tags = data.tags;
+
+    });
     /* 客户详情对象 */
     $http({
         url:'data/clueadd.json',
@@ -1224,8 +1239,8 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
  ********************************************************************************************************************/
 
 angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl', 
-    ['$scope', '$http','$state','$stateParams','clueData',
-    function($scope, $http, $state,$stateParams,clueData) {
+    ['$scope', '$http','$state','$stateParams','clueData','groupData','tagData',
+    function($scope, $http, $state,$stateParams,clueData,groupData,tagData) {
     $scope.isEdit = true;
     $scope.sexs = [
             {"value":"0","label":"男"},
@@ -1237,8 +1252,6 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-        /* 分组 */
-        $scope.groups = data.groups;
         /* 客户来源 */
         $scope.origins = data.origins;
         /* 国家/地区 */
@@ -1251,10 +1264,18 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
-        /* 客户标签*/
-        $scope.tags = data.tags;
 
     })
+    /* 分组 */
+    groupData.getData().then(function (data) {
+        $scope.groups = data.groups;
+
+    });
+    /* 客户标签*/
+    tagData.getData().then(function (data) {
+        $scope.tags = data.tags;
+
+    });
     /* 客户详情对象 */
     clueData.getIdData($stateParams.id).then(function(data){
         $scope.customer=data.clue;
@@ -1274,6 +1295,9 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
             }
         }
     }
+    $scope.editCustomer = function(value){
+        clueData.updateData(value);
+    }
     /* 添加日程 */
     $scope.scheadd = function(){
         $scope.customer.schedule.unshift({remind:[{date:''}]});
@@ -1284,7 +1308,9 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         var deleteConfirm = confirm('您确定要删除此日程？');
         if(deleteConfirm){
             $scope.customer[type].splice(index,1);
+            clueData.updateData(value);
         }
+
     }
     /* 完成日程 */
     $scope.schecomp = function(index,type,value){
