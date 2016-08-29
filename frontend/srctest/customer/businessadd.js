@@ -3,8 +3,8 @@
  ********************************************************************************************************************/
 
 angular.module("businessaddMoudle", []).controller('BusinessAddCtrl', 
-    ['$scope','$http', '$state', '$stateParams','businessData','$alert',
-    function($scope, $http, $state, $stateParams,businessData,$alert) {
+    ['$scope','$http', '$state', '$stateParams','businessData','$alert','groupData','tagData','customerData',
+    function($scope, $http, $state, $stateParams,businessData,$alert,groupData,tagData,customerData) {
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
@@ -15,16 +15,13 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-        /* 分组 */
-        $scope.groups = data.groups;
+
         /* 客户来源 */
         $scope.origins = data.origins;
         /* 国家/地区 */
         $scope.states = data.states;
         /* 国家/地区 */
         $scope.sts =data.sts;
-        /* 客户标签 */
-        $scope.tags = data.tags;
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
@@ -40,12 +37,17 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
         /*  添加日程 --联系人 */
         $scope.person = data.person;
     })
-    $http({
-        url:'data/company.json',
-        method:'GET'
-    }).success(function(data){
-        /*   自定义 -- 公司*/
-        $scope.company = data.company;
+    /* 自定义 -- 公司*/
+    customerData.getData().then(function (data) {
+        var company=[];
+        for(var i in data.customers){
+            company.push({
+                value:i,
+                id:data.customers[i]._id,
+                label:data.customers[i].companyName
+            })
+        }
+        $scope.company = company
     })
 
     /* 初始化项目 */
@@ -55,6 +57,16 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     }).success(function(data){
         $scope.customer=data;
     })
+    /* 分组 */
+    groupData.getData().then(function (data) {
+        $scope.groups = data.groups;
+
+    });
+    /* 客户标签*/
+    tagData.getData().then(function (data) {
+        $scope.tags = data.tags;
+
+    });
     $scope.saveData = function(value){
         businessData.addData(value).then(function (data) {
             window.history.go(-1);

@@ -3,8 +3,8 @@
  ********************************************************************************************************************/
 
 angular.module('customerlistMoudle',[]).controller('CustomerCtrl', 
-    ['$scope','$http','$alert','customerData',
-    function ($scope,$http,$alert,customerData) {
+    ['$scope','$http','$alert','customerData','groupData','tagData',
+    function ($scope,$http,$alert,customerData,groupData,tagData) {
 
     /* 顶部固定按钮 */
     $scope.pinShow = false;
@@ -32,14 +32,20 @@ angular.module('customerlistMoudle',[]).controller('CustomerCtrl',
         url:'data/customerSet.json', 
         method:'GET'
     }).success(function(data){
-        /* 分组 */
-        $scope.groups = data.groups;
         /*客户状态*/
         $scope.progress = data.progress;
-        /* 客户标签*/
-        $scope.tags = data.tags;
     })
+    /* 分组 */
+    groupData.getData().then(function (data) {
+        $scope.groups = data.groups;
 
+    });
+    /* 客户标签*/
+    tagData.getData().then(function (data) {
+        $scope.tags = data.tags;
+
+    });
+    /* 客户 */
     customerData.getData().then(function (data) {
        $scope.customers=data.customers; 
     });

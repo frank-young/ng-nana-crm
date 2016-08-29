@@ -15,16 +15,12 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-        /* 分组 */
-        $scope.groups = data.groups;
         /* 客户来源 */
         $scope.origins = data.origins;
         /* 国家/地区 */
         $scope.states = data.states;
         /* 国家/地区 */
         $scope.sts =data.sts;
-        /* 客户标签 */
-        $scope.tags = data.tags;
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
@@ -40,7 +36,7 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
         /*  添加日程 --联系人 */
         $scope.person = data.person;
     })
-
+    
     /* 自定义 -- 公司*/
     customerData.getData().then(function (data) {
         var company=[];

@@ -2,8 +2,8 @@
  *                                                      添加客户页面
  ********************************************************************************************************************/
 angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl', 
-    ['$scope', '$http', '$state', '$stateParams','customerData',
-    function($scope, $http, $state, $stateParams,customerData) {
+    ['$scope', '$http', '$state', '$stateParams','customerData','groupData','tagData',
+    function($scope, $http, $state, $stateParams,customerData,groupData,tagData) {
 
     $scope.sexs = [
             {"value":"0","label":"男"},
@@ -15,8 +15,6 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-        /* 分组 */
-        $scope.groups = data.groups;
         /* 客户来源 */
         $scope.origins = data.origins;
         /* 国家/地区 */
@@ -29,8 +27,6 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
-        /* 客户标签*/
-        $scope.tags = data.tags;
 
     })
 
@@ -41,6 +37,16 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     }).success(function(data){
         $scope.customer=data;   
     })
+    /* 分组 */
+    groupData.getData().then(function (data) {
+        $scope.groups = data.groups;
+
+    });
+    /* 客户标签*/
+    tagData.getData().then(function (data) {
+        $scope.tags = data.tags;
+
+    });
     $scope.saveData = function(value){
         customerData.addData(value).then(function (data) {
             window.history.go(-1)

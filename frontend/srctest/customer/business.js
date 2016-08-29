@@ -2,8 +2,8 @@
  *                                                      项目列表页
  ********************************************************************************************************************/
 angular.module("businessMoudle", []).controller('BusinessCtrl', 
-    ['$scope', '$http', '$modal','businessData',
-    function($scope, $http, $modal,businessData) {
+    ['$scope', '$http', '$modal','businessData','groupData','tagData','customerData',
+    function($scope, $http, $modal,businessData,groupData,tagData,customerData) {
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -30,8 +30,6 @@ angular.module("businessMoudle", []).controller('BusinessCtrl',
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-         /* 分组 */
-        $scope.groups = data.groups;
         /* 客户来源 */
         $scope.origins = data.origins;
         /* 国家/地区 */
@@ -44,18 +42,32 @@ angular.module("businessMoudle", []).controller('BusinessCtrl',
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
-        /* 客户标签*/
-        $scope.tags = data.tags;
 
         $scope.status = data.status;
     })
-    $http({
-        url:'data/company.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.company = data.company;
+    /* 自定义 -- 公司*/
+    customerData.getData().then(function (data) {
+        var company=[];
+        for(var i in data.customers){
+            company.push({
+                value:i,
+                id:data.customers[i]._id,
+                label:data.customers[i].companyName
+            })
+        }
+        $scope.company = company
     })
 
+    /* 分组 */
+    groupData.getData().then(function (data) {
+        $scope.groups = data.groups;
+
+    });
+    /* 客户标签*/
+    tagData.getData().then(function (data) {
+        $scope.tags = data.tags;
+
+    });
     $http({
         url:'data/person.json',
         method:'GET'
