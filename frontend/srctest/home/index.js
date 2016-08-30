@@ -3,5 +3,5 @@
  ********************************************************************************************************************/
 
 angular.module("homeMoudle", []).controller('HomeCtrl', function($scope, $http, $state) {
-	$scope.home = "zhehsi "
+	$scope.home = "home "
 })

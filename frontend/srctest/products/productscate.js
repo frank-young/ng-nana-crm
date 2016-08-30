@@ -3,8 +3,8 @@
  ********************************************************************************************************************/
 
 angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCtrl', 
-    ['$scope', '$http', '$state','cateData',
-    function($scope, $http, $state,cateData) {
+    ['$scope', '$http', '$alert','$state','cateData',
+    function($scope, $http,$alert, $state,cateData) {
 	/* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -19,17 +19,18 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
     })
     /* 添加分类信息 */
     $scope.addCate= function(){
-        var value = $scope.cate.length
-        $scope.cate.push({"value":value,"isEdit":true,"label":'默认分类'});
+        var value = $scope.cate.length;
+        cateData.addData({"value":value,"isEdit":true,"label":'默认分类'});
         cateData.getData().then(function (data) {
             $scope.cate = data.cates;
-            console.log($scope.cates);
-        });
+        })
     }
     /* 保存单条分类信息 */
     $scope.saveCate= function(value){
         if(value.isEdit == true){
-            console.log('保存成功！')
+            cateData.updateData(value).then(function (data) {
+                $scope.changeAlert('操作成功！','');
+            });
         }
     }
     /* 删除单条分类信息 */
@@ -38,7 +39,19 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
         if(deleteConfirm){
             var index = findIndex(value,$scope.cate);
             $scope.cate.splice(index,1);   //删除
+            cateData.deleteData(value).then(function(data){
+                $scope.changeAlert('删除成功！');
+            })
+            /* 更新数据value索引值 */
+            $scope.cate.forEach( function(element, index) {
+                element.value = index;
+                cateData.updateData(element);
+            });
         }
+    }
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
     }
     /* 监听items ，发送数据 */
     $scope.$watch('cate', function(newVal, oldVal) {

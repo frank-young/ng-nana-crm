@@ -2000,7 +2000,7 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
  ********************************************************************************************************************/
 
 angular.module("homeMoudle", []).controller('HomeCtrl', function($scope, $http, $state) {
-	$scope.home = "zhehsi "
+	$scope.home = "home "
 })
 ;/********************************************************************************************************************
  *                                                      联系人列表页面
@@ -2188,8 +2188,8 @@ angular.module("addImgMoudle", ['ngFileUpload']).controller('AddImgCtrl', functi
  ********************************************************************************************************************/
 
 angular.module("productsMoudle", []).controller('ProductsCtrl', 
-    ['$scope', '$http', '$state','$alert','productData',
-    function($scope, $http, $state,$alert,productData) {
+    ['$scope', '$http', '$state','$alert','productData','cateData',
+    function($scope, $http, $state,$alert,productData,cateData) {
 	/* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -2214,10 +2214,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
         $scope.products=data.products;
     })
     /*产品分类*/
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
     /* 固定/取消固定 位置  ----栏目位置*/
@@ -2276,7 +2273,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
             var index = findIndex(value[i],$scope.products);
             $scope.products[index].isTop = true;      //固定
             $scope.products[index].isChecked = false;  //去掉标记位，也就是去掉勾
-        
+            productData.updateData(value[i]);
         }
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     }
@@ -2286,6 +2283,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
             var index = findIndex(value[i],$scope.products);
             $scope.products[index].isTop = false;      //取消固定
             $scope.products[index].isChecked = false;  //去掉标记位，也就是去掉勾
+            productData.updateData(value[i]);
         }
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     }
@@ -2307,13 +2305,10 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
  ********************************************************************************************************************/
 
 angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtrl', 
-    ['$scope', '$http', '$state','$alert','productData',
-    function($scope, $http, $state,$alert,productData) {
+    ['$scope', '$http', '$state','$alert','productData','cateData',
+    function($scope, $http, $state,$alert,productData,cateData) {
 	/*产品分类*/
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
     var date = new Date();
@@ -2397,8 +2392,8 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
  ********************************************************************************************************************/
 
 angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCtrl', 
-    ['$scope', '$http', '$state','cateData',
-    function($scope, $http, $state,cateData) {
+    ['$scope', '$http', '$alert','$state','cateData',
+    function($scope, $http,$alert, $state,cateData) {
 	/* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -2413,17 +2408,18 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
     })
     /* 添加分类信息 */
     $scope.addCate= function(){
-        var value = $scope.cate.length
-        $scope.cate.push({"value":value,"isEdit":true,"label":'默认分类'});
+        var value = $scope.cate.length;
+        cateData.addData({"value":value,"isEdit":true,"label":'默认分类'});
         cateData.getData().then(function (data) {
             $scope.cate = data.cates;
-            console.log($scope.cates);
-        });
+        })
     }
     /* 保存单条分类信息 */
     $scope.saveCate= function(value){
         if(value.isEdit == true){
-            console.log('保存成功！')
+            cateData.updateData(value).then(function (data) {
+                $scope.changeAlert('操作成功！','');
+            });
         }
     }
     /* 删除单条分类信息 */
@@ -2432,7 +2428,19 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
         if(deleteConfirm){
             var index = findIndex(value,$scope.cate);
             $scope.cate.splice(index,1);   //删除
+            cateData.deleteData(value).then(function(data){
+                $scope.changeAlert('删除成功！');
+            })
+            /* 更新数据value索引值 */
+            $scope.cate.forEach( function(element, index) {
+                element.value = index;
+                cateData.updateData(element);
+            });
         }
+    }
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
     }
     /* 监听items ，发送数据 */
     $scope.$watch('cate', function(newVal, oldVal) {
@@ -2446,15 +2454,12 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
  ********************************************************************************************************************/
 
 angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', 
-    ['$scope', '$http', '$stateParams','$alert','productData',
-    function($scope, $http, $stateParams,$alert,productData) {
+    ['$scope', '$http', '$stateParams','$alert','productData','cateData',
+    function($scope, $http, $stateParams,$alert,productData,cateData) {
 	/* 是否可编辑 */
 	$scope.isEdit = true;
 	/*产品分类*/
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
     var date = new Date();
@@ -3072,19 +3077,27 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
  *                                                      个人设置
  ********************************************************************************************************************/
 
-angular.module("settingMoudle", []).controller('SettingCtrl', function($scope, $http, $state) {
+angular.module("settingMoudle", []).controller('SettingCtrl', 
+	['$scope', '$http', '$state','settingData',
+	function($scope, $http, $state,settingData) {
 	$scope.isEdit = true;
-	$scope.user = {
-		"account":"yangjunaslnd@qq.com",
-		"name":"frank",
-		"company":"Nana tec",
-		"section":"销售部",
-		"position":"销售总监",
-		"tel":"022-8473645",
-		"phone":"18603847263",
-		"fax":"022-7539059",
-		"sex":"男",
-		"birthday":"1993-04-12",
-		"city":"天津市北辰区天穆镇政"
-	}  
-})
+	// $scope.user = {
+	// 	"account":"yangjunaslnd@qq.com",
+	// 	"name":"frank",
+	// 	"company":"Nana tec",
+	// 	"section":"销售部",
+	// 	"position":"销售总监",
+	// 	"tel":"022-8473645",
+	// 	"phone":"18603847263",
+	// 	"fax":"022-7539059",
+	// 	"sex":"男",
+	// 	"birthday":"1993-04-12",
+	// 	"city":"天津市北辰区天穆镇政"
+	// } 
+	settingData.getData().then(function(data){
+		$scope.user = data.user
+	})
+	$scope.saveSetting = function(value){
+		settingData.updateData(value);
+	}
+}])

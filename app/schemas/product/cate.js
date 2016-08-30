@@ -1,8 +1,7 @@
 var mongoose = require('mongoose')	
 var CateSchema = new mongoose.Schema({
 	value:String,
-	text:String,
-	color:String,
+	label:String,
 	isEdit:Boolean,
 	meta:{
 		createAt:{

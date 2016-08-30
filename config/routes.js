@@ -8,6 +8,7 @@ var Index = require('../app/controllers/index'),
     Tag = require('../app/controllers/customer/tag'),
     Product = require('../app/controllers/product/product')
     Cate = require('../app/controllers/product/cate')
+    Setting = require('../app/controllers/setting'),
 
 module.exports = function(app){
 	app.use(function(req, res, next) {
@@ -77,6 +78,10 @@ module.exports = function(app){
   app.post('/cate/update', Cate.update)
   app.post('/cate/add', Cate.save)
   app.delete('/cate/delete', Cate.del)
+
+  //user setting
+  app.get('/setting', Setting.data)
+  app.post('/setting/update', Setting.update)
 
   // app.get('/admin/customer/update/:id',User.adminRequired,Customer.update)
   // app.post('/admin/customer', User.adminRequired,Customer.save)

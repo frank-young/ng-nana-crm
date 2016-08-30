@@ -3,8 +3,8 @@
  ********************************************************************************************************************/
 
 angular.module("productsMoudle", []).controller('ProductsCtrl', 
-    ['$scope', '$http', '$state','$alert','productData',
-    function($scope, $http, $state,$alert,productData) {
+    ['$scope', '$http', '$state','$alert','productData','cateData',
+    function($scope, $http, $state,$alert,productData,cateData) {
 	/* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -29,10 +29,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
         $scope.products=data.products;
     })
     /*产品分类*/
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
     /* 固定/取消固定 位置  ----栏目位置*/
@@ -91,7 +88,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
             var index = findIndex(value[i],$scope.products);
             $scope.products[index].isTop = true;      //固定
             $scope.products[index].isChecked = false;  //去掉标记位，也就是去掉勾
-        
+            productData.updateData(value[i]);
         }
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     }
@@ -101,6 +98,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
             var index = findIndex(value[i],$scope.products);
             $scope.products[index].isTop = false;      //取消固定
             $scope.products[index].isChecked = false;  //去掉标记位，也就是去掉勾
+            productData.updateData(value[i]);
         }
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     }

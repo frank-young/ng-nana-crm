@@ -3,15 +3,12 @@
  ********************************************************************************************************************/
 
 angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', 
-    ['$scope', '$http', '$stateParams','$alert','productData',
-    function($scope, $http, $stateParams,$alert,productData) {
+    ['$scope', '$http', '$stateParams','$alert','productData','cateData',
+    function($scope, $http, $stateParams,$alert,productData,cateData) {
 	/* 是否可编辑 */
 	$scope.isEdit = true;
 	/*产品分类*/
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
     var date = new Date();

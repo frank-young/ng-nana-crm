@@ -3,13 +3,10 @@
  ********************************************************************************************************************/
 
 angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtrl', 
-    ['$scope', '$http', '$state','$alert','productData',
-    function($scope, $http, $state,$alert,productData) {
+    ['$scope', '$http', '$state','$alert','productData','cateData',
+    function($scope, $http, $state,$alert,productData,cateData) {
 	/*产品分类*/
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
     var date = new Date();
