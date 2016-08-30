@@ -2,7 +2,9 @@
  *                                                      新建产品页面
  ********************************************************************************************************************/
 
-angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtrl', function($scope, $http, $state) {
+angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtrl', 
+    ['$scope', '$http', '$state','$alert','productData',
+    function($scope, $http, $state,$alert,productData) {
 	/*产品分类*/
     $http({
         url:'data/productcate.json',
@@ -13,7 +15,7 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
     var date = new Date();
     $scope.product ={	
 			"id":0,
-            "isTop":true,
+            "isTop":false,
             "name":"",
             "model":"",
             "cate":"",
@@ -23,7 +25,8 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
             "size":"",
             "quantity":"",
 			"weight":"",
-            "date":date
+            "path":"",
+            "img":""
         }
 
     $scope.mulImages = [];
@@ -74,4 +77,15 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
         });
 
     };
-});
+    $scope.saveProduct = function(value){
+        productData.addData(value).then(function(data){
+            $scope.changeAlert('添加成功！');
+            window.history.go(-1);
+        });
+    }
+
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}]);

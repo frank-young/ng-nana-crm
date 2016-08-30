@@ -2,10 +2,11 @@
  *                                                      产品详情页面
  ********************************************************************************************************************/
 
-angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', function($scope, $http, $state) {
+angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', 
+    ['$scope', '$http', '$stateParams','$alert','productData',
+    function($scope, $http, $stateParams,$alert,productData) {
 	/* 是否可编辑 */
-	$scope.isEdit = true;		//默认不可用
-
+	$scope.isEdit = true;
 	/*产品分类*/
     $http({
         url:'data/productcate.json',
@@ -14,20 +15,10 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', func
         $scope.cate=data.cates;
     })
     var date = new Date();
-    $scope.product ={	
-			"id":0,
-            "isTop":true,
-            "name":"手机",
-            "model":"LA-40-P",
-            "cate":"1",
-            "people":"杨军",
-            "editpeople":"杨军",
-            "description":"这是一些描述",
-            "size":"45*34*58cm",
-            "quantity":"15pcs",
-			"weight":"19.8kg",
-            "date":date
-        }
+    /* 产品详情请求 */
+    productData.getIdData($stateParams.id).then(function (data) {
+       $scope.product=data.product; 
+    });
     $scope.mulImages = [];
 
     $scope.$watch('files', function () {
@@ -77,4 +68,4 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', func
 
     };
 
-});
+}]);

@@ -2,7 +2,9 @@
  *                                                      产品分类页面
  ********************************************************************************************************************/
 
-angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCtrl', function($scope, $http, $state) {
+angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCtrl', 
+    ['$scope', '$http', '$state','cateData',
+    function($scope, $http, $state,cateData) {
 	/* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -12,16 +14,17 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
         }
     } 
     /*产品分类*/
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
     /* 添加分类信息 */
     $scope.addCate= function(){
         var value = $scope.cate.length
-        $scope.cate.push({"value":value,"isEdit":false});
+        $scope.cate.push({"value":value,"isEdit":true,"label":'默认分类'});
+        cateData.getData().then(function (data) {
+            $scope.cate = data.cates;
+            console.log($scope.cates);
+        });
     }
     /* 保存单条分类信息 */
     $scope.saveCate= function(value){
@@ -44,4 +47,4 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
            console.log(newVal)
         }
     }, true);
-});
+}]);

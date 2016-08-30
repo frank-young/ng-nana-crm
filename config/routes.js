@@ -5,7 +5,9 @@ var Index = require('../app/controllers/index'),
     Clue = require('../app/controllers/customer/clue'),
     Business = require('../app/controllers/customer/business'),
     Group = require('../app/controllers/customer/group'),
-    Tag = require('../app/controllers/customer/tag')
+    Tag = require('../app/controllers/customer/tag'),
+    Product = require('../app/controllers/product/product')
+    Cate = require('../app/controllers/product/cate')
 
 module.exports = function(app){
 	app.use(function(req, res, next) {
@@ -35,21 +37,21 @@ module.exports = function(app){
   app.post('/customer/update', Customer.update)
   app.post('/customer/add', Customer.save)
   app.delete('/customer/delete', Customer.del)
-  app.get('/customer/detial/:id', Customer.detail)
+  app.get('/customer/detail/:id', Customer.detail)
 
   //潜在客户
   app.get('/clue', Clue.list)
   app.post('/clue/update', Clue.update)
   app.post('/clue/add', Clue.save)
   app.delete('/clue/delete', Clue.del)
-  app.get('/clue/detial/:id', Clue.detail)
+  app.get('/clue/detail/:id', Clue.detail)
 
   //项目
   app.get('/business', Business.list)
   app.post('/business/update', Business.update)
   app.post('/business/add', Business.save)
   app.delete('/business/delete', Business.del)
-  app.get('/business/detial/:id', Business.detail)
+  app.get('/business/detail/:id', Business.detail)
 
   //设置-group
   app.get('/group', Group.list)
@@ -62,6 +64,19 @@ module.exports = function(app){
   app.post('/tag/update', Tag.update)
   app.post('/tag/add', Tag.save)
   app.delete('/tag/delete', Tag.del)
+
+  //产品信息
+  app.get('/product', Product.list)
+  app.post('/product/update', Product.update)
+  app.post('/product/add', Product.save)
+  app.delete('/product/delete', Product.del)
+  app.get('/product/detail/:id', Product.detail)
+ 
+  //产品分类
+  app.get('/cate', Cate.list)
+  app.post('/cate/update', Cate.update)
+  app.post('/cate/add', Cate.save)
+  app.delete('/cate/delete', Cate.del)
 
   // app.get('/admin/customer/update/:id',User.adminRequired,Customer.update)
   // app.post('/admin/customer', User.adminRequired,Customer.save)

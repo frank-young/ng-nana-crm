@@ -114,7 +114,7 @@
                     </div>
                     <!-- /.col-xs-2 -->
                     <div class="col-xs-3">
-                        <a href="" ui-sref="web.productsDetail({id:product.id})" ng-bind="product.name"></a>
+                        <a href="" ui-sref="web.productsDetail({id:product._id})" ng-bind="product.name"></a>
                     </div>
                     <!-- /.col-xs-4 -->
                     <div class="col-xs-4">
@@ -132,7 +132,7 @@
             </div>
             <!-- /.col-md-2 -->
             <div class="col-md-2 col-xs-3">
-                <p ng-bind="product.date | time"></p>
+                <p ng-bind="product.meta.createAt | time"></p>
             </div>
             <!-- /.col-md-2 -->
             <div class="col-md-2 col-xs-5">
@@ -148,7 +148,7 @@
                     </div>
                     <!-- /.col-xs-4 -->
                     <div class="col-xs-4">
-                        <p><a href="" ui-sref="web.productsDetail({id:product.id})" style="margin-right: 5px;" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="编辑">
+                        <p><a href="" ui-sref="web.productsDetail({id:product._id})" style="margin-right: 5px;" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="编辑">
                             <i class="fa fa-edit fa-lg top-icon"></i>
                         </a></p>
                     </div>

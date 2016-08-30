@@ -73,7 +73,6 @@ var _ = require('underscore')
 		var id = req.params.id		//拿到id的值
 		Clue.findById(id,function(err,clue){
 			res.json({
-				title:'潜在客户详情页',
 				clue:clue
 			})
 		})
@@ -91,15 +90,4 @@ var _ = require('underscore')
 			})
 		}
 	}
-
-	//admin page
-	exports.new = function(req,res){
-		res.render('admin',{
-			title:'后台页面',
-			clue:{
-
-			}
-		})
-	}
-
 	

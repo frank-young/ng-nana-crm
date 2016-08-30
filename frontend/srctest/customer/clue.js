@@ -158,8 +158,7 @@ angular.module('clueMoudle',[]).controller('ClueCtrl',
                 $scope.clues[index].isChecked = false;  //去掉标记位
                 $scope.clues.splice(index,1);   //删除
                 clueData.deleteData(value[i])
-                
-                
+                 
             }
             $scope.checkArr.splice(0,$scope.checkArr.length);   
         }

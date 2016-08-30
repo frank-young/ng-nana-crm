@@ -67,7 +67,6 @@ var _ = require('underscore')
 		var id = req.params.id		//拿到id的值
 		Business.findById(id,function(err,business){
 			res.json({
-				title:'项目详情页',
 				business:business
 			})
 		})
@@ -86,14 +85,5 @@ var _ = require('underscore')
 		}
 	}
 
-	//admin page
-	exports.new = function(req,res){
-		res.render('admin',{
-			title:'后台页面',
-			business:{
-
-			}
-		})
-	}
 
 	

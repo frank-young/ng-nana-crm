@@ -2,7 +2,9 @@
  *                                                      全部产品页面
  ********************************************************************************************************************/
 
-angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope, $http, $state) {
+angular.module("productsMoudle", []).controller('ProductsCtrl', 
+    ['$scope', '$http', '$state','$alert','productData',
+    function($scope, $http, $state,$alert,productData) {
 	/* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -23,10 +25,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope,
     // $scope.totalItems = 6;
     $scope.currentPage = 1;
     /*产品*/
-    $http({
-        url:'data/products.json',
-        method:'GET'
-    }).success(function(data){
+    productData.getData().then(function(data){
         $scope.products=data.products;
     })
     /*产品分类*/
@@ -39,16 +38,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope,
     /* 固定/取消固定 位置  ----栏目位置*/
     $scope.pinItem = function(value){
         value.isTop = !value.isTop;
-        $http({
-            method: 'POST',
-            url: 'http://localhost/angularcode/src/',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-            },
-            data: value
-        }).success(function(data){
-            console.log('success')
-        })
+        productData.updateData(value);
         
     }
     /* 选择查看固定位置 */
@@ -77,6 +67,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope,
         if(deleteConfirm){
             var index = findIndex(value,$scope.products);
             $scope.products.splice(index,1);   //删除
+            productData.deleteData(value);
         }
     }
     /* 返回按钮，也就是清空整个数组，并且将选框的标记位设为false */
@@ -100,6 +91,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope,
             var index = findIndex(value[i],$scope.products);
             $scope.products[index].isTop = true;      //固定
             $scope.products[index].isChecked = false;  //去掉标记位，也就是去掉勾
+        
         }
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     }
@@ -118,10 +110,11 @@ angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope,
         if(deleteConfirm){
             for(var i in value){
                 var index = findIndex(value[i],$scope.products);
-                $scope.products.splice(index,1);   //删除
                 $scope.products[index].isChecked = false;  //去掉标记位
+                $scope.products.splice(index,1);   //删除
+                productData.deleteData(value[i]);
             }
             $scope.checkArr.splice(0,$scope.checkArr.length);   
         }
     }
-});
+}]);

@@ -57,7 +57,7 @@ angular.module('serviceData', [])
             getIdData: function (id) {
                 var defer = $q.defer();
                 $http({
-                    url: '/customer/detial/'+id,
+                    url: '/customer/detail/'+id,
                     method: 'get'
                 })
                 .success(function (data, status, headers, config) {
@@ -140,7 +140,7 @@ angular.module('serviceData', [])
             getIdData: function (id) {
                 var defer = $q.defer();
                 $http({
-                    url: '/clue/detial/'+id,
+                    url: '/clue/detail/'+id,
                     method: 'get'
                 })
                 .success(function (data, status, headers, config) {
@@ -223,7 +223,7 @@ angular.module('serviceData', [])
             getIdData: function (id) {
                 var defer = $q.defer();
                 $http({
-                    url: '/business/detial/'+id,
+                    url: '/business/detail/'+id,
                     method: 'get'
                 })
                 .success(function (data, status, headers, config) {
@@ -306,7 +306,7 @@ angular.module('serviceData', [])
             getIdData: function (id) {
                 var defer = $q.defer();
                 $http({
-                    url: '/group/detial/'+id,
+                    url: '/group/detail/'+id,
                     method: 'get'
                 })
                 .success(function (data, status, headers, config) {
@@ -389,7 +389,7 @@ angular.module('serviceData', [])
             getIdData: function (id) {
                 var defer = $q.defer();
                 $http({
-                    url: '/tag/detial/'+id,
+                    url: '/tag/detail/'+id,
                     method: 'get'
                 })
                 .success(function (data, status, headers, config) {
@@ -404,6 +404,172 @@ angular.module('serviceData', [])
                 $http({
                     method: 'DELETE',
                     url: '/tag/delete?id='+value._id,
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            }
+        }
+    }])
+    .factory('productData', ['$q','$http',function($q,$http){
+        return {
+            getData: function () {
+                var defer = $q.defer();
+                $http({
+                    url: '/product',
+                    method: 'get' 
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            updateData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/product/update',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        product:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            addData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/product/add',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        product:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            getIdData: function (id) {
+                var defer = $q.defer();
+                $http({
+                    url: '/product/detail/'+id,
+                    method: 'get'
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            deleteData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'DELETE',
+                    url: '/product/delete?id='+value._id,
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            }
+        }
+    }])
+    .factory('cateData', ['$q','$http',function($q,$http){
+        return {
+            getData: function () {
+                var defer = $q.defer();
+                $http({
+                    url: '/cate',
+                    method: 'get' 
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            updateData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/cate/update',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        cate:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            addData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/cate/add',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        cate:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            getIdData: function (id) {
+                var defer = $q.defer();
+                $http({
+                    url: '/cate/detail/'+id,
+                    method: 'get'
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            deleteData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'DELETE',
+                    url: '/cate/delete?id='+value._id,
                 })
                 .success(function (data, status, headers, config) {
                     defer.resolve(data);

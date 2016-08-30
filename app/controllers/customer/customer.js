@@ -72,7 +72,6 @@ var _ = require('underscore')
 		var id = req.params.id		//拿到id的值
 		Customer.findById(id,function(err,customer){
 			res.json({
-				title:'客户详情页',
 				customer:customer
 			})
 		})
@@ -91,14 +90,3 @@ var _ = require('underscore')
 		}
 	}
 
-	//admin page
-	exports.new = function(req,res){
-		res.render('admin',{
-			title:'后台页面',
-			customer:{
-
-			}
-		})
-	}
-
-	

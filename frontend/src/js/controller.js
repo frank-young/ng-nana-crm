@@ -1011,8 +1011,7 @@ angular.module('clueMoudle',[]).controller('ClueCtrl',
                 $scope.clues[index].isChecked = false;  //去掉标记位
                 $scope.clues.splice(index,1);   //删除
                 clueData.deleteData(value[i])
-                
-                
+                 
             }
             $scope.checkArr.splice(0,$scope.checkArr.length);   
         }
@@ -2188,7 +2187,9 @@ angular.module("addImgMoudle", ['ngFileUpload']).controller('AddImgCtrl', functi
  *                                                      全部产品页面
  ********************************************************************************************************************/
 
-angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope, $http, $state) {
+angular.module("productsMoudle", []).controller('ProductsCtrl', 
+    ['$scope', '$http', '$state','$alert','productData',
+    function($scope, $http, $state,$alert,productData) {
 	/* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -2209,10 +2210,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope,
     // $scope.totalItems = 6;
     $scope.currentPage = 1;
     /*产品*/
-    $http({
-        url:'data/products.json',
-        method:'GET'
-    }).success(function(data){
+    productData.getData().then(function(data){
         $scope.products=data.products;
     })
     /*产品分类*/
@@ -2225,16 +2223,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope,
     /* 固定/取消固定 位置  ----栏目位置*/
     $scope.pinItem = function(value){
         value.isTop = !value.isTop;
-        $http({
-            method: 'POST',
-            url: 'http://localhost/angularcode/src/',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-            },
-            data: value
-        }).success(function(data){
-            console.log('success')
-        })
+        productData.updateData(value);
         
     }
     /* 选择查看固定位置 */
@@ -2263,6 +2252,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope,
         if(deleteConfirm){
             var index = findIndex(value,$scope.products);
             $scope.products.splice(index,1);   //删除
+            productData.deleteData(value);
         }
     }
     /* 返回按钮，也就是清空整个数组，并且将选框的标记位设为false */
@@ -2286,6 +2276,7 @@ angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope,
             var index = findIndex(value[i],$scope.products);
             $scope.products[index].isTop = true;      //固定
             $scope.products[index].isChecked = false;  //去掉标记位，也就是去掉勾
+        
         }
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     }
@@ -2304,17 +2295,20 @@ angular.module("productsMoudle", []).controller('ProductsCtrl', function($scope,
         if(deleteConfirm){
             for(var i in value){
                 var index = findIndex(value[i],$scope.products);
-                $scope.products.splice(index,1);   //删除
                 $scope.products[index].isChecked = false;  //去掉标记位
+                $scope.products.splice(index,1);   //删除
+                productData.deleteData(value[i]);
             }
             $scope.checkArr.splice(0,$scope.checkArr.length);   
         }
     }
-});;/********************************************************************************************************************
+}]);;/********************************************************************************************************************
  *                                                      新建产品页面
  ********************************************************************************************************************/
 
-angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtrl', function($scope, $http, $state) {
+angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtrl', 
+    ['$scope', '$http', '$state','$alert','productData',
+    function($scope, $http, $state,$alert,productData) {
 	/*产品分类*/
     $http({
         url:'data/productcate.json',
@@ -2325,7 +2319,7 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
     var date = new Date();
     $scope.product ={	
 			"id":0,
-            "isTop":true,
+            "isTop":false,
             "name":"",
             "model":"",
             "cate":"",
@@ -2335,7 +2329,8 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
             "size":"",
             "quantity":"",
 			"weight":"",
-            "date":date
+            "path":"",
+            "img":""
         }
 
     $scope.mulImages = [];
@@ -2386,11 +2381,24 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
         });
 
     };
-});;/********************************************************************************************************************
+    $scope.saveProduct = function(value){
+        productData.addData(value).then(function(data){
+            $scope.changeAlert('添加成功！');
+            window.history.go(-1);
+        });
+    }
+
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}]);;/********************************************************************************************************************
  *                                                      产品分类页面
  ********************************************************************************************************************/
 
-angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCtrl', function($scope, $http, $state) {
+angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCtrl', 
+    ['$scope', '$http', '$state','cateData',
+    function($scope, $http, $state,cateData) {
 	/* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -2400,16 +2408,17 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
         }
     } 
     /*产品分类*/
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
     /* 添加分类信息 */
     $scope.addCate= function(){
         var value = $scope.cate.length
-        $scope.cate.push({"value":value,"isEdit":false});
+        $scope.cate.push({"value":value,"isEdit":true,"label":'默认分类'});
+        cateData.getData().then(function (data) {
+            $scope.cate = data.cates;
+            console.log($scope.cates);
+        });
     }
     /* 保存单条分类信息 */
     $scope.saveCate= function(value){
@@ -2432,14 +2441,15 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
            console.log(newVal)
         }
     }, true);
-});;/********************************************************************************************************************
+}]);;/********************************************************************************************************************
  *                                                      产品详情页面
  ********************************************************************************************************************/
 
-angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', function($scope, $http, $state) {
+angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', 
+    ['$scope', '$http', '$stateParams','$alert','productData',
+    function($scope, $http, $stateParams,$alert,productData) {
 	/* 是否可编辑 */
-	$scope.isEdit = true;		//默认不可用
-
+	$scope.isEdit = true;
 	/*产品分类*/
     $http({
         url:'data/productcate.json',
@@ -2448,20 +2458,10 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', func
         $scope.cate=data.cates;
     })
     var date = new Date();
-    $scope.product ={	
-			"id":0,
-            "isTop":true,
-            "name":"手机",
-            "model":"LA-40-P",
-            "cate":"1",
-            "people":"杨军",
-            "editpeople":"杨军",
-            "description":"这是一些描述",
-            "size":"45*34*58cm",
-            "quantity":"15pcs",
-			"weight":"19.8kg",
-            "date":date
-        }
+    /* 产品详情请求 */
+    productData.getIdData($stateParams.id).then(function (data) {
+       $scope.product=data.product; 
+    });
     $scope.mulImages = [];
 
     $scope.$watch('files', function () {
@@ -2511,7 +2511,7 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', func
 
     };
 
-});;/********************************************************************************************************************
+}]);;/********************************************************************************************************************
  *                                                      报价单列表页面
  ********************************************************************************************************************/
 
