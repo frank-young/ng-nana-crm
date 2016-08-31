@@ -2006,7 +2006,9 @@ angular.module("homeMoudle", []).controller('HomeCtrl', function($scope, $http, 
  *                                                      联系人列表页面
  ********************************************************************************************************************/
 
-angular.module("peopleMoudle", []).controller('PeopleCtrl', function($scope, $http, $state) {
+angular.module("peopleMoudle", []).controller('PeopleCtrl', 
+    ['$scope', '$http', '$state','customerData',
+    function($scope, $http, $state,customerData) {
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -2033,13 +2035,26 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl', function($scope, $ht
     }).success(function(data){
         $scope.people=data.people;
     })
-    /* 客户 */
-    $http({
-        url:'data/company.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.company=data.company;
+    customerData.getData().then(function(data){
+        var people=[];
+        for(var i in data.customers){
+            people.push(...data.customers[i].people);   //使用ES6  ... 来组合
+        }
+        $scope.people = people
     })
+    /* 自定义 -- 公司*/
+    customerData.getData().then(function (data) {
+        var company=[];
+        for(var i in data.customers){
+            company.push({
+                value:i,
+                id:data.customers[i]._id,
+                label:data.customers[i].companyName
+            })
+        }
+        $scope.company = company
+    })
+
     /* 客户 */
     $http({
         url:'data/customerSet.json',
@@ -2135,7 +2150,7 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl', function($scope, $ht
             $scope.checkArr.splice(0,$scope.checkArr.length);   
         }
     }
-});;/********************************************************************************************************************
+}]);;/********************************************************************************************************************
  *                                                      联系人列表页面
  ********************************************************************************************************************/
 
