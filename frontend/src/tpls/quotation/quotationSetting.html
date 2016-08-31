@@ -2,7 +2,7 @@
 
 <div ng-controller="QuotationSettingCtrl">
     <div data-bs-active-pane="" bs-tabs="">
-        <div data-title="报价单标签" name="" bs-pane="">
+<!--         <div data-title="报价单标签" name="" bs-pane="">
             <hr>
             <div class="row">
                 <div class="col-sm-11 col-md-5 col-md-offset-3">
@@ -37,28 +37,8 @@
                     <div class="set-btn-add" ng-click="addTag()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加分组"><i class="fa fa-plus fa-2x" ></i></div>
                 </div>
             </div>
-        </div>
+        </div> -->
             
-        <div data-title="报价单阶段" name="" bs-pane="">
-            <hr>
-            <div class="row">
-                <div class="col-sm-11 col-md-5 col-md-offset-3">
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="pha in phase" >
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p class="no-drag-p">
-                                        {{pha.label}}
-                                    </p>
-                                </div>
-                            </div>
-                            
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div> 
-
         <div data-title="报价单头部" name="" bs-pane="">
             <hr>
             <div class="row">
@@ -117,7 +97,26 @@
                 </div>
             </div>
         </div>    
-
+        
+        <div data-title="报价单阶段" name="" bs-pane="">
+            <hr>
+            <div class="row">
+                <div class="col-sm-11 col-md-5 col-md-offset-3">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="pha in phase" >
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="no-drag-p">
+                                        {{pha.label}}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> 
     </div>
 </div>
 

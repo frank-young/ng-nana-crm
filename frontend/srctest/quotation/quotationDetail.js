@@ -4,8 +4,8 @@
 
 angular.module("quotationDetailMoudle", [])
 .controller('QuotationDetailCtrl', 
-    ['$scope', '$http', '$stateParams','$alert','quotationData','customerData','productData','cateData',
-    function($scope, $http, $stateParams,$alert,quotationData,customerData, productData,cateData) {
+    ['$scope', '$http', '$stateParams','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
+    function($scope, $http, $stateParams,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
     // cfpLoadingBar.start();  //进度条开始
 	$scope.isEdit = true; 
     quotationData.getIdData($stateParams.id).then(function (data) {
@@ -19,6 +19,14 @@ angular.module("quotationDetailMoudle", [])
     }).success(function(data){
         $scope.units = data.units;
     })
+    /* 报价阶段 */
+    $http({
+        url:'data/phase.json',
+        method:'GET'
+    }).success(function(data){
+        $scope.phase = data.phase;
+
+    })
     /* 自定义 -- 公司*/
     customerData.getData().then(function (data) {
         var company=[];
@@ -31,23 +39,18 @@ angular.module("quotationDetailMoudle", [])
         }
         $scope.company = company
     })
+
     /* 报价单头部 */
-    $http({
-        url:'data/quotationhead.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.heads = data.heads;
+    quotationheadData.getData().then(function(data){
+        $scope.heads = data.quotationheads;
     })
     $scope.selectHead = function(selected){
     	$scope.quotation.head = selected
     }
 
     /* 报价单尾部*/
-    $http({
-        url:'data/quotationfoot.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.foots = data.foots;
+    quotationfootData.getData().then(function(data){
+        $scope.foots = data.quotationfoots;
     })
     $scope.selectFoot = function(selected){
     	$scope.quotation.foot = selected
@@ -89,12 +92,12 @@ angular.module("quotationDetailMoudle", [])
         }
         if(!mark){
             $scope.quotation.products.push({
-                    "value":value._id,
-                    "name":value.name,
-                    "num":0,
-                    "price":"",
-                    "total":""
-                })
+                "value":value._id,
+                "name":value.name,
+                "num":0,
+                "price":"",
+                "total":""
+            })
         }            
     }
     /* 总数量和总计 */   
@@ -117,11 +120,20 @@ angular.module("quotationDetailMoudle", [])
                 priceArray.forEach(function(value){
                     $scope.totalPrice += parseFloat(value);     //toFixed(2)
                 });
+                $scope.quotation.amount = angular.copy($scope.totalPrice)+" "+ $scope.units[$scope.quotation.units].label;
+
             }
         }
     }, true);
+
+    $scope.$watch('quotation', function(newVal, oldVal) {
+        $scope.quotation.amount = angular.copy($scope.totalPrice)+" "+ $scope.units[$scope.quotation.units].label;
+    }, true);
+    
     /*提示框*/
     $scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:5});
+        if (newVal !== oldVal) {
+            $alert({title: title, content: content, type: "info", show: true,duration:5});
+        }
     }
 }])

@@ -1,6 +1,6 @@
 <div ng-controller="QuotationDetailCtrl">
 	<form name="quotationForm">
-		<h2 class="page-header">新建报价单
+		<h2 class="page-header">编辑报价单
 			<a href="javascript:window.history.go(-1)" type="button" class="btn btn-primary ml-20"><i class="fa fa-angle-left"></i> 返回</a>
 			<button type="button" class="btn btn-primary" onclick="window.print()"><i class="fa fa-file-pdf-o"></i> 生成PDF</button>
 			<button type="button" class="btn btn-danger" ng-class="{true: 'pro-show', false: 'pro-hide'}[isEdit]" ng-click="isEdit = !isEdit"><i class="fa fa-edit"></i> 编辑</button>
@@ -28,6 +28,12 @@
 							<button type="button" class="form-control form-select" ng-model="quotation.company" data-html="1" data-toggle="true" bs-options="com.value as com.label for com in company"  placeholder="选择客户" data-animation="am-flip-x" bs-select ng-disabled="isEdit">
 			                    客户<span class="caret"></span>
 			                </button>
+						</div>
+						<label class="col-sm-2 control-label">报价单阶段</label>
+						<div class="col-sm-4 ">
+							<button type="button" class="form-control form-select" ng-model="quotation.phase" data-html="1" data-toggle="true" bs-options="pha.value as pha.label for pha in phase"  placeholder="报价单阶段" data-animation="am-flip-x" bs-select ng-disabled="isEdit">
+			                    报价单阶段<span class="caret"></span> 
+			                </button>	
 						</div>
 					</div>
 				</div>

@@ -42,13 +42,13 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl',
     })
 
     /* 报价阶段 */
-    $scope.phase = [
-    	{"value":"0","label":"已创建"},
-        {"value":"1","label":"已发送"},
-        {"value":"2","label":"尚有谈判余地"},
-        {"value":"3","label":"已接受"},
-        {"value":"4","label":"已拒绝"}
-    ];
+    $http({
+        url:'data/phase.json',
+        method:'GET'
+    }).success(function(data){
+        $scope.phase = data.phase;
+
+    })
     /* 固定/取消固定 位置  ----栏目位置*/
     $scope.pinItem = function(value){
         value.isTop = !value.isTop;

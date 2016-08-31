@@ -1,7 +1,7 @@
 {
     "units":[
         {"value":"0","label":"美元"},
-        {"value":"1","label":"人民币"},
+        {"value":"1","label":"元"},
         {"value":"2","label":"韩元"},
         {"value":"3","label":"日元"}
     ]

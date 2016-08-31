@@ -33,14 +33,13 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
     ];
 
     /* 报价阶段 */
-    $scope.phase = [
-    	{"value":"0","label":"已创建"},
-        {"value":"1","label":"已发送"},
-        {"value":"2","label":"尚有谈判余地"},
-        {"value":"0","label":"已接受"},
-        {"value":"1","label":"已拒绝"}
-    ]
+    $http({
+        url:'data/phase.json',
+        method:'GET'
+    }).success(function(data){
+        $scope.phase = data.phase;
 
+    })
 
     /* 添加标签信息 */
     $scope.addTag = function(){
@@ -90,13 +89,11 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
     }
     /* 保存单条报价单尾信息 */
     $scope.saveHead = function(msg){
-        $scope.heads.forEach(function(value,key){
-			if(value.value == msg.value){
-				delete $scope.heads[key]
-				$scope.heads.splice(key,1,msg);
-			}
-		})
+        quotationheadData.updateData(msg);
 		$scope.headMsg = {};
+        quotationheadData.getData().then(function(data){
+            $scope.heads = data.quotationheads;
+        })
     }
     /* 添加报价头尾信息 */
     $scope.saveHeadAdd = function(value){
@@ -120,7 +117,6 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         quotationheadData.getData().then(function(data){
             $scope.heads = data.quotationheads;
         })
-
     }
     
 
@@ -154,16 +150,14 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
     }
     /* 保存单条报价单尾信息 */
     $scope.saveFoot = function(msg){
-        $scope.foots.forEach(function(value,key){
-			if(value.value == msg.value){
-				delete $scope.foots[key]
-				$scope.foots.splice(key,1,msg);
-			}
-		})
-		$scope.footMsg = {};
+        quotationfootData.updateData(msg);
+        $scope.footMsg = {};
+        quotationfootData.getData().then(function(data){
+            $scope.foots = data.quotationfoots;
+        })
     }
     /* 添加报价单尾信息 */
-    $scope.saveFootAdd = function(value){
+    $scope.saveFootAdd = function(value){ 
         var val = $scope.foots.length;
         var msgadd = {
         	"value":val,
