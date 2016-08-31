@@ -44,9 +44,7 @@ var _ = require('underscore')
 		productObj.editpeople = user.name
 		if(id !=="undefined"){
 			Product.findById(id,function(err,product){
-				if(err){
-					console.log(err)
-				}
+
 				_product = _.extend(product,productObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
 				_product.save(function(err,product){
 					if(err){

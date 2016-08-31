@@ -2,20 +2,19 @@ var mongoose = require('mongoose')
 var CustomerSchema = new mongoose.Schema({
 	isTop: Boolean,
 	isChecked: Boolean,
-	group: String,
+	website: String,
+	class:String,
+	address:String,
 	companyName:String,
 	name: String,
-	progress: {
-    	type: Number,
-    	default: 0
-  	},
+	progress: String,
 	tags: Array,
 	star: {
     	type: Number,
     	default: 0
   	},
 	group:String,
-	origins:String,
+	origin:String,
 	mobile:String,
 	fax:String,
 	st:String,
@@ -28,6 +27,7 @@ var CustomerSchema = new mongoose.Schema({
 	schedule_expired:Array,
 	schedule_complete:Array,
 	business:Array,
+	charge:String,
 	meta:{
 		createAt:{
 			type:Number,	//类型

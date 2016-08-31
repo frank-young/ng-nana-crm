@@ -1,10 +1,10 @@
 <div ng-controller="PeopleCtrl">
     <h2 class="page-header">
         联系人
-        <button class="btn btn-primary ml-20" ng-click="pinSortFunc({isTop:true});pinShowFunc()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="选择固定位置" ng-class="{true: 'pro-show', false: 'pro-hide'}[!pinShow]"> <i class="fa fa-thumb-tack fa-lg" ></i>
+<!--         <button class="btn btn-primary ml-20" ng-click="pinSortFunc({isTop:true});pinShowFunc()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="选择固定位置" ng-class="{true: 'pro-show', false: 'pro-hide'}[!pinShow]"> <i class="fa fa-thumb-tack fa-lg" ></i>
         </button>
         <button class="btn btn-primary ml-20" ng-click="pinSortFunc();pinShowFunc()" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="取消固定位置" ng-class="{true: 'pro-show', false: 'pro-hide'}[pinShow]"> <i class="fa fa-thumb-tack fa-lg rotate-45"></i>
-        </button>
+        </button> -->
         <!-- <a ui-sref="web.peopleAdd()" class="btn btn-danger ml-10"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="新建联系人"> <i class="fa fa-plus fa-lg"></i>
         </a> -->
     </h2>
@@ -26,7 +26,7 @@
         </div>
         <!-- /.col-xs-9 -->
         <div class="col-sm-3 col-xs-9" >
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-xs-2">
                     <p>
                         <a href="" ng-click="surePin(checkArr)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="固定位置">
@@ -34,7 +34,7 @@
                         </a>
                     </p>
                 </div>
-                <!-- /.col-xs-2 -->
+                
                 <div class="col-xs-2">
                     <p>
                         <a href="" ng-click="cancelPin(checkArr)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="取消固定位置">
@@ -42,7 +42,7 @@
                         </a>
                     </p>
                 </div>
-                <!-- /.col-xs-2 -->
+                
                 <div class="col-xs-2">
                     <p>
                         <a href="" ng-click="deletePeople(checkArr)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除">
@@ -50,7 +50,7 @@
                         </a>
                     </p>
                 </div>
-                <!-- /.col-xs-2 --> </div>
+            </div> -->
             <!-- /.row --> </div>
         <!-- /.col-xs-2 --> </div>
 
@@ -118,7 +118,7 @@
                     </div>
                     <!-- /.col-xs-4 -->
                     <div class="col-xs-4">
-                        <p ng-bind="company[peopleItem.company].label"></p>
+                        <p ng-bind="peopleItem.company"></p>
                     </div>
                     <!-- /.col-xs-3 -->
                     <div class="col-xs-3">
@@ -128,7 +128,7 @@
                 <!-- /.row --> </div>
             <!-- /.col-md-4 -->
             <div class="col-md-2 col-xs-12">
-                <p ng-bind="origins[peopleItem.origins].label"></p>
+                <p ng-bind="origins[peopleItem.origin].label"></p>
             </div>
             <!-- /.col-md-2 -->
             <div class="col-md-2 col-xs-3">
@@ -142,9 +142,9 @@
             <div class="col-md-2 col-xs-12 cus-ctrl">
                 <div class="row">
                     <div class="col-xs-4">
-                        <p><a href="" style="margin-right: 5px;" ng-click="pinItem(peopleItem)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="固定/取消">
+           <!--              <p><a href="" style="margin-right: 5px;" ng-click="pinItem(peopleItem)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="固定/取消">
                             <i class="fa fa-thumb-tack fa-lg  top-icon" ng-class="{true: 'pin-icon', false: 'unpin-icon'}[peopleItem.isTop]"></i>
-                        </a></p>
+                        </a></p> -->
                     </div>
                     <!-- /.col-xs-4 -->
                     <div class="col-xs-4">
@@ -153,11 +153,11 @@
                         </a></p>
                     </div>
                     <!-- /.col-xs-4 -->
-                    <div class="col-xs-4">
+<!--                     <div class="col-xs-4">
                         <p><a href="" ng-click="deletePeople(peopleItem)" style="margin-right: 5px;" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除">
                             <i class="fa fa-trash fa-lg top-icon"></i>
                         </a></p>
-                    </div>
+                    </div> -->
                     <!-- /.col-xs-4 --> </div>
                 <!-- /.row --> </div>
         </div>

@@ -13,30 +13,34 @@ var _ = require('underscore')
 	//客户更新、新建
 	exports.save = function(req,res){
 		var customerObj = req.body.customer 	//从路由传过来的 customer对象
+		var user = req.session.user
 		var _customer
 			_customer = new Customer({
 				isTop: customerObj.isTop,
 				isChecked: customerObj.isChecked,
-				group: customerObj.group,
+				website: customerObj.website,
 				companyName: customerObj.companyName,
 				name: customerObj.name,
 				progress: customerObj. progress,
 				tags: customerObj.tags,
 				star: customerObj.star,
 				group: customerObj.group,
-				origins: customerObj.origins,
+				origin: customerObj.origin,
 				mobile: customerObj.mobile,
 				fax: customerObj.fax,
+				class: customerObj.class,
 				st: customerObj.st,
 				remark: customerObj.remark,
 				peoples: customerObj.peoples,
 				position: customerObj.position,
 				email: customerObj.email,
 				country: customerObj.country,
+				address: customerObj.address,
 				schedule: customerObj.schedule,
 				schedule_expired: customerObj.schedule_expired,
 				schedule_complete: customerObj.schedule_complete,
-				business: customerObj.business
+				business: customerObj.business,
+				charge:user.name
 			})
 			_customer.save(function(err,customer){
 				if(err){
@@ -52,16 +56,10 @@ var _ = require('underscore')
 		var _customer
 		if(id !=="undefined"){
 			Customer.findById(id,function(err,customer){
-				if(err){
-					console.log(err)
-				}
+
 				_customer = _.extend(customer,customerObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
 				_customer.save(function(err,customer){
-					if(err){
-						console.log(err)
-					}
-
-					res.json({status:"更新成功",success: 1})
+					res.json({status:"更新成功",success: customer})
 				})
 			})
 		}

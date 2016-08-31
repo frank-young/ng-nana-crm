@@ -23,10 +23,10 @@
             {"value":"0","label":"原材料供应商"},
             {"value":"1","label":"生产商"},
             {"value":"2","label":"贸易商"},
-            {"value":"2","label":"零售商"},
-            {"value":"2","label":"机构/团体消费者"},
-            {"value":"2","label":"个人消费者"},
-            {"value":"2","label":"其他"}
+            {"value":"3","label":"零售商"},
+            {"value":"4","label":"机构/团体消费者"},
+            {"value":"5","label":"个人消费者"},
+            {"value":"6","label":"其他"}
         ],
     "person": [
             {"value":"0","label":"frank"},

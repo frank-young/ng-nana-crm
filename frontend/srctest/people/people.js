@@ -3,8 +3,8 @@
  ********************************************************************************************************************/
 
 angular.module("peopleMoudle", []).controller('PeopleCtrl', 
-    ['$scope', '$http', '$state','customerData',
-    function($scope, $http, $state,customerData) {
+    ['$scope', '$http', '$state','$alert','customerData',
+    function($scope, $http, $state,$alert,customerData) {
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -25,18 +25,22 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl',
     // $scope.totalItems = 6;
     $scope.currentPage = 1;
     /*联系人*/
-    $http({
-        url:'data/peopleall.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.people=data.people;
-    })
     customerData.getData().then(function(data){
         var people=[];
-        for(var i in data.customers){
-            people.push(...data.customers[i].people);   //使用ES6  ... 来组合
-        }
+
+        data.customers.forEach( function(ele, i) {
+            ele.peoples.forEach( function(element, index) {
+                element.company = ele.companyName;
+                element.origin = ele.origin;
+                element.people = ele.charge;
+                element.date = ele.meta.createAt;
+                people[i] = element;
+
+            });
+        });
+
         $scope.people = people
+
     })
     /* 自定义 -- 公司*/
     customerData.getData().then(function (data) {
@@ -58,25 +62,25 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl',
     }).success(function(data){
         $scope.origins=data.origins;
     })
-    /* 固定/取消固定 位置  ----栏目位置*/
-    $scope.pinItem = function(value){
-        value.isTop = !value.isTop;
-        $http({
-            method: 'POST',
-            url: 'http://localhost/angularcode/src/',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-            },
-            data: value
-        }).success(function(data){
-            console.log('success')
-        })
+    // /* 固定/取消固定 位置  ----栏目位置*/
+    // $scope.pinItem = function(value){
+    //     value.isTop = !value.isTop;
+    //     $http({
+    //         method: 'POST',
+    //         url: 'http://localhost/angularcode/src/',
+    //         headers: {
+    //             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    //         },
+    //         data: value
+    //     }).success(function(data){
+    //         console.log('success')
+    //     })
         
-    }
-    /* 选择查看固定位置 */
-    $scope.pinSortFunc = function(value){
-        $scope.pinSort = value;
-    }
+    // }
+    // /* 选择查看固定位置 */
+    // $scope.pinSortFunc = function(value){
+    //     $scope.pinSort = value;
+    // }
 
     /***************************** 以下是顶部导航栏批量操作 **************************************/
     /* 多选框选择 */
@@ -99,6 +103,7 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl',
         if(deleteConfirm){
             var index = findIndex(value,$scope.people);
             $scope.people.splice(index,1);   //删除
+            customerData.updateData(value);
         }
     }
     /* 返回按钮，也就是清空整个数组，并且将选框的标记位设为false */
@@ -116,34 +121,43 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl',
                 $scope.people[i].isChecked = true;
             }
     }
-    /* 固定 ----批量操作*/
-    $scope.surePin = function(value){
-        for(var i in value){
-            var index = findIndex(value[i],$scope.people);
-            $scope.people[index].isTop = true;      //固定
-            $scope.people[index].isChecked = false;  //去掉标记位，也就是去掉勾
-        }
-        $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
-    }
-    /* 取消固定 ----批量操作*/
-    $scope.cancelPin = function(value){
-        for(var i in value){
-            var index = findIndex(value[i],$scope.people);
-            $scope.people[index].isTop = false;      //取消固定
-            $scope.people[index].isChecked = false;  //去掉标记位，也就是去掉勾
-        }
-        $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
-    }
+    // /* 固定 ----批量操作*/
+    // $scope.surePin = function(value){
+    //     for(var i in value){
+    //         var index = findIndex(value[i],$scope.people);
+    //         $scope.people[index].isTop = true;      //固定
+    //         $scope.people[index].isChecked = false;  //去掉标记位，也就是去掉勾
+    //         customerData.updateData(value[i]);
+    //     }
+    //     $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
+    // }
+    // /* 取消固定 ----批量操作*/
+    // $scope.cancelPin = function(value){
+    //     for(var i in value){
+    //         var index = findIndex(value[i],$scope.people);
+    //         $scope.people[index].isTop = false;      //取消固定
+    //         $scope.people[index].isChecked = false;  //去掉标记位，也就是去掉勾
+    //         customerData.updateData(value[i]);
+    //     }
+    //     $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
+    // }
     /* 删除栏目 ----批量操作 */
     $scope.deletePeople = function(value){
         var deleteConfirm = confirm('您确定要删除这位联系人吗？');
         if(deleteConfirm){
             for(var i in value){
                 var index = findIndex(value[i],$scope.people);
-                $scope.people.splice(index,1);   //删除
                 $scope.people[index].isChecked = false;  //去掉标记位
+                $scope.people.splice(index,1);   //删除
+                customerData.updateData(value[i]);
             }
             $scope.checkArr.splice(0,$scope.checkArr.length);   
         }
     }
-}]);
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}])
+
+
