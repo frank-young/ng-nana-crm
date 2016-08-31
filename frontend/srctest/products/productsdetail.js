@@ -21,6 +21,14 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
     $scope.$watch('files', function () {
         $scope.selectImage($scope.files);
     });
+
+    $scope.saveProduct = function(value){
+        $scope.isEdit = !$scope.isEdit;
+        productData.updateData(value).then(function(data){
+            $scope.changeAlert('操作成功！');
+        });
+    }
+
     //根据选择的图片来判断 是否为一下子选择了多张
     //一下子选择多张的数据格式为一个数组中有多个对象，而一次只选择一张的数据格式为一个数组中有一个对象
     $scope.selectImage = function (files) {
@@ -64,5 +72,9 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
         });
 
     };
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
 
 }]);

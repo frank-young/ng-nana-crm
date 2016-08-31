@@ -6,7 +6,7 @@
 			<a ui-sref="web.productsAdd" class="btn btn-primary"><i class="fa fa-copy"></i> 克隆</a>
  
 			<button type="button" class="btn btn-danger" ng-class="{true: 'pro-show', false: 'pro-hide'}[isEdit]" ng-click="isEdit = !isEdit"><i class="fa fa-edit"></i> 编辑</button>
-			<button type="button" class="btn btn-success" ng-class="{true: 'pro-show', false: 'pro-hide'}[!isEdit]" ng-click="isEdit = !isEdit"><i class="fa fa-save"></i> 保存</button>
+			<button type="button" class="btn btn-success" ng-class="{true: 'pro-show', false: 'pro-hide'}[!isEdit]" ng-click="saveProduct(product)"><i class="fa fa-save"></i> 保存</button>
 
 		</h2>
 		<div class="pro-wrap">
@@ -98,7 +98,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1" style="margin-top: 20px;margin-bottom: 10px;">
-					<button type="button" class="btn btn-success" ng-show="!isEdit" ng-click="isEdit = !isEdit" ng-disabled="productForm.$invalid"><i class="fa fa-save"></i> 保存</button>
+					<button type="button" class="btn btn-success" ng-show="!isEdit" ng-click="saveProduct(product)" ng-disabled="productForm.$invalid"><i class="fa fa-save"></i> 保存</button>
 				</div>
 			</div>
 		</div>

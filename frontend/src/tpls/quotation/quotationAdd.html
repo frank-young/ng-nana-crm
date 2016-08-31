@@ -79,7 +79,7 @@
 							<div class="form-group row">
 								<div class="col-xs-10">
 									<span class="btn btn-success mr-10">{{$index+1}}</span>
-									<span ng-bind="products[product.value].name"></span>
+									<span ng-bind="product.name"></span>
 								</div>
 								<div class="col-xs-1">
 									<button class="btn btn-danger" ng-click="deleteProduct(product)">删除</button>
@@ -147,7 +147,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-1 col-md-offset-1" style="margin-top: 20px;margin-bottom: 10px;">
-					<button type="button" class="btn btn-success" ng-click="" ng-disabled="quotationForm.$invalid">保存</button>
+					<button type="button" class="btn btn-success" ng-click="saveQuotation(quotation)" ng-disabled="quotationForm.$invalid">保存</button>
 				</div>
 				<div class="col-md-1" style="margin-top: 20px;margin-bottom: 10px;">
 					<button type="button" class="btn btn-primary" ng-click="" onclick="window.print()">打印</button>

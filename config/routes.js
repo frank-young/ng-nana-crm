@@ -9,6 +9,9 @@ var Index = require('../app/controllers/index'),
     Product = require('../app/controllers/product/product')
     Cate = require('../app/controllers/product/cate')
     Setting = require('../app/controllers/setting'),
+    Quotation = require('../app/controllers/quotation/quotation')
+    Quotationhead = require('../app/controllers/quotation/quotationhead')
+    Quotationfoot = require('../app/controllers/quotation/quotationfoot')
 
 module.exports = function(app){
 	app.use(function(req, res, next) {
@@ -78,6 +81,25 @@ module.exports = function(app){
   app.post('/cate/update', Cate.update)
   app.post('/cate/add', Cate.save)
   app.delete('/cate/delete', Cate.del)
+
+  //报价单
+  app.get('/quotation', Quotation.list)
+  app.post('/quotation/update', Quotation.update)
+  app.post('/quotation/add', Quotation.save)
+  app.delete('/quotation/delete', Quotation.del)
+  app.get('/quotation/detail/:id', Quotation.detail)
+
+  //报价单--头部
+  app.get('/quotationhead', Quotationhead.list)
+  app.post('/quotationhead/update', Quotationhead.update)
+  app.post('/quotationhead/add', Quotationhead.save)
+  app.delete('/quotationhead/delete', Quotationhead.del)
+
+  //报价单--尾部
+  app.get('/quotationfoot', Quotationfoot.list)
+  app.post('/quotationfoot/update', Quotationfoot.update)
+  app.post('/quotationfoot/add', Quotationfoot.save)
+  app.delete('/quotationfoot/delete', Quotationfoot.del)
 
   //user setting
   app.get('/setting', Setting.data)

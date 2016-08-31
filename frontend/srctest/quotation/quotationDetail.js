@@ -2,26 +2,15 @@
  *                                                      报价单详情页面
  ********************************************************************************************************************/
 
-angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
-.controller('QuotationDetailCtrl', function($scope, $http, $state,cfpLoadingBar) {
-    cfpLoadingBar.start();  //进度条开始
+angular.module("quotationDetailMoudle", [])
+.controller('QuotationDetailCtrl', 
+    ['$scope', '$http', '$stateParams','$alert','quotationData','customerData','productData','cateData',
+    function($scope, $http, $stateParams,$alert,quotationData,customerData, productData,cateData) {
+    // cfpLoadingBar.start();  //进度条开始
 	$scope.isEdit = true; 
-    $scope.quotation = {	
-			"id":0,
-            "isTop":true,
-            "isChecked":false,
-            "name":"传奇贸易公司订单",
-            "company":"1",
-            "amount":"20万人民币",
-            "phase":"1",
-            "people":"杨军",
-            "date":2141231198432,
-            "units":"0",
-            "company":"1",
-            "head":"0",
-            "foot":"0",
-            "products":[]
-        }
+    quotationData.getIdData($stateParams.id).then(function (data) {
+       $scope.quotation=data.quotation; 
+    });
     /* 货币计量单位 */
     $http({
         url:'data/units.json',
@@ -30,12 +19,17 @@ angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
     }).success(function(data){
         $scope.units = data.units;
     })
-    /* 客户信息 */
-    $http({
-        url:'data/company.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.company = data.company;
+    /* 自定义 -- 公司*/
+    customerData.getData().then(function (data) {
+        var company=[];
+        for(var i in data.customers){
+            company.push({
+                value:i,
+                id:data.customers[i]._id,
+                label:data.customers[i].companyName
+            })
+        }
+        $scope.company = company
     })
     /* 报价单头部 */
     $http({
@@ -60,19 +54,13 @@ angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
     }
     /* 报价详情 */
     //产品分类
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cates=data.cates;
     })
     //产品信息 
-    $http({
-        url:'data/products.json',
-        method:'GET'
-    }).success(function(data){
+    productData.getData().then(function(data){
         $scope.products=data.products;
-        cfpLoadingBar.complete();    //进度条结束
+        // cfpLoadingBar.complete();    //进度条结束
     })
     /* 删除产品 */
     $scope.deleteProduct = function(value){
@@ -82,12 +70,17 @@ angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
     		$scope.quotation.products.splice(index, 1);
     	}
     }
-
+    $scope.saveQuotation = function(value){
+        $scope.isEdit = !$scope.isEdit;
+        quotationData.updateData(value).then(function(data){
+            $scope.changeAlert('操作成功！');
+        });
+    }
     /* 选择产品 */
     $scope.selectProduct = function(value){
         mark = false;
         for(var i in $scope.quotation.products){    //判断product中的id是否包含在quitation.products.value中,
-            if($scope.quotation.products[i].value == value.id){
+            if($scope.quotation.products[i].value == value._id){
                 mark = true;        //只是做标记
                 return;
             }else{
@@ -96,7 +89,8 @@ angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
         }
         if(!mark){
             $scope.quotation.products.push({
-                    "value":value.id,
+                    "value":value._id,
+                    "name":value.name,
                     "num":0,
                     "price":"",
                     "total":""
@@ -121,9 +115,13 @@ angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
 
                 $scope.totalPrice = 0;
                 priceArray.forEach(function(value){
-                    $scope.totalPrice += parseFloat(value.toFixed(2));
+                    $scope.totalPrice += parseFloat(value);     //toFixed(2)
                 });
             }
         }
     }, true);
-})
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}])

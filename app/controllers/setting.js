@@ -15,7 +15,6 @@ var User = require('../models/user')	//引入模型
 	exports.update = function(req,res){
 		var email = req.session.user.email
 		var user = req.body.setting
-		console.log(user)
 		if(email){
 			User.update({email: email},
 				{$set:{

@@ -14,6 +14,7 @@ var _ = require('underscore')
 	//产品更新、新建
 	exports.save = function(req,res){
 		var productObj = req.body.product 	//从路由传过来的 product对象
+		var user = req.session.user
 		var _product
 			_product = new Product({
 				isTop: productObj.isTop,
@@ -21,8 +22,8 @@ var _ = require('underscore')
 				name: productObj.name,
 				model: productObj.model,
 				cate: productObj.cate,
-				people: productObj. people,
-				editpeople: productObj.editpeople,
+				people: user.name,
+				editpeople: user.name,
 				description: productObj.description,
 				path: productObj.path,
 				img: productObj.img
@@ -38,7 +39,9 @@ var _ = require('underscore')
 	exports.update = function(req,res){
 		var id = req.body.product._id
 		var productObj = req.body.product 	//从路由传过来的 product对象
+		var user = req.session.user
 		var _product
+		productObj.editpeople = user.name
 		if(id !=="undefined"){
 			Product.findById(id,function(err,product){
 				if(err){

@@ -617,4 +617,253 @@ angular.module('serviceData', [])
             }
         }
     }])
+    .factory('quotationData', ['$q','$http',function($q,$http){
+        return {
+            getData: function () {
+                var defer = $q.defer();
+                $http({
+                    url: '/quotation',
+                    method: 'get' 
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            updateData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/quotation/update',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        quotation:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            addData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/quotation/add',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        quotation:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            getIdData: function (id) {
+                var defer = $q.defer();
+                $http({
+                    url: '/quotation/detail/'+id,
+                    method: 'get'
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            deleteData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'DELETE',
+                    url: '/quotation/delete?id='+value._id,
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            }
+        }
+    }])
+    .factory('quotationheadData', ['$q','$http',function($q,$http){
+        return {
+            getData: function () {
+                var defer = $q.defer();
+                $http({
+                    url: '/quotationhead',
+                    method: 'get' 
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            updateData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/quotationhead/update',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        quotationhead:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            addData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/quotationhead/add',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        quotationhead:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            getIdData: function (id) {
+                var defer = $q.defer();
+                $http({
+                    url: '/quotationhead/detail/'+id,
+                    method: 'get'
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            deleteData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'DELETE',
+                    url: '/quotationhead/delete?id='+value._id,
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            }
+        }
+    }])
+    .factory('quotationfootData', ['$q','$http',function($q,$http){
+        return {
+            getData: function () {
+                var defer = $q.defer();
+                $http({
+                    url: '/quotationfoot',
+                    method: 'get' 
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            updateData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/quotationfoot/update',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        quotationfoot:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            addData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/quotationfoot/add',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        quotationfoot:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            getIdData: function (id) {
+                var defer = $q.defer();
+                $http({
+                    url: '/quotationfoot/detail/'+id,
+                    method: 'get'
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            deleteData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'DELETE',
+                    url: '/quotationfoot/delete?id='+value._id,
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            }
+        }
+    }])
 

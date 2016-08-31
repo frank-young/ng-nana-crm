@@ -2,7 +2,9 @@
  *                                                      报价单列表页面
  ********************************************************************************************************************/
 
-angular.module("quotationMoudle", []).controller('QuotationCtrl', function($scope, $http, $state) {
+angular.module("quotationMoudle", []).controller('QuotationCtrl', 
+    ['$scope', '$http', '$state','$alert','quotationData','customerData',
+    function($scope, $http, $state,$alert,quotationData,customerData) {
 	/* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -23,47 +25,51 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl', function($scop
     // $scope.totalItems = 6;
     $scope.currentPage = 1;
     /* 报价单 */
-    $http({
-        url:'data/quotation.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.quotation=data.quotation;
+    quotationData.getData().then(function(data){
+        $scope.quotation=data.quotations;
     })
-    /* 客户公司 */
-    $http({
-        url:'data/company.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.company=data.company;
+    /* 自定义 -- 公司*/
+    customerData.getData().then(function (data) {
+        var company=[];
+        for(var i in data.customers){
+            company.push({
+                value:i,
+                id:data.customers[i]._id,
+                label:data.customers[i].companyName
+            })
+        }
+        $scope.company = company
     })
+
     /* 报价阶段 */
     $scope.phase = [
     	{"value":"0","label":"已创建"},
         {"value":"1","label":"已发送"},
         {"value":"2","label":"尚有谈判余地"},
-        {"value":"0","label":"已接受"},
-        {"value":"1","label":"已拒绝"}
+        {"value":"3","label":"已接受"},
+        {"value":"4","label":"已拒绝"}
     ];
     /* 固定/取消固定 位置  ----栏目位置*/
     $scope.pinItem = function(value){
         value.isTop = !value.isTop;
-        $http({
-            method: 'POST',
-            url: 'http://localhost/angularcode/src/',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-            },
-            data: value
-        }).success(function(data){
-            console.log('success')
-        })
+        quotationData.updateData(value);
         
     }
     /* 选择查看固定位置 */
     $scope.pinSortFunc = function(value){
         $scope.pinSort = value;
     }
-
+    /* 删除单件报价单 */
+    $scope.deleteQuotation = function(value){
+        var deleteConfirm = confirm('您确定要删除这条报价单吗？');
+        if(deleteConfirm){
+            var index = findIndex(value,$scope.quotation);
+            $scope.quotation.splice(index,1);   //删除
+            quotationData.deleteData(value).then(function(data){
+                $scope.changeAlert('操作成功！');
+            })
+        }
+    }
     /***************************** 以下是顶部导航栏批量操作 **************************************/
     /* 多选框选择 */
     $scope.checkArr = [];
@@ -79,14 +85,7 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl', function($scop
         }
         
     }
-    /* 删除单件报价单 */
-    $scope.deleteQuotation = function(value){
-        var deleteConfirm = confirm('您确定要删除这条报价单吗？');
-        if(deleteConfirm){
-            var index = findIndex(value,$scope.quotation);
-            $scope.quotation.splice(index,1);   //删除
-        }
-    }
+    
     /* 返回按钮，也就是清空整个数组，并且将选框的标记位设为false */
     $scope.isCheckedNo = function(){
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组
@@ -108,6 +107,7 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl', function($scop
             var index = findIndex(value[i],$scope.quotation);
             $scope.quotation[index].isTop = true;      //固定
             $scope.quotation[index].isChecked = false;  //去掉标记位，也就是去掉勾
+            quotationData.updateData(value[i]);
         }
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     }
@@ -117,19 +117,25 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl', function($scop
             var index = findIndex(value[i],$scope.quotation);
             $scope.quotation[index].isTop = false;      //取消固定
             $scope.quotation[index].isChecked = false;  //去掉标记位，也就是去掉勾
+            quotationData.updateData(value[i]);
         }
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     }
     /* 删除栏目 ----批量操作 */
-    $scope.deleteQuotation = function(value){
+    $scope.deleteQuotations = function(value){
         var deleteConfirm = confirm('您确定要删除这些报价单吗？');
         if(deleteConfirm){
             for(var i in value){
                 var index = findIndex(value[i],$scope.quotation);
-                $scope.quotation.splice(index,1);   //删除
                 $scope.quotation[index].isChecked = false;  //去掉标记位
+                $scope.quotation.splice(index,1);   //删除
+                quotationData.deleteData(value[i]);
             }
             $scope.checkArr.splice(0,$scope.checkArr.length);   
         }
     }
-})
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}])

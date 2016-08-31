@@ -2472,6 +2472,14 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
     $scope.$watch('files', function () {
         $scope.selectImage($scope.files);
     });
+
+    $scope.saveProduct = function(value){
+        $scope.isEdit = !$scope.isEdit;
+        productData.updateData(value).then(function(data){
+            $scope.changeAlert('操作成功！');
+        });
+    }
+
     //根据选择的图片来判断 是否为一下子选择了多张
     //一下子选择多张的数据格式为一个数组中有多个对象，而一次只选择一张的数据格式为一个数组中有一个对象
     $scope.selectImage = function (files) {
@@ -2515,12 +2523,18 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
         });
 
     };
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
 
 }]);;/********************************************************************************************************************
  *                                                      报价单列表页面
  ********************************************************************************************************************/
 
-angular.module("quotationMoudle", []).controller('QuotationCtrl', function($scope, $http, $state) {
+angular.module("quotationMoudle", []).controller('QuotationCtrl', 
+    ['$scope', '$http', '$state','$alert','quotationData','customerData',
+    function($scope, $http, $state,$alert,quotationData,customerData) {
 	/* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -2541,47 +2555,51 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl', function($scop
     // $scope.totalItems = 6;
     $scope.currentPage = 1;
     /* 报价单 */
-    $http({
-        url:'data/quotation.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.quotation=data.quotation;
+    quotationData.getData().then(function(data){
+        $scope.quotation=data.quotations;
     })
-    /* 客户公司 */
-    $http({
-        url:'data/company.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.company=data.company;
+    /* 自定义 -- 公司*/
+    customerData.getData().then(function (data) {
+        var company=[];
+        for(var i in data.customers){
+            company.push({
+                value:i,
+                id:data.customers[i]._id,
+                label:data.customers[i].companyName
+            })
+        }
+        $scope.company = company
     })
+
     /* 报价阶段 */
     $scope.phase = [
     	{"value":"0","label":"已创建"},
         {"value":"1","label":"已发送"},
         {"value":"2","label":"尚有谈判余地"},
-        {"value":"0","label":"已接受"},
-        {"value":"1","label":"已拒绝"}
+        {"value":"3","label":"已接受"},
+        {"value":"4","label":"已拒绝"}
     ];
     /* 固定/取消固定 位置  ----栏目位置*/
     $scope.pinItem = function(value){
         value.isTop = !value.isTop;
-        $http({
-            method: 'POST',
-            url: 'http://localhost/angularcode/src/',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-            },
-            data: value
-        }).success(function(data){
-            console.log('success')
-        })
+        quotationData.updateData(value);
         
     }
     /* 选择查看固定位置 */
     $scope.pinSortFunc = function(value){
         $scope.pinSort = value;
     }
-
+    /* 删除单件报价单 */
+    $scope.deleteQuotation = function(value){
+        var deleteConfirm = confirm('您确定要删除这条报价单吗？');
+        if(deleteConfirm){
+            var index = findIndex(value,$scope.quotation);
+            $scope.quotation.splice(index,1);   //删除
+            quotationData.deleteData(value).then(function(data){
+                $scope.changeAlert('操作成功！');
+            })
+        }
+    }
     /***************************** 以下是顶部导航栏批量操作 **************************************/
     /* 多选框选择 */
     $scope.checkArr = [];
@@ -2597,14 +2615,7 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl', function($scop
         }
         
     }
-    /* 删除单件报价单 */
-    $scope.deleteQuotation = function(value){
-        var deleteConfirm = confirm('您确定要删除这条报价单吗？');
-        if(deleteConfirm){
-            var index = findIndex(value,$scope.quotation);
-            $scope.quotation.splice(index,1);   //删除
-        }
-    }
+    
     /* 返回按钮，也就是清空整个数组，并且将选框的标记位设为false */
     $scope.isCheckedNo = function(){
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组
@@ -2626,6 +2637,7 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl', function($scop
             var index = findIndex(value[i],$scope.quotation);
             $scope.quotation[index].isTop = true;      //固定
             $scope.quotation[index].isChecked = false;  //去掉标记位，也就是去掉勾
+            quotationData.updateData(value[i]);
         }
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     }
@@ -2635,37 +2647,44 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl', function($scop
             var index = findIndex(value[i],$scope.quotation);
             $scope.quotation[index].isTop = false;      //取消固定
             $scope.quotation[index].isChecked = false;  //去掉标记位，也就是去掉勾
+            quotationData.updateData(value[i]);
         }
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     }
     /* 删除栏目 ----批量操作 */
-    $scope.deleteQuotation = function(value){
+    $scope.deleteQuotations = function(value){
         var deleteConfirm = confirm('您确定要删除这些报价单吗？');
         if(deleteConfirm){
             for(var i in value){
                 var index = findIndex(value[i],$scope.quotation);
-                $scope.quotation.splice(index,1);   //删除
                 $scope.quotation[index].isChecked = false;  //去掉标记位
+                $scope.quotation.splice(index,1);   //删除
+                quotationData.deleteData(value[i]);
             }
             $scope.checkArr.splice(0,$scope.checkArr.length);   
         }
     }
-})
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}])
 ;/********************************************************************************************************************
  *                                                      添加报价单页面
  ********************************************************************************************************************/
 
-angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', function($scope, $http, $state) {
+angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', 
+    ['$scope', '$http', '$state','$alert','quotationData','customerData','productData','cateData',
+    function($scope, $http, $state,$alert,quotationData,customerData, productData,cateData) {
 	$scope.quotation = {	
 			"id":0,
-            "isTop":true,
+            "isTop":false,
             "isChecked":false,
             "name":"",
-            "company":"0",
+            "company":"",
             "amount":"",
             "phase":"0",
             "people":"",
-            "date":0,
             "units":"0",
             "head":"0",
             "foot":"0",
@@ -2678,13 +2697,19 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', function
     }).success(function(data){
         $scope.units = data.units;
     })
-    /* 客户信息 */
-    $http({
-        url:'data/company.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.company = data.company;
+    /* 自定义 -- 公司*/
+    customerData.getData().then(function (data) {
+        var company=[];
+        for(var i in data.customers){
+            company.push({
+                value:i,
+                id:data.customers[i]._id,
+                label:data.customers[i].companyName
+            })
+        }
+        $scope.company = company
     })
+
     /* 报价单头部 */
     $http({
         url:'data/quotationhead.json',
@@ -2693,7 +2718,7 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', function
         $scope.heads = data.heads;
     })
     $scope.selectHead = function(selected){
-    	$scope.quotation.head = selected
+    	$scope.quotation.head = selected;
     }
 
     /* 报价单尾部*/
@@ -2706,21 +2731,24 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', function
     $scope.selectFoot = function(selected){
     	$scope.quotation.foot = selected
     }
+
     /* 报价详情 */
     //产品分类
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cates=data.cates;
     })
     //产品信息 
-    $http({
-        url:'data/products.json',
-        method:'GET'
-    }).success(function(data){
+    productData.getData().then(function(data){
         $scope.products=data.products;
     })
+
+    $scope.saveQuotation = function(value){
+        quotationData.addData(value).then(function(data){
+            $scope.changeAlert('添加成功！');
+            window.history.go(-1);
+        });
+    }
+
     /* 删除产品 */
     $scope.deleteProduct = function(value){
     	var delconfirm = confirm("您确定要删除这件产品吗？");
@@ -2733,8 +2761,9 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', function
     /* 选择产品 */
     $scope.selectProduct = function(value){
         mark = false;
-        for(var i in $scope.quotation.products){    //判断product中的id是否包含在quitation.products.value中,
-            if($scope.quotation.products[i].value == value.id){
+        for(var i in $scope.quotation.products){    
+            //判断product中的id是否包含在quitation.products.value中,
+            if($scope.quotation.products[i].value == value._id){
                 mark = true;        //只是做标记
                 return;
             }else{
@@ -2743,11 +2772,12 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', function
         }
         if(!mark){
             $scope.quotation.products.push({
-                    "value":value.id,
-                    "num":0,
-                    "price":"",
-                    "total":""
-                })
+                "value":value._id,
+                "name":value.name,
+                "num":0,
+                "price":"",
+                "total":""
+            })
         }            
     }
     /* 总数量和总计 */   
@@ -2766,38 +2796,30 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', function
 
                 $scope.totalPrice = 0;
                 priceArray.forEach(function(value){
-                    $scope.totalPrice += parseFloat(value.toFixed(2));
+                    $scope.totalPrice += parseFloat(value);
                 });
             }
         }
     }, true);
     
-
-})
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}])
 ;/********************************************************************************************************************
  *                                                      报价单详情页面
  ********************************************************************************************************************/
 
-angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
-.controller('QuotationDetailCtrl', function($scope, $http, $state,cfpLoadingBar) {
-    cfpLoadingBar.start();  //进度条开始
+angular.module("quotationDetailMoudle", [])
+.controller('QuotationDetailCtrl', 
+    ['$scope', '$http', '$stateParams','$alert','quotationData','customerData','productData','cateData',
+    function($scope, $http, $stateParams,$alert,quotationData,customerData, productData,cateData) {
+    // cfpLoadingBar.start();  //进度条开始
 	$scope.isEdit = true; 
-    $scope.quotation = {	
-			"id":0,
-            "isTop":true,
-            "isChecked":false,
-            "name":"传奇贸易公司订单",
-            "company":"1",
-            "amount":"20万人民币",
-            "phase":"1",
-            "people":"杨军",
-            "date":2141231198432,
-            "units":"0",
-            "company":"1",
-            "head":"0",
-            "foot":"0",
-            "products":[]
-        }
+    quotationData.getIdData($stateParams.id).then(function (data) {
+       $scope.quotation=data.quotation; 
+    });
     /* 货币计量单位 */
     $http({
         url:'data/units.json',
@@ -2806,12 +2828,17 @@ angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
     }).success(function(data){
         $scope.units = data.units;
     })
-    /* 客户信息 */
-    $http({
-        url:'data/company.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.company = data.company;
+    /* 自定义 -- 公司*/
+    customerData.getData().then(function (data) {
+        var company=[];
+        for(var i in data.customers){
+            company.push({
+                value:i,
+                id:data.customers[i]._id,
+                label:data.customers[i].companyName
+            })
+        }
+        $scope.company = company
     })
     /* 报价单头部 */
     $http({
@@ -2836,19 +2863,13 @@ angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
     }
     /* 报价详情 */
     //产品分类
-    $http({
-        url:'data/productcate.json',
-        method:'GET'
-    }).success(function(data){
+    cateData.getData().then(function(data){
         $scope.cates=data.cates;
     })
     //产品信息 
-    $http({
-        url:'data/products.json',
-        method:'GET'
-    }).success(function(data){
+    productData.getData().then(function(data){
         $scope.products=data.products;
-        cfpLoadingBar.complete();    //进度条结束
+        // cfpLoadingBar.complete();    //进度条结束
     })
     /* 删除产品 */
     $scope.deleteProduct = function(value){
@@ -2858,12 +2879,17 @@ angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
     		$scope.quotation.products.splice(index, 1);
     	}
     }
-
+    $scope.saveQuotation = function(value){
+        $scope.isEdit = !$scope.isEdit;
+        quotationData.updateData(value).then(function(data){
+            $scope.changeAlert('操作成功！');
+        });
+    }
     /* 选择产品 */
     $scope.selectProduct = function(value){
         mark = false;
         for(var i in $scope.quotation.products){    //判断product中的id是否包含在quitation.products.value中,
-            if($scope.quotation.products[i].value == value.id){
+            if($scope.quotation.products[i].value == value._id){
                 mark = true;        //只是做标记
                 return;
             }else{
@@ -2872,7 +2898,8 @@ angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
         }
         if(!mark){
             $scope.quotation.products.push({
-                    "value":value.id,
+                    "value":value._id,
+                    "name":value.name,
                     "num":0,
                     "price":"",
                     "total":""
@@ -2897,18 +2924,24 @@ angular.module("quotationDetailMoudle", ['cfp.loadingBar'])
 
                 $scope.totalPrice = 0;
                 priceArray.forEach(function(value){
-                    $scope.totalPrice += parseFloat(value.toFixed(2));
+                    $scope.totalPrice += parseFloat(value);     //toFixed(2)
                 });
             }
         }
     }, true);
-})
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}])
 ;/********************************************************************************************************************
  *                                                      报价单设置页面
  ********************************************************************************************************************/
 
 angular.module("quotationSettingMoudle", ['ng-sortable'])
-.controller('QuotationSettingCtrl', function($scope, $http, $state) {
+.controller('QuotationSettingCtrl', 
+    ['$scope', '$http', '$state','quotationheadData','quotationfootData',
+    function($scope, $http, $state,quotationheadData,quotationfootData) {
 	/* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -2974,11 +3007,8 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
 
     /************************************* 报价单头 ********************************/
     /* 报价单头 */
-    $http({
-        url:'data/quotationhead.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.heads = data.heads;
+    quotationheadData.getData().then(function(data){
+        $scope.heads = data.quotationheads;
     })
     /* 项目选择设置 */
     $http({
@@ -3004,16 +3034,29 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
 		})
 		$scope.headMsg = {};
     }
-    /* 添加报价单尾信息 */
+    /* 添加报价头尾信息 */
     $scope.saveHeadAdd = function(value){
         var val = $scope.heads.length;
         var msgadd = {
         	"value":val,
+            "isEdit":false,
         	"text":value.text,
-        	"content":value.content,
-        	"isEdit":false
+            "company":value.company,
+            "cname":value.cname,
+            "address":value.address,
+            "phone":value.phone,
+            "email":value.email,
+            "people":value.people,
+            "mobile":value.mobile,
+            "fromDate":value.fromDate,
+            "untilDate":value.untilDate,
+            "logo":value.logo
         }
-        $scope.heads.push(msgadd);
+        quotationheadData.addData(msgadd)
+        quotationheadData.getData().then(function(data){
+            $scope.heads = data.quotationheads;
+        })
+
     }
     
 
@@ -3023,16 +3066,21 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         if(deleteConfirm){
             var index = findIndex(value,$scope.heads);
             $scope.heads.splice(index,1);   //删除
+            quotationheadData.deleteData(value).then(function(data){
+                $scope.changeAlert('删除成功！');
+            })
+            /* 更新数据value索引值 */
+            $scope.heads.forEach( function(element, index) {
+                element.value = index;
+                quotationheadData.updateData(element);
+            });
         }
     }
 
     /************************************* 报价单尾 ********************************/
     /* 报价单尾 */
-    $http({
-        url:'data/quotationfoot.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.foots = data.foots;
+    quotationfootData.getData().then(function(data){
+        $scope.foots = data.quotationfoots;
     })
     /******** 报价单弹窗 ********/
     /* 修改信息*/
@@ -3059,7 +3107,10 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         	"content":value.content,
         	"isEdit":false
         }
-        $scope.foots.push(msgadd);
+        quotationfootData.addData(msgadd);
+        quotationfootData.getData().then(function(data){
+            $scope.foots = data.quotationfoots;
+        })
 
     }
     
@@ -3069,9 +3120,17 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         if(deleteConfirm){
             var index = findIndex(value,$scope.foots);
             $scope.foots.splice(index,1);   //删除
+            quotationfootData.deleteData(value).then(function(data){
+                $scope.changeAlert('删除成功！');
+            })
+            /* 更新数据value索引值 */
+            $scope.foots.forEach( function(element, index) {
+                element.value = index;
+                quotationfootData.updateData(element);
+            });
         }
     }
-})
+}])
 
 ;/********************************************************************************************************************
  *                                                      个人设置

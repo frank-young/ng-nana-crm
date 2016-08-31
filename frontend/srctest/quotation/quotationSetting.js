@@ -3,7 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("quotationSettingMoudle", ['ng-sortable'])
-.controller('QuotationSettingCtrl', function($scope, $http, $state) {
+.controller('QuotationSettingCtrl', 
+    ['$scope', '$http', '$state','quotationheadData','quotationfootData',
+    function($scope, $http, $state,quotationheadData,quotationfootData) {
 	/* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -69,11 +71,8 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
 
     /************************************* 报价单头 ********************************/
     /* 报价单头 */
-    $http({
-        url:'data/quotationhead.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.heads = data.heads;
+    quotationheadData.getData().then(function(data){
+        $scope.heads = data.quotationheads;
     })
     /* 项目选择设置 */
     $http({
@@ -99,16 +98,29 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
 		})
 		$scope.headMsg = {};
     }
-    /* 添加报价单尾信息 */
+    /* 添加报价头尾信息 */
     $scope.saveHeadAdd = function(value){
         var val = $scope.heads.length;
         var msgadd = {
         	"value":val,
+            "isEdit":false,
         	"text":value.text,
-        	"content":value.content,
-        	"isEdit":false
+            "company":value.company,
+            "cname":value.cname,
+            "address":value.address,
+            "phone":value.phone,
+            "email":value.email,
+            "people":value.people,
+            "mobile":value.mobile,
+            "fromDate":value.fromDate,
+            "untilDate":value.untilDate,
+            "logo":value.logo
         }
-        $scope.heads.push(msgadd);
+        quotationheadData.addData(msgadd)
+        quotationheadData.getData().then(function(data){
+            $scope.heads = data.quotationheads;
+        })
+
     }
     
 
@@ -118,16 +130,21 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         if(deleteConfirm){
             var index = findIndex(value,$scope.heads);
             $scope.heads.splice(index,1);   //删除
+            quotationheadData.deleteData(value).then(function(data){
+                $scope.changeAlert('删除成功！');
+            })
+            /* 更新数据value索引值 */
+            $scope.heads.forEach( function(element, index) {
+                element.value = index;
+                quotationheadData.updateData(element);
+            });
         }
     }
 
     /************************************* 报价单尾 ********************************/
     /* 报价单尾 */
-    $http({
-        url:'data/quotationfoot.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.foots = data.foots;
+    quotationfootData.getData().then(function(data){
+        $scope.foots = data.quotationfoots;
     })
     /******** 报价单弹窗 ********/
     /* 修改信息*/
@@ -154,7 +171,10 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         	"content":value.content,
         	"isEdit":false
         }
-        $scope.foots.push(msgadd);
+        quotationfootData.addData(msgadd);
+        quotationfootData.getData().then(function(data){
+            $scope.foots = data.quotationfoots;
+        })
 
     }
     
@@ -164,7 +184,15 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         if(deleteConfirm){
             var index = findIndex(value,$scope.foots);
             $scope.foots.splice(index,1);   //删除
+            quotationfootData.deleteData(value).then(function(data){
+                $scope.changeAlert('删除成功！');
+            })
+            /* 更新数据value索引值 */
+            $scope.foots.forEach( function(element, index) {
+                element.value = index;
+                quotationfootData.updateData(element);
+            });
         }
     }
-})
+}])
 
