@@ -7,6 +7,7 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		{
 			icon:'fa fa-paper-plane-o',
 			title:'圈内信',
+			role:0,
 			subs:[
 				{
 					text:'圈内信',
@@ -17,6 +18,7 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		{
 			icon:'fa fa-users',
 			title:'客户管理',
+			role:0,
 			subs:[
 				{
 					text:'潜在客户',
@@ -40,6 +42,7 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		{
 			icon:'fa fa-diamond',
 			title:'产品管理',
+			role:0,
 			subs:[
 				{
 					text:'全部产品',
@@ -63,6 +66,7 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		{
 			icon:'fa fa-file-pdf-o',
 			title:'报价单',
+			role:0,
 			subs:[
 				{
 					text:'报价单总览',
@@ -81,13 +85,29 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		{
 			icon:'fa fa-phone',
 			title:'通讯录',
+			role:0,
 			subs:[
 				{
 					text:'全部联系人',
 					link:'web.people'
 				}
 			]
-		}
+		},
+		{
+			icon:'fa fa-meh-o',
+			title:'团队成员',
+			role:10,
+			subs:[
+				{
+					text:'成员列表',
+					link:'web.team'
+				},
+				{
+					text:'新建成员',
+					link:'web.teamAdd'
+				}
+			]
+		},
 
 	]
 });

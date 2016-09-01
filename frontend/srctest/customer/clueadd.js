@@ -60,6 +60,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     /* 添加联系人 */
     $scope.cusadd = function(){
         $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false});     //默认未收藏联系人，可编辑状态
+
     }
     /* 删除联系人 */
     $scope.cusdel = function(index){
@@ -67,6 +68,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
+                customerData.updateData($scope.customer);
             }
         }
     }

@@ -48,11 +48,15 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
     });
     /* 编辑客户信息 */
     $scope.editCustomer = function(value){
-        customerData.updateData(value)
+        customerData.updateData(value);
+        customerData.getIdData($state.id).then(function (data) {
+            $scope.customer=data.customer; 
+        });
+
     }
     /* 添加联系人 */
     $scope.cusadd = function(){
-        $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false});     //默认未收藏联系人，可编辑状态
+        $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false,isTop:false});     //默认未收藏联系人，可编辑状态  
     }
     /* 删除联系人 */
     $scope.cusdel = function(index){
@@ -60,7 +64,7 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
-
+                customerData.updateData($scope.customer);
             }
         }
     }

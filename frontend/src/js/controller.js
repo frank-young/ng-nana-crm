@@ -7,6 +7,7 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		{
 			icon:'fa fa-paper-plane-o',
 			title:'圈内信',
+			role:0,
 			subs:[
 				{
 					text:'圈内信',
@@ -17,6 +18,7 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		{
 			icon:'fa fa-users',
 			title:'客户管理',
+			role:0,
 			subs:[
 				{
 					text:'潜在客户',
@@ -40,6 +42,7 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		{
 			icon:'fa fa-diamond',
 			title:'产品管理',
+			role:0,
 			subs:[
 				{
 					text:'全部产品',
@@ -63,6 +66,7 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		{
 			icon:'fa fa-file-pdf-o',
 			title:'报价单',
+			role:0,
 			subs:[
 				{
 					text:'报价单总览',
@@ -81,13 +85,29 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		{
 			icon:'fa fa-phone',
 			title:'通讯录',
+			role:0,
 			subs:[
 				{
 					text:'全部联系人',
 					link:'web.people'
 				}
 			]
-		}
+		},
+		{
+			icon:'fa fa-meh-o',
+			title:'团队成员',
+			role:10,
+			subs:[
+				{
+					text:'成员列表',
+					link:'web.team'
+				},
+				{
+					text:'新建成员',
+					link:'web.teamAdd'
+				}
+			]
+		},
 
 	]
 });;/**
@@ -1038,14 +1058,7 @@ angular.module('clueMoudle',[]).controller('ClueCtrl',
     var date =  new Date();
     today = date.getTime();
     $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null}]};     //初始空数据
-    /* 客户设置 */
-    $http({
-        url:'data/person.json',
-        method:'GET'
-    }).success(function(data){
-        /*  添加日程 --联系人 */
-        $scope.person = data.person;
-    })
+
     /* 保存数据，并且添加到原始数据里 */
     $scope.saveSchedule = function(value){
         value.schedule.unshift($scope.schedule);
@@ -1130,6 +1143,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     /* 添加联系人 */
     $scope.cusadd = function(){
         $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false});     //默认未收藏联系人，可编辑状态
+
     }
     /* 删除联系人 */
     $scope.cusdel = function(index){
@@ -1137,6 +1151,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
+                customerData.updateData($scope.customer);
             }
         }
     }
@@ -1303,6 +1318,7 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
     /* 添加联系人 */
     $scope.cusadd = function(){
         $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false});     //默认未收藏联系人，可编辑状态
+
     }
     /* 删除联系人 */
     $scope.cusdel = function(index){
@@ -1310,12 +1326,15 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
-
+                customerData.updateData($scope.customer);
             }
         }
     }
     $scope.editCustomer = function(value){
         clueData.updateData(value);
+        clueData.getIdData($state.id).then(function (data) {
+            $scope.customer=data.clue; 
+        });
     }
     /* 添加日程 */
     $scope.scheadd = function(){
@@ -1590,14 +1609,7 @@ angular.module('customerlistMoudle',[]).controller('CustomerCtrl',
     var date =  new Date();
     today = date.getTime();
     $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null}]};     //初始空数据
-    /* 客户设置 */
-    $http({
-        url:'data/person.json',
-        method:'GET'
-    }).success(function(data){
-        /*  添加日程 --联系人 */
-        $scope.person = data.person;
-    })
+
     /* 保存数据，并且添加到原始数据里 */
     $scope.saveSchedule = function(value){
         value.schedule.unshift($scope.schedule);
@@ -1662,6 +1674,7 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     }).success(function(data){
         $scope.customer=data;   
     })
+
     /* 分组 */
     groupData.getData().then(function (data) {
         $scope.groups = data.groups;
@@ -1685,7 +1698,7 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     }
     /* 添加联系人 */
     $scope.cusadd = function(){
-        $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false});     //默认未收藏联系人，可编辑状态
+        $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false,isTop:false});     //默认未收藏联系人，可编辑状态
     }
     /* 删除联系人 */
     $scope.cusdel = function(index){
@@ -1693,6 +1706,7 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
+                customerData.updateData($scope.customer);
             }
         }
     }
@@ -1844,11 +1858,15 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
     });
     /* 编辑客户信息 */
     $scope.editCustomer = function(value){
-        customerData.updateData(value)
+        customerData.updateData(value);
+        customerData.getIdData($state.id).then(function (data) {
+            $scope.customer=data.customer; 
+        });
+
     }
     /* 添加联系人 */
     $scope.cusadd = function(){
-        $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false});     //默认未收藏联系人，可编辑状态
+        $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false,isTop:false});     //默认未收藏联系人，可编辑状态  
     }
     /* 删除联系人 */
     $scope.cusdel = function(index){
@@ -1856,7 +1874,7 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
-
+                customerData.updateData($scope.customer);
             }
         }
     }
@@ -2038,13 +2056,13 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl',
                 element.origin = ele.origin;
                 element.people = ele.charge;
                 element.date = ele.meta.createAt;
-                people[i] = element;
+                element.id = ele._id;
+                people.push(element);
 
             });
         });
 
         $scope.people = people
-
     })
     /* 自定义 -- 公司*/
     customerData.getData().then(function (data) {
@@ -2069,22 +2087,12 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl',
     // /* 固定/取消固定 位置  ----栏目位置*/
     // $scope.pinItem = function(value){
     //     value.isTop = !value.isTop;
-    //     $http({
-    //         method: 'POST',
-    //         url: 'http://localhost/angularcode/src/',
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-    //         },
-    //         data: value
-    //     }).success(function(data){
-    //         console.log('success')
-    //     })
-        
+    //     customerData.updateData(value);
     // }
-    // /* 选择查看固定位置 */
-    // $scope.pinSortFunc = function(value){
-    //     $scope.pinSort = value;
-    // }
+    /* 选择查看固定位置 */
+    $scope.pinSortFunc = function(value){
+        $scope.pinSort = value;
+    }
 
     /***************************** 以下是顶部导航栏批量操作 **************************************/
     /* 多选框选择 */
@@ -2101,15 +2109,15 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl',
         }
         
     }
-    /* 删除联系人 */
-    $scope.deletePeople = function(value){
-        var deleteConfirm = confirm('您确定要删除这位联系人吗？');
-        if(deleteConfirm){
-            var index = findIndex(value,$scope.people);
-            $scope.people.splice(index,1);   //删除
-            customerData.updateData(value);
-        }
-    }
+    // /* 删除联系人 */
+    // $scope.deletePeople = function(value){
+    //     var deleteConfirm = confirm('您确定要删除这位联系人吗？');
+    //     if(deleteConfirm){
+    //         var index = findIndex(value,$scope.people);
+    //         $scope.people.splice(index,1);   //删除
+    //         customerData.updateData(value);
+    //     }
+    // }
     /* 返回按钮，也就是清空整个数组，并且将选框的标记位设为false */
     $scope.isCheckedNo = function(){
         $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组
@@ -2145,19 +2153,19 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl',
     //     }
     //     $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组，也就是关闭顶部选框
     // }
-    /* 删除栏目 ----批量操作 */
-    $scope.deletePeople = function(value){
-        var deleteConfirm = confirm('您确定要删除这位联系人吗？');
-        if(deleteConfirm){
-            for(var i in value){
-                var index = findIndex(value[i],$scope.people);
-                $scope.people[index].isChecked = false;  //去掉标记位
-                $scope.people.splice(index,1);   //删除
-                customerData.updateData(value[i]);
-            }
-            $scope.checkArr.splice(0,$scope.checkArr.length);   
-        }
-    }
+    // /* 删除栏目 ----批量操作 */
+    // $scope.deletePeople = function(value){
+    //     var deleteConfirm = confirm('您确定要删除这位联系人吗？');
+    //     if(deleteConfirm){
+    //         for(var i in value){
+    //             var index = findIndex(value[i],$scope.people);
+    //             $scope.people[index].isChecked = false;  //去掉标记位
+    //             $scope.people.splice(index,1);   //删除
+    //             customerData.updateData(value[i]);
+    //         }
+    //         $scope.checkArr.splice(0,$scope.checkArr.length);   
+    //     }
+    // }
     /*提示框*/
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});
@@ -2169,25 +2177,27 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl',
  *                                                      联系人列表页面
  ********************************************************************************************************************/
 
-angular.module("peopleDetailMoudle", []).controller('PeopleDetailCtrl', function($scope, $http, $state) {
+angular.module("peopleDetailMoudle", []).controller('PeopleDetailCtrl', 
+    ['$scope', '$http', '$stateParams','customerData',
+    function($scope, $http, $stateParams,customerData) {
     $scope.sexs = [
         {"value":"0","label":"男"},
         {"value":"1","label":"女"}
     ];
-    $scope.people = {
-            "name":"杨军12",
-            "email":"yangjunalns@qq.com",
-            "sex":"0",   
-            "birthed":809846400000,
-            "phone":"1860816004",
-            "position":"采购经理",
-            "remark":"这是一个重要客户",
-            "isImportant":true,
-            "isEdit":true
-        }
+    customerData.getIdData($stateParams.id).then(function (data) {
+       $scope.customer=data.customer; 
+    });
 
     $scope.isImportant = true;
-});;/********************************************************************************************************************
+    $scope.isEdit = true;
+
+    $scope.savePeople = function(value){
+        customerData.updateData(value);
+        customerData.getIdData($stateParams.id).then(function (data) {
+           $scope.customer=data.customer; 
+        });
+    }
+}]);;/********************************************************************************************************************
  *                                                      添加图片
  ********************************************************************************************************************/
 
@@ -3179,26 +3189,161 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
  ********************************************************************************************************************/
 
 angular.module("settingMoudle", []).controller('SettingCtrl', 
-	['$scope', '$http', '$state','settingData',
-	function($scope, $http, $state,settingData) {
+	['$scope', '$http', '$state','$alert','settingData',
+	function($scope, $http, $state,$alert,settingData) {
 	$scope.isEdit = true;
-	// $scope.user = {
-	// 	"account":"yangjunaslnd@qq.com",
-	// 	"name":"frank",
-	// 	"company":"Nana tec",
-	// 	"section":"销售部",
-	// 	"position":"销售总监",
-	// 	"tel":"022-8473645",
-	// 	"phone":"18603847263",
-	// 	"fax":"022-7539059",
-	// 	"sex":"男",
-	// 	"birthday":"1993-04-12",
-	// 	"city":"天津市北辰区天穆镇政"
-	// } 
+	$scope.sexs = [
+        {"value":"0","label":"男"},
+        {"value":"1","label":"女"}
+    ];
 	settingData.getData().then(function(data){
 		$scope.user = data.user
 	})
 	$scope.saveSetting = function(value){
-		settingData.updateData(value);
+		settingData.updateData(value)
+		// .then(function(data){
+  //           $scope.changeAlert('保存成功！');
+  //       });
 	}
+	/*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
 }])
+;/********************************************************************************************************************
+ *                                                      成员列表页面
+ ********************************************************************************************************************/
+
+angular.module("teamMoudle", []).controller('TeamCtrl', 
+    ['$scope', '$http', '$state','$alert','settingData',
+    function($scope, $http, $state,$alert,settingData) {
+
+    /* 根据数组值找到索引*/
+    function findIndex(current, obj){
+        for(var i in obj){
+            if (obj[i] == current) {
+                return i;
+            } 
+        }
+    }
+
+    settingData.getData().then(function(data){
+    	$scope.user = data.user
+    })
+
+    /*分页*/
+    $scope.itemsPerPage = 5;
+    // $scope.totalItems = 6;
+    $scope.currentPage = 1;
+
+    /***************************** 以下是顶部导航栏批量操作 **************************************/
+    /* 多选框选择 */
+    $scope.checkArr = [];
+    $scope.isChecked = function(value){
+        if(value.isChecked){        //通过判断是否选中
+            $scope.checkArr.push(value);
+        }else{
+            var index = findIndex(value,$scope.checkArr);
+            // var index = $scope.checkArr.indexOf(value);
+            if(index != -1){
+                $scope.checkArr.splice(index,1);
+            }
+        }
+        
+    }
+    /* 删除成员 */
+    $scope.deleteTeam = function(value){
+        var deleteConfirm = confirm('您确定要删除这位成员吗？');
+        if(deleteConfirm){
+            var index = findIndex(value,$scope.team);
+            $scope.team.splice(index,1);   //删除
+            customerData.updateData(value);
+        }
+    }
+    /* 返回按钮，也就是清空整个数组，并且将选框的标记位设为false */
+    $scope.isCheckedNo = function(){
+        $scope.checkArr.splice(0,$scope.checkArr.length);   //清空数组
+        for(var i in $scope.team){
+            $scope.team[i].isChecked = false;      //去掉标记位
+        }
+    }
+    /* 全选操作 */
+    $scope.isCheckedAll = function(cur,per){
+        $scope.checkArr.splice(0,$scope.checkArr.length);
+            for(var i in $scope.team){
+                $scope.checkArr.push($scope.team[i]);
+                $scope.team[i].isChecked = true;
+            }
+    }
+    /* 删除栏目 ----批量操作 */
+    $scope.deleteTeam = function(value){
+        var deleteConfirm = confirm('您确定要删除这位成员吗？');
+        if(deleteConfirm){
+            for(var i in value){
+                var index = findIndex(value[i],$scope.team);
+                $scope.team[index].isChecked = false;  //去掉标记位
+                $scope.team.splice(index,1);   //删除
+                customerData.updateData(value[i]);
+            }
+            $scope.checkArr.splice(0,$scope.checkArr.length);   
+        }
+    }
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}])
+
+
+;/********************************************************************************************************************
+ *                                                      添加成员页面
+ ********************************************************************************************************************/
+
+angular.module("teamAddMoudle", []).controller('TeamAddCtrl', 
+    ['$scope', '$http', '$state','$alert','settingData',
+    function($scope, $http, $state,$alert,settingData) {
+    $scope.sexs = [
+        {"value":"0","label":"男"},
+        {"value":"1","label":"女"}
+    ];
+    $scope.user = {
+					name:"",
+					email:"",
+					password:"",
+					section:"",
+					position:"",
+					tel:"",
+					phone:"",
+					fax:"",
+					sex:"0",
+					class:"0"
+
+				}
+    $scope.saveUser = function(value){
+    	settingData.addData(value);
+    }
+
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}])
+
+
+;/********************************************************************************************************************
+ *                                                      成员详情页面
+ ********************************************************************************************************************/
+
+angular.module("teamDetailMoudle", []).controller('TeamDetailCtrl', 
+    ['$scope', '$http', '$state','$alert',
+    function($scope, $http, $state,$alert) {
+    $scope.isEdit = false;
+
+
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}])
+
+

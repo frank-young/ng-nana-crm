@@ -30,7 +30,10 @@ var app = angular.module('app', [
         'quotationSettingMoudle',
         'peopleMoudle',
         'peopleDetailMoudle',
-        'settingMoudle'
+        'settingMoudle',
+        'teamMoudle',
+        'teamAddMoudle',
+        'teamDetailMoudle'
         ]);  
 
 
@@ -58,23 +61,12 @@ app.run(function($rootScope, $state, $stateParams) {
 app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/index');
     $stateProvider
-        // .state('index', {
-        //     url: '/index',
-        //     views: {
-        //         '': {
-        //             templateUrl: 'tpls/home.html'
-        //         },
-        //         'main@index': {
-        //             templateUrl: 'tpls/loginForm.html'
-        //         }
-        //     }
-        // })
         .state('web', {
-            url: '/index',
+            url: '',
             templateUrl: 'tpls/nav.html'
         })
         .state('web.home', {
-            url: '/home',
+            url: '/index',
             templateUrl: 'tpls/home/index.html'
         })
         .state('web.clue', {
@@ -164,6 +156,18 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('web.setting', {
             url: '/setting',
             templateUrl: 'tpls/setting/setting.html'
+        })
+        .state('web.team', {
+            url: '/team',
+            templateUrl: 'tpls/team/team.html'
+        })
+        .state('web.teamAdd', {
+            url: '/teamAdd',
+            templateUrl: 'tpls/team/teamAdd.html'
+        })
+        .state('web.teamDetail', {
+            url: '/teamDetail/:id',
+            templateUrl: 'tpls/team/teamDetail.html'
         })
         
 });

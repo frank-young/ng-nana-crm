@@ -1,6 +1,6 @@
 <div class="row cus-border">
     <div class="col-md-12 cus-txt">
-        <h4>联系人</h4>
+        <h4>联系人 </h4>
     </div>
     <div class="col-md-12 "  ng-repeat="people in customer.peoples">
         <div class="cus-people">
@@ -36,23 +36,7 @@
                             <button type="button" class="form-control form-select" ng-model="people.sex" data-html="1" data-toggle="true" bs-options="sex.value as sex.label for sex in sexs" ng-disabled="people.isEdit" placeholder="请选择性别" data-animation="am-flip-x" bs-select>
                                 <span class="caret"></span> <!-- <i class="fa fa-sort-down fa-lg"></i> -->
                             </button>
-<!--                             <div class="radio">
-                                <label>
-                                    <input type="radio" class="" name="sex{{$index}}" checked="{{people.sex}}" ng-disabled="people.isEdit">
-                                    男
-                                    <span></span>
-                                </label>
-                            </div> -->
                         </div>
-<!--                         <div class="col-xs-2">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" class="" name="sex{{$index}}" checked="{{!people.sex}}" ng-disabled="people.isEdit">
-                                    女
-                                    <span></span>
-                                </label>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                 <!-- /.col-sm-5 -->

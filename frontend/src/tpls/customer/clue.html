@@ -286,7 +286,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">关联联系人</label>
                                     <div class="col-sm-5">
-                                        <button type="button" class="form-control form-select" ng-model="schedule.selectPerson" data-html="1" data-toggle="true" bs-options="per.value as per.label for per in person" placeholder="请选择联系人" data-animation="am-flip-x" bs-select required name="selectPerson" ng-class="{'has-danger': scheduleForm.selectPerson.$invalid}">
+                                        <button type="button" class="form-control form-select" ng-model="schedule.selectPerson" data-html="1" data-toggle="true" bs-options="per.name as per.name for per in clue.peoples" placeholder="请选择联系人" data-animation="am-flip-x" bs-select required name="selectPerson" ng-class="{'has-danger': scheduleForm.selectPerson.$invalid}">
                                             <span class="caret"></span>
                                         </button>
                                     </div>

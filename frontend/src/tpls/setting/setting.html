@@ -31,8 +31,13 @@
 						<p>部门电话：<input type="text" class="form-control set-input" ng-model="user.tel" ng-disabled="isEdit"></p>
 						<p>个人手机：<input type="text" class="form-control set-input" ng-model="user.phone" ng-disabled="isEdit"></p>
 						<p>传真：<input type="text" class="form-control set-input" ng-model="user.fax" ng-disabled="isEdit"></p>
-						<p>性别：<input type="text" class="form-control set-input" ng-model="user.sex" ng-disabled="isEdit"></p>
-						<p>生日：<input type="text" class="form-control set-input" ng-model="user.birthday" ng-disabled="isEdit"></p>
+						<p>性别：
+							<button type="button" class="form-control form-select" ng-model="user.sex" data-html="1" data-toggle="true" bs-options="sex.value as sex.label for sex in sexs" ng-disabled="isEdit" placeholder="请选择性别" data-animation="am-flip-x" bs-select style="width: 260px;display: inline-block;">
+                                <span class="caret"></span> 
+                            </button>
+						</p>
+
+						<p>生日：<input type="text" class="form-control set-input"  data-date-format="yyyy-MM-dd" data-date-type="number" data-min-date="" data-max-date="today" data-autoclose="1"  ng-model="user.birthday" ng-disabled="isEdit" placeholder="生日" data-animation="am-flip-x" bs-datepicker></p>
 						<p>地区：<input type="text" class="form-control set-input" ng-model="user.city" ng-disabled="isEdit"></p>
 						</div>
 				</div>

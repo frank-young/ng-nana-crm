@@ -2,22 +2,24 @@
  *                                                      联系人列表页面
  ********************************************************************************************************************/
 
-angular.module("peopleDetailMoudle", []).controller('PeopleDetailCtrl', function($scope, $http, $state) {
+angular.module("peopleDetailMoudle", []).controller('PeopleDetailCtrl', 
+    ['$scope', '$http', '$stateParams','customerData',
+    function($scope, $http, $stateParams,customerData) {
     $scope.sexs = [
         {"value":"0","label":"男"},
         {"value":"1","label":"女"}
     ];
-    $scope.people = {
-            "name":"杨军12",
-            "email":"yangjunalns@qq.com",
-            "sex":"0",   
-            "birthed":809846400000,
-            "phone":"1860816004",
-            "position":"采购经理",
-            "remark":"这是一个重要客户",
-            "isImportant":true,
-            "isEdit":true
-        }
+    customerData.getIdData($stateParams.id).then(function (data) {
+       $scope.customer=data.customer; 
+    });
 
     $scope.isImportant = true;
-});
+    $scope.isEdit = true;
+
+    $scope.savePeople = function(value){
+        customerData.updateData(value);
+        customerData.getIdData($stateParams.id).then(function (data) {
+           $scope.customer=data.customer; 
+        });
+    }
+}]);

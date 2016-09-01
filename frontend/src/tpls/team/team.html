@@ -1,0 +1,113 @@
+<div ng-controller="TeamCtrl">
+    <h2 class="page-header">
+        成员
+        <a ui-sref="web.teamAdd" class="btn btn-danger ml-10"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="新建成员"> <i class="fa fa-plus fa-lg"></i>
+        </a>
+    </h2>
+
+    <div class="select-h select-h-close" ng-class="{true: 'select-h-active', false: 'select-h-close'}[checkArr.length!=0]">
+        <div class="col-sm-2 col-xs-3">
+            <p ng-click="isCheckedNo()" style="overflow: hidden;"> <i class="fa fa-angle-left fa-2x top-icon"></i>
+                返回
+            </p>
+        </div>
+        <!-- /.col-xs-1 -->
+        <div class="col-sm-7 hidden-xs">
+            <p>
+                已选: {{checkArr.length}}
+                <a href="" style="margin-left: 20px;" ng-click="isCheckedAll()">全选</a>
+                <a href="" style="margin-left: 20px;" ng-click="isCheckedNo()">取消全选</a>
+            </p>
+        </div>
+        <!-- /.col-xs-9 -->
+        <div class="col-sm-3 col-xs-9" >
+            <div class="row">
+
+                <div class="col-xs-2">
+                    <p>
+                        <a href="" ng-click="deleteteam(checkArr)" data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="删除">
+                            <i class="fa fa-trash fa-2x top-icon"></i>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row hidden-xs hidden-sm">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-1"></div>
+
+                        <div class="col-xs-4">
+                            <span class="h-sort" ng-click="col='name';desc=!desc">
+                                姓名
+                                <i class="fa fa-sort"></i>
+                            </span>
+                        </div>
+
+                        <div class="col-xs-6">邮箱</div>
+
+                    </div>
+                </div>
+                <div class="col-md-2 col-xs-6">部门</div>
+                <div class="col-md-2 col-xs-6" >职位</div>
+
+                <div class="col-md-2 col-xs-12">
+                    <p style="cursor:pointer;">账号类型</p>
+                </div>
+
+                <div class="col-md-2 col-xs-12">创建时间</div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="row cus-item fade-pin" ng-repeat="teamItem in user | orderBy:col:desc | filter: pinSort">
+        <!-- | offset: (currentPage-1)*itemsPerPage |  limitTo:itemsPerPage-->
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4 col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-1">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-change="isChecked(teamItem)" ng-model="teamItem.isChecked">
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="" ui-sref="web.teamDetail({id:teamItem._id})" ng-bind="teamItem.name"></a>
+                        </div>
+                        <div class="col-xs-7">
+                            <p ng-bind="teamItem.email"></p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <p ng-bind="teamItem.section"></p>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <p ng-bind="teamItem.position"></p>
+                </div>
+                <div class="col-md-2 col-xs-12">
+                    <p ng-bind="teamItem.phone"></p>
+                </div>
+                <div class="col-md-2 col-xs-5">
+                    <p ng-bind="teamItem.meta.createAt | time"></p>
+                </div>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+<!-- <uib-pagination total-items="team.length" ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" items-per-page="itemsPerPage" num-pages="numPages" ng-show="team.length>
+itemsPerPage" next-text="下一页" previous-text="上一页" first-text="首页" last-text="尾页">
+</uib-pagination>
+-->
+</div>

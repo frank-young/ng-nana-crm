@@ -1,0 +1,103 @@
+<div ng-controller="TeamAddCtrl">
+	<h2 class="page-header">添加成员
+		<a href="javascript:window.history.go(-1)" type="button" class="btn btn-primary ml-20"><i class="fa fa-angle-left"></i> 返回</a>
+		<button type="button" class="btn btn-success" ng-click="saveUser(user)"><i class="fa fa-save"></i> 保存</button>
+	</h2>
+
+<div class="row cus-border">
+	<div class="col-md-12 cus-txt">
+		<h4>成员</h4>
+	</div>
+	<form name="teamFrom">
+		<div class="col-md-12 ">
+			<div class="cus-user">
+				<div class="row">
+					<div class="col-sm-5">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">昵称</label>
+							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.name.$invalid}">
+								<input type="text" name="name" class="form-control" placeholder="昵称" ng-model="user.name" ng-disabled="isEdit" required ng-maxlength="50"></div>
+						</div>
+					</div>
+					<div class="col-sm-5 col-sm-offset-1">
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label">部门</label>
+							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.section.$invalid}">
+								<input type="text" name="section" class="form-control" placeholder="部门" ng-model="user.section" ng-disabled="isEdit" ng-maxlength="50"></div>
+						</div>
+					</div>
+
+					<div class="col-sm-5">
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label">邮箱*</label>
+							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.mail.$invalid}">
+								<input type="email" name="mail" class="form-control" placeholder="邮箱（登录账号）" ng-model="user.email" ng-disabled="isEdit" required ng-maxlength="50"></div>
+						</div>
+					</div>
+					<div class="col-sm-5 col-sm-offset-1">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">部门电话</label>
+							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.tel.$invalid}">
+								<input type="text" name="tel" class="form-control" placeholder="部门电话" ng-model="user.tel" ng-disabled="isEdit" ng-maxlength="20"></div>
+						</div>
+					</div>
+					<div class="col-sm-5">
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">密码</label>
+							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.password.$invalid}">
+								<input type="password" name="password" class="form-control" placeholder="密码" ng-model="user.password" ng-disabled="isEdit" ng-maxlength="20" required></div>
+						</div>
+
+					</div>
+					<div class="col-sm-5 col-sm-offset-1">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">职位</label>
+							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.position.$invalid}">
+								<input type="text" name="position" class="form-control" placeholder="职位" ng-model="user.position" ng-disabled="isEdit" ng-maxlength="50"></div>
+						</div>
+
+					</div>
+					<div class="col-sm-5">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">个人手机</label>
+							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.phone.$invalid}">
+								<input type="text" name="phone" class="form-control" placeholder="个人手机" ng-model="user.phone" ng-disabled="isEdit" ng-maxlength="20"></div>
+						</div>
+						
+					</div>
+					<div class="col-sm-5 col-sm-offset-1">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">传真</label>
+							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.fex.$invalid}">
+								<input type="text" name="fex" class="form-control" placeholder="传真" ng-model="user.fex" ng-disabled="isEdit" ng-maxlength="20"></div>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">账号类型</label>
+							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.class.$invalid}">
+								<input type="text" name="class" class="form-control" placeholder="账号类型" ng-model="user.class" ng-disabled="isEdit" require></div>
+						</div>
+					</div>
+					<div class="col-sm-5 col-sm-offset-1">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">性别</label>
+							<div class="col-sm-9">
+								<button type="button" class="form-control form-select" ng-model="user.sex" data-html="1" data-toggle="true" bs-options="sex.value as sex.label for sex in sexs" ng-disabled="isEdit" placeholder="请选择性别" data-animation="am-flip-x" bs-select>
+									<span class="caret"></span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+</div>
+
+</div>

@@ -37,6 +37,7 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     }).success(function(data){
         $scope.customer=data;   
     })
+
     /* 分组 */
     groupData.getData().then(function (data) {
         $scope.groups = data.groups;
@@ -60,7 +61,7 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     }
     /* 添加联系人 */
     $scope.cusadd = function(){
-        $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false});     //默认未收藏联系人，可编辑状态
+        $scope.customer.peoples.push({sex:'0',isImportant:false,isEdit:false,isTop:false});     //默认未收藏联系人，可编辑状态
     }
     /* 删除联系人 */
     $scope.cusdel = function(index){
@@ -68,6 +69,7 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
+                customerData.updateData($scope.customer);
             }
         }
     }

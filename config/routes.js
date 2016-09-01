@@ -105,6 +105,9 @@ module.exports = function(app){
   app.get('/setting', Setting.data)
   app.post('/setting/update', Setting.update)
 
+  app.post('/setting/add', Setting.add)
+
+  app.delete('/setting/delete', Setting.del)
   // app.get('/admin/customer/update/:id',User.adminRequired,Customer.update)
   // app.post('/admin/customer', User.adminRequired,Customer.save)
   // app.get('/admin/customer/list',User.adminRequired,Customer.list)

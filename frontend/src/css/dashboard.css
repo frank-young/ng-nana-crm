@@ -426,7 +426,7 @@ input[type='checkbox']:checked+ span:after{
 
   padding: 20px;
   background-color: #F5F7FA;
-  overflow-x: hidden;
+
 }
 @media (min-width: 768px) {
   .main {
@@ -436,8 +436,7 @@ input[type='checkbox']:checked+ span:after{
     position: relative;
     margin-left: 220px;
     height: 100%;
-    overflow: auto;
-    overflow-x: hidden;
+
   }
 }
 .main .page-header {

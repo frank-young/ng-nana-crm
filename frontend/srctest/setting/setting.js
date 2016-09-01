@@ -3,26 +3,24 @@
  ********************************************************************************************************************/
 
 angular.module("settingMoudle", []).controller('SettingCtrl', 
-	['$scope', '$http', '$state','settingData',
-	function($scope, $http, $state,settingData) {
+	['$scope', '$http', '$state','$alert','settingData',
+	function($scope, $http, $state,$alert,settingData) {
 	$scope.isEdit = true;
-	// $scope.user = {
-	// 	"account":"yangjunaslnd@qq.com",
-	// 	"name":"frank",
-	// 	"company":"Nana tec",
-	// 	"section":"销售部",
-	// 	"position":"销售总监",
-	// 	"tel":"022-8473645",
-	// 	"phone":"18603847263",
-	// 	"fax":"022-7539059",
-	// 	"sex":"男",
-	// 	"birthday":"1993-04-12",
-	// 	"city":"天津市北辰区天穆镇政"
-	// } 
+	$scope.sexs = [
+        {"value":"0","label":"男"},
+        {"value":"1","label":"女"}
+    ];
 	settingData.getData().then(function(data){
 		$scope.user = data.user
 	})
 	$scope.saveSetting = function(value){
-		settingData.updateData(value);
+		settingData.updateData(value)
+		// .then(function(data){
+  //           $scope.changeAlert('保存成功！');
+  //       });
 	}
+	/*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
 }])

@@ -29,7 +29,7 @@ var UserSchema = new mongoose.Schema({
 	tel:String,
 	fax:String,
 	sex:String,
-	birthday:String,
+	birthday:Number,
 	city:String,
 	meta:{
 		createAt:{

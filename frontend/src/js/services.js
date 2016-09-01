@@ -614,6 +614,39 @@ angular.module('serviceData', [])
                     defer.reject(msg);
                 });
                 return defer.promise;
+            },
+            addData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/setting/add',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        setting:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            deleteData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'DELETE',
+                    url: '/setting/delete?id='+value._id,
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
             }
         }
     }])
