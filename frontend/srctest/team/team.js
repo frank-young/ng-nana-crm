@@ -16,7 +16,7 @@ angular.module("teamMoudle", []).controller('TeamCtrl',
     }
 
     settingData.getData().then(function(data){
-    	$scope.user = data.user
+    	$scope.user = data.users
     })
 
     /*分页*/
