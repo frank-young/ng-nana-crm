@@ -3,7 +3,8 @@ var _ = require('underscore')
 	
 	//分类列表页
 	exports.list = function(req,res){
-		Cate.fetch(function(err,cates){
+		var user = req.session.user
+		Cate.fetch({"userlocal":user.email},function(err,cates){
 			res.json({
 				status:"1",
 				cates:cates
@@ -13,11 +14,14 @@ var _ = require('underscore')
 	//分类更新、新建
 	exports.save = function(req,res){
 		var cateObj = req.body.cate 	//从路由传过来的 cate对象
+		var user = req.session.user
 		var _cate
 			_cate = new Cate({
 				isEdit: cateObj.isEdit,
 				value:cateObj.value,
-				label:cateObj.label
+				label:cateObj.label,
+				userlocal:user.email,
+				domainlocal:user.domain
 			})
 			_cate.save(function(err,cate){
 				if(err){

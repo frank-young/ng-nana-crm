@@ -3,16 +3,25 @@ var _ = require('underscore')
 	
 	//项目列表页
 	exports.list = function(req,res){
-		Business.fetch(function(err,businesss){
-			res.json({
-				status:"1",
-				businesss:businesss
-			})
+		var user = req.session.user
+		Business.fetch({"userlocal":user.email},function(err,businesss){
+			if(err){
+				res.json({
+					msg:err
+				})
+				console.log(err)
+			}else{
+				res.json({
+					businesss:businesss
+				})
+			}
+			
 		})
 	}
 	//项目更新、新建
 	exports.save = function(req,res){
 		var businessObj = req.body.business 	//从路由传过来的 business对象
+		var user = req.session.user
 		var _business
 			_business = new Business({
 				isTop: businessObj.isTop,
@@ -31,13 +40,18 @@ var _ = require('underscore')
 				schedule: businessObj.schedule,
 				schedule_expired: businessObj.schedule_expired,
 				schedule_complete: businessObj.schedule_complete,
-				business: businessObj.business
+				business: businessObj.business,
+				userlocal:user.email,
+				domainlocal:user.domain
 			})
 			_business.save(function(err,business){
 				if(err){
+					res.json({msg:"添加失败！",status: 0})
 					console.log(err)
+				}else{
+					res.json({msg:"添加成功！",status: 1})
+
 				}
-				res.json({status:"添加成功",status: 1})
 			})
 	}
 	//项目更新、新建
@@ -53,10 +67,13 @@ var _ = require('underscore')
 				_business = _.extend(business,businessObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
 				_business.save(function(err,business){
 					if(err){
+						res.json({msg:"更新失败！",status: 0})
 						console.log(err)
+					}else{
+						res.json({msg:"更新成功！",status: 1})
+
 					}
 
-					res.json({status:"更新成功",status: 1})
 				})
 			})
 		}
@@ -78,8 +95,10 @@ var _ = require('underscore')
 			Business.remove({_id: id},function(err,business){
 				if(err){
 					console.log(err)
+					res.json({msg:"更新失败！",status: 0})
 				}else{
-					res.json({status: 1})
+					res.json({msg:"更新成功！",status: 1})
+
 				}
 			})
 		}

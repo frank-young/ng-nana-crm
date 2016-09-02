@@ -3,7 +3,8 @@ var _ = require('underscore')
 	
 	//分组列表页
 	exports.list = function(req,res){
-		Tag.fetch(function(err,tags){
+		var user = req.session.user
+		Tag.fetch({"userlocal":user.email},function(err,tags){
 			res.json({
 				status:"1",
 				tags:tags
@@ -13,12 +14,15 @@ var _ = require('underscore')
 	//分组更新、新建
 	exports.save = function(req,res){
 		var tagObj = req.body.tag 	//从路由传过来的 tag对象
+		var user = req.session.user
 		var _tag
 			_tag = new Tag({
 				isEdit: tagObj.isEdit,
 				value:tagObj.value,
 				text:tagObj.text,
-				color:tagObj.color
+				color:tagObj.color,
+				userlocal:user.email,
+				domainlocal:user.domain
 
 			})
 			_tag.save(function(err,tag){

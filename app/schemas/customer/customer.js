@@ -37,7 +37,9 @@ var CustomerSchema = new mongoose.Schema({
 			type:Number,	
 			default:Date.now()
 		}
-	}
+	},
+	userlocal:String,
+	domainlocal:String
 })
 
 CustomerSchema.pre('save',function(next){	//每次存数据之前都要调用这个方法
@@ -51,9 +53,9 @@ CustomerSchema.pre('save',function(next){	//每次存数据之前都要调用这
 })
 
 CustomerSchema.statics = {
-	fetch:function(cb){		//取出目前数据库所有的数据
+	fetch:function(rule,cb){		//取出目前数据库所有的数据
 		return this
-			.find({})	//查找全部数据
+			.find(rule)	//查找全部数据
 			.sort('meta.createAt')		//按照更新时间排序
 			.exec(cb)
 	},

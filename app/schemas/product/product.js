@@ -22,7 +22,9 @@ var ProductSchema = new mongoose.Schema({
 			type:Number,	
 			default:Date.now()
 		}
-	}
+	},
+	userlocal:String,
+	domainlocal:String
 })
 
 ProductSchema.pre('save',function(next){
@@ -35,9 +37,9 @@ ProductSchema.pre('save',function(next){
 })
 
 ProductSchema.statics = {
-	fetch:function(cb){	
+	fetch:function(rule,cb){	
 		return this
-			.find({})
+			.find(rule)
 			.sort('meta.createAt')
 			.exec(cb)
 	},

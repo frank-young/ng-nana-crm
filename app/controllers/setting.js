@@ -92,8 +92,8 @@ var User = require('../models/user')	//引入模型
 
 	/* 成员列表 */
 	exports.list = function(req,res){
-
-		User.fetch(function(err,users){
+		var user = req.session.user
+		User.fetch({'domain':user.domain},function(err,users){
 			res.json({
 				status:"1",
 				users:users
@@ -169,7 +169,6 @@ var User = require('../models/user')	//引入模型
 		if(user.role < 10 ){
 			return res.json({status: 1,msg:"你没有权限访问"})
 		}
-		console.log(user)
 		next()
 	}
 

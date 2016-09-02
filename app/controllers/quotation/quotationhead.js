@@ -3,8 +3,8 @@ var _ = require('underscore')
 	
 	//产品列表页
 	exports.list = function(req,res){
-
-		Quotationhead.fetch(function(err,quotationheads){
+		var user = req.session.user
+		Quotationhead.fetch({"userlocal":user.email},function(err,quotationheads){
 			res.json({
 				status:"1",
 				quotationheads:quotationheads

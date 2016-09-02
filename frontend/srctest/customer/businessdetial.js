@@ -29,14 +29,10 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
         /* 推进状态*/
         $scope.status = data.status;
     })
-    $http({
-        url:'data/person.json',
-        method:'GET'
-    }).success(function(data){
-        /*  添加日程 --联系人 */
-        $scope.person = data.person;
+    /* 客户详情对象 */
+    businessData.getIdData($stateParams.id).then(function(data){
+        $scope.customer=data.business;   
     })
-    
     /* 自定义 -- 公司*/
     customerData.getData().then(function (data) {
         var company=[];
@@ -44,16 +40,16 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
             company.push({
                 value:i,
                 id:data.customers[i]._id,
-                label:data.customers[i].companyName
+                label:data.customers[i].companyName,
+                peoplename:data.customers[i].peoples[0].name,
+                peopleemail:data.customers[i].peoples[0].email
             })
         }
-        $scope.company = company
+        $scope.company = company;
+        $scope.peoplename = company[$scope.customer.company].peoplename;
+        $scope.peopleemail = company[$scope.customer.company].peopleemail;
     })
-
-    /* 客户详情对象 */
-    businessData.getIdData($stateParams.id).then(function(data){
-        $scope.customer=data.business;   
-    })
+    
     $scope.saveData = function(value){
         businessData.updateData(value)
         var id,
@@ -140,18 +136,7 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
     /* 保存数据，并且添加到原始数据里 */
     $scope.saveSchedule = function(value){
         value.schedule.unshift($scope.schedule);
-        /* 发送数据到服务器 */
-        $http({
-                method: 'POST',
-                url: 'http://localhost/angularcode/src/',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                },
-                data: value
-            }).success(function(data){
-               
-            })
-            
+    
         $scope.cancleSchedule();    
     }
     /* 清空日程弹出框数据 */
@@ -179,18 +164,7 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
     }
     $scope.saveEditSchedule = function(value){
         value.schedule[editIndex] = $scope.scheduleModal;
-        /* 发送数据到服务器 */
-        $http({
-                method: 'POST',
-                url: 'http://localhost/angularcode/src/',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                },
-                data: value
-            }).success(function(data){
-               
-            })
-            
+
         $scope.cancleEditSchedule();    
     }
     /* 添加日程提醒 */

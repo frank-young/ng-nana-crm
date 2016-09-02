@@ -1,9 +1,4 @@
 {
-    "groups": [
-            {"value":"0","label":"基本会员","isEdit":true},
-            {"value":"1","label":"高级会员","isEdit":true},
-            {"value":"2","label":"钻石会员","isEdit":true}
-        ],
     "origins":[
             {"value":"0","label":"网络营销"},
             {"value":"1","label":"自主开发"},
@@ -12,7 +7,6 @@
             {"value":"4","label":"其他"}
         ],
     "states":["美国","中国","澳大利亚","越南"],
-    "sts":["手机生产","电脑生产","蓝牙设备"],
     "progress":[
             {"value":"0","label":"意向客户"},
             {"value":"1","label":"初步沟通"},
@@ -27,16 +21,6 @@
             {"value":"4","label":"机构/团体消费者"},
             {"value":"5","label":"个人消费者"},
             {"value":"6","label":"其他"}
-        ],
-    "person": [
-            {"value":"0","label":"frank"},
-            {"value":"1","label":"json"},
-            {"value":"2","label":"联系人3"}
-        ],
-    "tags":[
-            {"value":"0","text":"平板","color":"primary","isEdit":true},
-            {"value":"1","text":"手机","color":"danger","isEdit":true},
-            {"value":"2","text":"电脑","color":"success","isEdit":true}
         ],
     "status":[
             {"value":"0","label":"签订合同"},

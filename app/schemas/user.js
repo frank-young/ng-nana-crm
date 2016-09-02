@@ -83,9 +83,9 @@ UserSchema.methods = {
 }
 
 UserSchema.statics = {
-	fetch:function(cb){		//取出目前数据库所有的数据
+	fetch:function(rule,cb){		//取出目前数据库所有的数据
 		return this
-			.find({})	//查找全部数据
+			.find(rule)	//查找全部数据
 			.sort('meta.updateAt')		//按照更新时间排序
 			.exec(cb)
 	},

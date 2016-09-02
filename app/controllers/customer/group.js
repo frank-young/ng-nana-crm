@@ -3,7 +3,8 @@ var _ = require('underscore')
 	
 	//分组列表页
 	exports.list = function(req,res){
-		Group.fetch(function(err,groups){
+		var user = req.session.user
+		Group.fetch({"userlocal":user.email},function(err,groups){
 			res.json({
 				status:"1",
 				groups:groups
@@ -13,11 +14,14 @@ var _ = require('underscore')
 	//分组更新、新建
 	exports.save = function(req,res){
 		var groupObj = req.body.group 	//从路由传过来的 group对象
+		var user = req.session.user
 		var _group
 			_group = new Group({
 				isEdit: groupObj.isEdit,
 				value:groupObj.value,
-				label:groupObj.label
+				label:groupObj.label,
+				userlocal:user.email,
+				domainlocal:user.domain
 
 			})
 			_group.save(function(err,group){

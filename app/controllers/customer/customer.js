@@ -3,7 +3,8 @@ var _ = require('underscore')
 	
 	//客户列表页
 	exports.list = function(req,res){
-		Customer.fetch(function(err,customers){
+		var user = req.session.user
+		Customer.fetch({"userlocal":user.email},function(err,customers){
 			res.json({
 				status:"1",
 				customers:customers
@@ -40,7 +41,9 @@ var _ = require('underscore')
 				schedule_expired: customerObj.schedule_expired,
 				schedule_complete: customerObj.schedule_complete,
 				business: customerObj.business,
-				charge:user.name
+				charge:user.name,
+				userlocal:user.email,
+				domainlocal:user.domain
 			})
 			_customer.save(function(err,customer){
 				if(err){

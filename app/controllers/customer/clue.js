@@ -4,7 +4,7 @@ var _ = require('underscore')
 	//潜在客户列表页
 	exports.list = function(req,res){
 		var user = req.session.user
-		Clue.fetch({"user":user.email,"domain":user.domain},function(err,clues){
+		Clue.fetch({"userlocal":user.email},function(err,clues){
 			res.json({
 				status:"1",
 				clues:clues

@@ -20,7 +20,9 @@ var QuotationSchema = new mongoose.Schema({
 			type:Number,	
 			default:Date.now()
 		}
-	}
+	},
+	userlocal:String,
+	domainlocal:String
 })
 
 QuotationSchema.pre('save',function(next){
@@ -33,9 +35,9 @@ QuotationSchema.pre('save',function(next){
 })
 
 QuotationSchema.statics = {
-	fetch:function(cb){	
+	fetch:function(rule,cb){	
 		return this
-			.find({})
+			.find(rule)
 			.sort('meta.createAt')
 			.exec(cb)
 	},

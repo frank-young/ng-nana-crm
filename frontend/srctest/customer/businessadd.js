@@ -70,7 +70,7 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     $scope.saveData = function(value){
         businessData.addData(value).then(function (data) {
             window.history.go(-1);
-            $scope.changeAlert('保存成功！','');
+            $scope.changeAlert(data.msg);
         })
     }
     /*提示框*/

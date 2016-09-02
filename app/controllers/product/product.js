@@ -3,8 +3,8 @@ var _ = require('underscore')
 	
 	//产品列表页
 	exports.list = function(req,res){
-
-		Product.fetch(function(err,products){
+		var user = req.session.user
+		Product.fetch({"userlocal":user.email},function(err,products){
 			res.json({
 				status:"1",
 				products:products
@@ -26,7 +26,9 @@ var _ = require('underscore')
 				editpeople: user.name,
 				description: productObj.description,
 				path: productObj.path,
-				img: productObj.img
+				img: productObj.img,
+				userlocal:user.email,
+				domainlocal:user.domain
 			})
 			_product.save(function(err,product){
 				if(err){
