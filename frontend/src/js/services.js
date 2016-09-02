@@ -595,11 +595,57 @@ angular.module('serviceData', [])
                 });
                 return defer.promise;
             },
+            getListData: function () {
+                var defer = $q.defer();
+                $http({
+                    url: '/setting/list',
+                    method: 'get' 
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            getIdData: function (id) {
+                var defer = $q.defer();
+                $http({
+                    url: '/setting/detail/'+id,
+                    method: 'get'
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
             updateData: function (value) {
                 var defer = $q.defer();
                 $http({
                     method: 'POST',
                     url: '/setting/update',
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    data: {
+                        setting:value
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
+            updatecopyData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'POST',
+                    url: '/setting/updatecopy',
                     dataType: "json",
                     headers: {
                         'Content-Type': 'application/json; charset=utf-8'
@@ -647,7 +693,20 @@ angular.module('serviceData', [])
                     defer.reject(msg);
                 });
                 return defer.promise;
-            }
+            },
+            getRbac: function () {
+                var defer = $q.defer();
+                $http({
+                    url: '/setting/rbac',
+                    method: 'get' 
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
+            },
         }
     }])
     .factory('quotationData', ['$q','$http',function($q,$http){

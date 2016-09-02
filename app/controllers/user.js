@@ -15,7 +15,8 @@
 	exports.signup = function(req,res){
 
 		var _user = req.body.user
-		
+		_user.role = 10
+		console.log(_user)
 		User.findOne({email:_user.email},function(err,user){
 			if(err){
 				console.log(err)
@@ -81,7 +82,6 @@
 			if(err){
 				console.log(err)
 			}
-			// console.log(users)
 			res.render('userlist',{
 				title:'用户列表',
 				users:users

@@ -19,16 +19,19 @@ angular.module("teamAddMoudle", []).controller('TeamAddCtrl',
 					phone:"",
 					fax:"",
 					sex:"0",
-					class:"0"
-
+					class:"0",
+                    domain:"",
+                    birthday:0
 				}
     $scope.saveUser = function(value){
-    	settingData.addData(value);
+    	settingData.addData(value).then(function(data){
+                $scope.changeAlert(data.msg)
+        });
     }
 
     /*提示框*/
     $scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:5});
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
     }
 }])
 

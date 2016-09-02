@@ -2,8 +2,10 @@
  * 左侧 menu 菜单
  */
 
-angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
-	$scope.menus = [
+angular.module('navleftMoudle',[]).controller('NavleftCtrl', 
+	['$scope', '$http','settingData',
+	function ($scope, $http,settingData) {
+		var menus = [
 		{
 			icon:'fa fa-paper-plane-o',
 			title:'圈内信',
@@ -110,4 +112,16 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		},
 
 	]
-});
+
+	settingData.getRbac().then(function(data){
+		$scope.role = data.rbac
+		$scope.menus = [];
+		menus.map(function (menu) {
+			if(menu.role <= $scope.role){
+				$scope.menus.push(menu)
+			}
+		 	return $scope.menu; 
+		});
+	})
+
+}]);

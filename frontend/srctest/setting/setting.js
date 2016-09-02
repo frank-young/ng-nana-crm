@@ -14,11 +14,11 @@ angular.module("settingMoudle", []).controller('SettingCtrl',
 		$scope.user = data.user
 	})
 	$scope.saveSetting = function(value){
-		settingData.updateData(value)
-		// .then(function(data){
-  //           $scope.changeAlert('保存成功！');
-  //       });
+		settingData.updateData(value).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
 	}
+	
 	/*提示框*/
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});

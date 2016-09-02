@@ -15,8 +15,9 @@ angular.module("teamMoudle", []).controller('TeamCtrl',
         }
     }
 
-    settingData.getData().then(function(data){
+    settingData.getListData().then(function(data){
     	$scope.user = data.users
+        // $scope.changeAlert(data.msg);
     })
 
     /*分页*/

@@ -25,16 +25,17 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">部门</label>
 							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.section.$invalid}">
-								<input type="text" name="section" class="form-control" placeholder="部门" ng-model="user.position" ng-disabled="isEdit" ng-maxlength="50"></div>
+								<input type="text" name="section" class="form-control" placeholder="部门" ng-model="user.section" ng-disabled="isEdit" ng-maxlength="50"></div>
 						</div>
 					</div>
 
 					<div class="col-sm-5">
 						
 						<div class="form-group">
-							<label class="col-sm-3 control-label">邮箱*</label>
+							<label class="col-sm-3 control-label">邮箱</label>
 							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.mail.$invalid}">
-								<input type="email" name="mail" class="form-control" placeholder="邮箱（登录账号）" ng-model="user.email" ng-disabled="isEdit" required ng-maxlength="50"></div>
+								<div class="form-control" ng-bind="user.email" ng-disabled="{{true}}" ></div>
+							</div>
 						</div>
 					</div>
 					<div class="col-sm-5 col-sm-offset-1">
@@ -47,9 +48,12 @@
 					<div class="col-sm-5">
 
 						<div class="form-group">
-							<label class="col-sm-3 control-label">密码</label>
-							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.password.$invalid}">
-								<input type="password" name="password" class="form-control" placeholder="密码" ng-model="user.password" ng-disabled="isEdit" ng-maxlength="20" required></div>
+							<label class="col-sm-3 control-label">性别</label>
+							<div class="col-sm-9">
+								<button type="button" class="form-control form-select" ng-model="user.sex" data-html="1" data-toggle="true" bs-options="sex.value as sex.label for sex in sexs" ng-disabled="isEdit" placeholder="请选择性别" data-animation="am-flip-x" bs-select>
+									<span class="caret"></span>
+								</button>
+							</div>
 						</div>
 
 					</div>
@@ -65,7 +69,8 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">个人手机</label>
 							<div class="col-sm-9" ng-class="{'has-danger': teamFrom.phone.$invalid}">
-								<input type="text" name="phone" class="form-control" placeholder="个人手机" ng-model="user.phone" ng-disabled="isEdit" ng-maxlength="20"></div>
+								<div type="text" class="form-control" ng-bind="user.phone"" ng-disabled="{{true}}"></div>
+							</div>
 						</div>
 						
 					</div>
@@ -83,16 +88,7 @@
 								<input type="text" name="class" class="form-control" placeholder="账号类型" ng-model="user.class" ng-disabled="isEdit" require></div>
 						</div>
 					</div>
-					<div class="col-sm-5 col-sm-offset-1">
-						<div class="form-group">
-							<label class="col-sm-3 control-label">性别</label>
-							<div class="col-sm-9">
-								<button type="button" class="form-control form-select" ng-model="user.sex" data-html="1" data-toggle="true" bs-options="sex.value as sex.label for sex in sexs" ng-disabled="isEdit" placeholder="请选择性别" data-animation="am-flip-x" bs-select>
-									<span class="caret"></span>
-								</button>
-							</div>
-						</div>
-					</div>
+
 				</div>
 			</div>
 		</div>

@@ -1,12 +1,19 @@
 var mongoose = require('mongoose')
 var bcrypt = require('bcryptjs')
 var SALT_WORK_FACTOR = 10
-	//0: 基本
-	//1: 验证用户
-	//2：高级用户 
-	//
-	//>10:admin
-	//>50: super admin
+/**
+ ** 	****角色权限*****
+ * 	
+ * 	0: 成员，空间管理者分配的子成员
+ * 	1~9：空间的层级权限
+ *	10: 注册用户，空间管理者
+ *	11~19：模块升级权限
+ *  20：高级用户 
+ * 
+ *	>50 作者，frankyoung，超级管理员
+ *
+ * 
+ */
 var UserSchema = new mongoose.Schema({
 	name:String,
 	phone:{
@@ -19,18 +26,19 @@ var UserSchema = new mongoose.Schema({
 	},
 	domain:String,
 	password:String,
-	role:{
-		type:Number,
-		default:0
-	},
+	role:Number,
 	company:String,
 	section:String,
 	position:String,
 	tel:String,
 	fax:String,
 	sex:String,
-	birthday:Number,
+	birthday:{
+		type:Number,
+		default:0
+	},
 	city:String,
+	class:String,
 	meta:{
 		createAt:{
 			type:Date,

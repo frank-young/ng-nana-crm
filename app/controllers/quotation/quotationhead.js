@@ -6,7 +6,7 @@ var _ = require('underscore')
 
 		Quotationhead.fetch(function(err,quotationheads){
 			res.json({
-				success:"1",
+				status:"1",
 				quotationheads:quotationheads
 			})
 		})
@@ -31,7 +31,7 @@ var _ = require('underscore')
 				logo: quotationheadObj.logo
 			})
 			_quotationhead.save(function(err,quotationhead){
-				res.json({status:"添加成功",success: 1})
+				res.json({status:"添加成功",status: 1})
 			})
 	}
 	//产品更新、新建
@@ -44,7 +44,7 @@ var _ = require('underscore')
 			Quotationhead.findById(id,function(err,quotationhead){
 				_quotationhead = _.extend(quotationhead,quotationheadObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
 				_quotationhead.save(function(err,quotationhead){
-					res.json({status:"更新成功",success: 1})
+					res.json({status:"更新成功",status: 1})
 				})
 			})
 		}
@@ -66,7 +66,7 @@ var _ = require('underscore')
 				if(err){
 					console.log(err)
 				}else{
-					res.json({success: 1})
+					res.json({status: 1})
 				}
 			})
 		}

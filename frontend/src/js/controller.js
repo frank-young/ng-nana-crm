@@ -2,8 +2,10 @@
  * 左侧 menu 菜单
  */
 
-angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
-	$scope.menus = [
+angular.module('navleftMoudle',[]).controller('NavleftCtrl', 
+	['$scope', '$http','settingData',
+	function ($scope, $http,settingData) {
+		var menus = [
 		{
 			icon:'fa fa-paper-plane-o',
 			title:'圈内信',
@@ -110,7 +112,19 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl', function ($scope) {
 		},
 
 	]
-});;/**
+
+	settingData.getRbac().then(function(data){
+		$scope.role = data.rbac
+		$scope.menus = [];
+		menus.map(function (menu) {
+			if(menu.role <= $scope.role){
+				$scope.menus.push(menu)
+			}
+		 	return $scope.menu; 
+		});
+	})
+
+}]);;/**
  * 顶部导航
  * 
  */
@@ -3200,11 +3214,11 @@ angular.module("settingMoudle", []).controller('SettingCtrl',
 		$scope.user = data.user
 	})
 	$scope.saveSetting = function(value){
-		settingData.updateData(value)
-		// .then(function(data){
-  //           $scope.changeAlert('保存成功！');
-  //       });
+		settingData.updateData(value).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
 	}
+	
 	/*提示框*/
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});
@@ -3227,8 +3241,9 @@ angular.module("teamMoudle", []).controller('TeamCtrl',
         }
     }
 
-    settingData.getData().then(function(data){
+    settingData.getListData().then(function(data){
     	$scope.user = data.users
+        // $scope.changeAlert(data.msg);
     })
 
     /*分页*/
@@ -3316,16 +3331,19 @@ angular.module("teamAddMoudle", []).controller('TeamAddCtrl',
 					phone:"",
 					fax:"",
 					sex:"0",
-					class:"0"
-
+					class:"0",
+                    domain:"",
+                    birthday:0
 				}
     $scope.saveUser = function(value){
-    	settingData.addData(value);
+    	settingData.addData(value).then(function(data){
+                $scope.changeAlert(data.msg)
+        });
     }
 
     /*提示框*/
     $scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:5});
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
     }
 }])
 
@@ -3335,11 +3353,22 @@ angular.module("teamAddMoudle", []).controller('TeamAddCtrl',
  ********************************************************************************************************************/
 
 angular.module("teamDetailMoudle", []).controller('TeamDetailCtrl', 
-    ['$scope', '$http', '$state','$alert',
-    function($scope, $http, $state,$alert) {
-    $scope.isEdit = false;
+    ['$scope', '$http', '$stateParams','$alert','settingData',
+    function($scope, $http, $stateParams,$alert,settingData) {
+    $scope.isEdit = true;
+    $scope.sexs = [
+        {"value":"0","label":"男"},
+        {"value":"1","label":"女"}
+    ];
+    settingData.getIdData($stateParams.id).then(function (data) {
+       $scope.user=data.user; 
+    });
 
-
+    $scope.saveUser = function(value){
+    	settingData.updatecopyData(value).then(function(data){
+			$scope.changeAlert(data.msg)
+        });
+    }
     /*提示框*/
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});

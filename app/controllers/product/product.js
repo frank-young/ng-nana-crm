@@ -6,7 +6,7 @@ var _ = require('underscore')
 
 		Product.fetch(function(err,products){
 			res.json({
-				success:"1",
+				status:"1",
 				products:products
 			})
 		})
@@ -32,7 +32,7 @@ var _ = require('underscore')
 				if(err){
 					console.log(err)
 				}
-				res.json({status:"添加成功",success: 1})
+				res.json({status:"添加成功",status: 1})
 			})
 	}
 	//产品更新、新建
@@ -51,7 +51,7 @@ var _ = require('underscore')
 						console.log(err)
 					}
 
-					res.json({status:"更新成功",success: 1})
+					res.json({status:"更新成功",status: 1})
 				})
 			})
 		}
@@ -73,7 +73,7 @@ var _ = require('underscore')
 				if(err){
 					console.log(err)
 				}else{
-					res.json({success: 1})
+					res.json({status: 1})
 				}
 			})
 		}
