@@ -3,8 +3,8 @@ var _ = require('underscore')
 	
 	//潜在客户列表页
 	exports.list = function(req,res){
-
-		Clue.fetch(function(err,clues){
+		var user = req.session.user
+		Clue.fetch({"user":user.email,"domain":user.domain},function(err,clues){
 			res.json({
 				status:"1",
 				clues:clues
@@ -14,6 +14,7 @@ var _ = require('underscore')
 	//潜在客户更新、新建
 	exports.save = function(req,res){
 		var clueObj = req.body.clue 	//从路由传过来的 clue对象
+		var user = req.session.user
 		var _clue
 			_clue = new Clue({
 				isTop: clueObj.isTop,
@@ -40,7 +41,9 @@ var _ = require('underscore')
 				schedule: clueObj.schedule,
 				schedule_expired: clueObj.schedule_expired,
 				schedule_complete: clueObj.schedule_complete,
-				business: clueObj.business
+				business: clueObj.business,
+				userlocal:user.email,
+				domainlocal:user.domain
 			})
 			_clue.save(function(err,clue){
 				if(err){

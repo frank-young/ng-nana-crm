@@ -16,7 +16,7 @@
 
 		var _user = req.body.user
 		_user.role = 10
-		console.log(_user)
+		
 		User.findOne({email:_user.email},function(err,user){
 			if(err){
 				console.log(err)

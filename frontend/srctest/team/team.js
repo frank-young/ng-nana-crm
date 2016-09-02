@@ -62,8 +62,9 @@ angular.module("teamMoudle", []).controller('TeamCtrl',
             for(var i in $scope.team){
                 $scope.checkArr.push($scope.team[i]);
                 $scope.team[i].isChecked = true;
+                
             }
-    }
+    } 
     /* 删除栏目 ----批量操作 */
     $scope.deleteTeam = function(value){
         var deleteConfirm = confirm('您确定要删除这位成员吗？');
@@ -75,7 +76,7 @@ angular.module("teamMoudle", []).controller('TeamCtrl',
                 customerData.updateData(value[i]);
             }
             $scope.checkArr.splice(0,$scope.checkArr.length);   
-        }
+        } 
     }
     /*提示框*/
     $scope.changeAlert = function(title,content){

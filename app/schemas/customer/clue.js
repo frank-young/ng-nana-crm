@@ -36,7 +36,9 @@ var ClueSchema = new mongoose.Schema({
 			type:Number,	
 			default:Date.now()
 		}
-	}
+	},
+	userlocal:String,
+	domainlocal:String
 })
 
 ClueSchema.pre('save',function(next){	//每次存数据之前都要调用这个方法
@@ -50,9 +52,9 @@ ClueSchema.pre('save',function(next){	//每次存数据之前都要调用这个�
 })
 
 ClueSchema.statics = {
-	fetch:function(cb){		//取出目前数据库所有的数据
+	fetch:function(cb,who){		//取出目前数据库所有的数据
 		return this
-			.find({})	//查找全部数据
+			.find(who)	//查找全部数据
 			.sort('meta.createAt')		//按照更新时间排序
 			.exec(cb)
 	},
