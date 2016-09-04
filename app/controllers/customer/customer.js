@@ -5,10 +5,18 @@ var _ = require('underscore')
 	exports.list = function(req,res){
 		var user = req.session.user
 		Customer.fetch({"userlocal":user.email},function(err,customers){
-			res.json({
-				status:"1",
-				customers:customers
-			})
+			
+			if(err){
+				res.json({
+					msg:err
+				})
+				console.log(err)
+			}else{
+				res.json({
+					customers:customers
+				})
+			}
+			
 		})
 	}
 	//客户更新、新建
@@ -47,9 +55,12 @@ var _ = require('underscore')
 			})
 			_customer.save(function(err,customer){
 				if(err){
+					res.json({
+						msg:err
+					})
 					console.log(err)
 				}
-				res.json({status:"添加成功",status: 1})
+				res.json({msg:"添加成功",status: 1})
 			})
 	}
 	//客户更新、新建
@@ -62,7 +73,12 @@ var _ = require('underscore')
 
 				_customer = _.extend(customer,customerObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
 				_customer.save(function(err,customer){
-					res.json({status:"更新成功",status: customer})
+					if(err){
+						res.json({msg:err})
+					}else{
+						res.json({msg:"更新成功",status: 1})
+
+					}
 				})
 			})
 		}

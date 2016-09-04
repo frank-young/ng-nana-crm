@@ -77,7 +77,7 @@ angular.module("teamMoudle", []).controller('TeamCtrl',
             }
             $scope.checkArr.splice(0,$scope.checkArr.length);   
         } 
-    }
+    } 
     /*提示框*/
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});

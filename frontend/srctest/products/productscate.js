@@ -29,9 +29,9 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
     $scope.saveCate= function(value){
         if(value.isEdit == true){
             cateData.updateData(value).then(function (data) {
-                $scope.changeAlert('操作成功！','');
+                $scope.changeAlert(data.msg);
             });
-        }
+        } 
     }
     /* 删除单条分类信息 */
     $scope.deleteCate= function(value){
@@ -40,7 +40,7 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
             var index = findIndex(value,$scope.cate);
             $scope.cate.splice(index,1);   //删除
             cateData.deleteData(value).then(function(data){
-                $scope.changeAlert('删除成功！');
+                $scope.changeAlert(data.msg);
             })
             /* 更新数据value索引值 */
             $scope.cate.forEach( function(element, index) {

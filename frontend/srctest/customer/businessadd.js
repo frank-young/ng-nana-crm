@@ -9,7 +9,7 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
         ];
-
+ 
     /* 客户设置 */
     $http({
         url:'data/customerSet.json',

@@ -25,7 +25,7 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
     $scope.saveProduct = function(value){
         $scope.isEdit = !$scope.isEdit;
         productData.updateData(value).then(function(data){
-            $scope.changeAlert('操作成功！');
+            $scope.changeAlert(data.msg);
         });
     }
 
@@ -50,7 +50,7 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
         if(delconfirm){
             var index = $scope.mulImages.indexOf(value);
             $scope.mulImages.splice(index,1);
-        }
+        } 
 
     }   
     $scope.upload = function () {

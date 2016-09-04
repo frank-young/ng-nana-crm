@@ -28,11 +28,11 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
 
         /* 推进状态*/
         $scope.status = data.status;
-    })
+    }) 
     /* 客户详情对象 */
     businessData.getIdData($stateParams.id).then(function(data){
         $scope.customer=data.business;   
-    })
+    }) 
     /* 自定义 -- 公司*/
     customerData.getData().then(function (data) {
         var company=[];

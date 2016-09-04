@@ -27,7 +27,7 @@ var _ = require('underscore')
 				if(err){
 					console.log(err)
 				}
-				res.json({status:"添加成功",status: 1})
+				res.json({msg:"添加成功",status: 1})
 			})
 	}
 	//分类更新、新建
@@ -46,7 +46,7 @@ var _ = require('underscore')
 						console.log(err)
 					}
 
-					res.json({status:"更新成功",status: 1})
+					res.json({msg:"更新成功",status: 1})
 				})
 			})
 		}
@@ -61,7 +61,7 @@ var _ = require('underscore')
 				if(err){
 					console.log(err)
 				}else{
-					res.json({status: 1})
+					res.json({status: 1,msg:"删除成功"})
 				}
 			})
 		}

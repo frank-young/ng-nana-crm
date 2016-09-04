@@ -15,7 +15,7 @@ var Domain = require('../models/domain'),	//引入模型
 
 		Domain.findOne({name:_domain.name},function(err,domain){
 			if(domain){
-				res.json({status:"添加失败"})		//添加失败
+				res.json({msg:"添加失败"})		//添加失败
 			}else{
 				var domain = new Domain(_domain)
 				domain.save(function(err,domain){

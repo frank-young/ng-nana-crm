@@ -355,7 +355,7 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
         ];
-
+ 
     /* 客户设置 */
     $http({
         url:'data/customerSet.json',
@@ -565,11 +565,11 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
 
         /* 推进状态*/
         $scope.status = data.status;
-    })
+    }) 
     /* 客户详情对象 */
     businessData.getIdData($stateParams.id).then(function(data){
         $scope.customer=data.business;   
-    })
+    }) 
     /* 自定义 -- 公司*/
     customerData.getData().then(function (data) {
         var company=[];
@@ -734,7 +734,8 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
  ********************************************************************************************************************/
 
 angular.module("customerSettingMoudle", ['ng-sortable'])
-.controller('CustomerSettingCtrl', ['$scope', '$http', '$state','groupData','tagData','$alert',
+.controller('CustomerSettingCtrl', 
+    ['$scope', '$http', '$state','groupData','tagData','$alert',
     function($scope, $http, $state,groupData,tagData,$alert) {
     /* 根据数组值找到索引*/
     function findIndex(current, obj){
@@ -793,7 +794,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
 
         if(value.isEdit == true){
             groupData.updateData(value).then(function (data) {
-                $scope.changeAlert('操作成功！','');
+                $scope.changeAlert(data.msg);
             });
         }
     }
@@ -843,7 +844,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             tagData.updateData(value).then(function (data) {
                 $scope.changeAlert('操作成功！','');
             });
-        }
+        } 
     }
     /* 删除单条标签信息 */
     $scope.deleteTag = function(value){
@@ -2188,7 +2189,7 @@ angular.module("peopleDetailMoudle", []).controller('PeopleDetailCtrl',
     $scope.sexs = [
         {"value":"0","label":"男"},
         {"value":"1","label":"女"}
-    ];
+    ]; 
     customerData.getIdData($stateParams.id).then(function (data) {
        $scope.customer=data.customer; 
     });
@@ -2197,10 +2198,15 @@ angular.module("peopleDetailMoudle", []).controller('PeopleDetailCtrl',
     $scope.isEdit = true;
 
     $scope.savePeople = function(value){
-        customerData.updateData(value);
+        customerData.updateData(value).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
         customerData.getIdData($stateParams.id).then(function (data) {
            $scope.customer=data.customer; 
         });
+    }
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
     }
 }]);;/********************************************************************************************************************
  *                                                      添加图片
@@ -2404,7 +2410,7 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
     } 
     $scope.upload = function () {
         if (!$scope.mulImages.length) {
-            return;
+            return; 
         }
         var url = $scope.params.url;
         var data = angular.copy($scope.params.data || {});
@@ -2423,7 +2429,7 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
     };
     $scope.saveProduct = function(value){
         productData.addData(value).then(function(data){
-            $scope.changeAlert('添加成功！');
+            $scope.changeAlert(data.msg);
             window.history.go(-1);
         });
     }
@@ -2463,9 +2469,9 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
     $scope.saveCate= function(value){
         if(value.isEdit == true){
             cateData.updateData(value).then(function (data) {
-                $scope.changeAlert('操作成功！','');
+                $scope.changeAlert(data.msg);
             });
-        }
+        } 
     }
     /* 删除单条分类信息 */
     $scope.deleteCate= function(value){
@@ -2474,7 +2480,7 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
             var index = findIndex(value,$scope.cate);
             $scope.cate.splice(index,1);   //删除
             cateData.deleteData(value).then(function(data){
-                $scope.changeAlert('删除成功！');
+                $scope.changeAlert(data.msg);
             })
             /* 更新数据value索引值 */
             $scope.cate.forEach( function(element, index) {
@@ -2521,7 +2527,7 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
     $scope.saveProduct = function(value){
         $scope.isEdit = !$scope.isEdit;
         productData.updateData(value).then(function(data){
-            $scope.changeAlert('操作成功！');
+            $scope.changeAlert(data.msg);
         });
     }
 
@@ -2546,7 +2552,7 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
         if(delconfirm){
             var index = $scope.mulImages.indexOf(value);
             $scope.mulImages.splice(index,1);
-        }
+        } 
 
     }   
     $scope.upload = function () {
@@ -3294,7 +3300,7 @@ angular.module("teamMoudle", []).controller('TeamCtrl',
             }
             $scope.checkArr.splice(0,$scope.checkArr.length);   
         } 
-    }
+    } 
     /*提示框*/
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});

@@ -3,7 +3,8 @@
  ********************************************************************************************************************/
 
 angular.module("customerSettingMoudle", ['ng-sortable'])
-.controller('CustomerSettingCtrl', ['$scope', '$http', '$state','groupData','tagData','$alert',
+.controller('CustomerSettingCtrl', 
+    ['$scope', '$http', '$state','groupData','tagData','$alert',
     function($scope, $http, $state,groupData,tagData,$alert) {
     /* 根据数组值找到索引*/
     function findIndex(current, obj){
@@ -62,7 +63,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
 
         if(value.isEdit == true){
             groupData.updateData(value).then(function (data) {
-                $scope.changeAlert('操作成功！','');
+                $scope.changeAlert(data.msg);
             });
         }
     }
@@ -112,7 +113,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             tagData.updateData(value).then(function (data) {
                 $scope.changeAlert('操作成功！','');
             });
-        }
+        } 
     }
     /* 删除单条标签信息 */
     $scope.deleteTag = function(value){

@@ -57,7 +57,7 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
     } 
     $scope.upload = function () {
         if (!$scope.mulImages.length) {
-            return;
+            return; 
         }
         var url = $scope.params.url;
         var data = angular.copy($scope.params.data || {});
@@ -76,7 +76,7 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
     };
     $scope.saveProduct = function(value){
         productData.addData(value).then(function(data){
-            $scope.changeAlert('添加成功！');
+            $scope.changeAlert(data.msg);
             window.history.go(-1);
         });
     }
