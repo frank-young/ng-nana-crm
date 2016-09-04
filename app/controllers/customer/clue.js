@@ -5,10 +5,16 @@ var _ = require('underscore')
 	exports.list = function(req,res){
 		var user = req.session.user
 		Clue.fetch({"userlocal":user.email},function(err,clues){
-			res.json({
-				status:"1",
-				clues:clues
-			})
+			if(err){
+				res.json({
+					msg:err
+				})
+				console.log(err)
+			}else{
+				res.json({
+					clues:clues
+				})
+			}
 		})
 	}
 	//潜在客户更新、新建
@@ -47,9 +53,14 @@ var _ = require('underscore')
 			})
 			_clue.save(function(err,clue){
 				if(err){
+					res.json({
+						msg:err
+					})
 					console.log(err)
+				}else{
+					res.json({msg:"添加成功",status: 1})
+
 				}
-				res.json({status:"添加成功",status: 1})
 			})
 	}
 	//潜在客户更新、新建
@@ -65,10 +76,14 @@ var _ = require('underscore')
 				_clue = _.extend(clue,clueObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
 				_clue.save(function(err,clue){
 					if(err){
+						res.json({
+							msg:err
+						})
 						console.log(err)
-					}
+					}else{
+						res.json({msg:"更新成功",status: 1})
 
-					res.json({status:"更新成功",status: 1})
+					}
 				})
 			})
 		}
@@ -89,9 +104,12 @@ var _ = require('underscore')
 		if(id){
 			Clue.remove({_id: id},function(err,clue){
 				if(err){
+					res.json({
+						msg:err
+					})
 					console.log(err)
 				}else{
-					res.json({status: 1})
+					res.json({status: 1,msg:"删除成功"})
 				}
 			})
 		}

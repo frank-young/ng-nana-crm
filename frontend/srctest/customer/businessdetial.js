@@ -3,8 +3,8 @@
  ********************************************************************************************************************/
 
 angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl', 
-    ['$scope','$http', '$state', '$stateParams','businessData','customerData',
-    function($scope, $http, $state, $stateParams,businessData,customerData) {
+    ['$scope','$http', '$state','$alert','$stateParams','businessData','customerData',
+    function($scope, $http, $state,$alert,$stateParams,businessData,customerData) {
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
@@ -51,7 +51,12 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
     })
     
     $scope.saveData = function(value){
-        businessData.updateData(value)
+        if($scope.customer.isEdit === true){
+            businessData.updateData(value).then(function(data){
+                $scope.changeAlert(data.msg)
+            })    
+        }
+        
         var id,
             cusdata;
         for(var i in $scope.company){
@@ -182,5 +187,9 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
         $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null}]};     //初始空数据
     }
 
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
     
 }]);

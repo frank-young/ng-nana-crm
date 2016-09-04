@@ -540,8 +540,8 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
  ********************************************************************************************************************/
 
 angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl', 
-    ['$scope','$http', '$state', '$stateParams','businessData','customerData',
-    function($scope, $http, $state, $stateParams,businessData,customerData) {
+    ['$scope','$http', '$state','$alert','$stateParams','businessData','customerData',
+    function($scope, $http, $state,$alert,$stateParams,businessData,customerData) {
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
@@ -588,7 +588,12 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
     })
     
     $scope.saveData = function(value){
-        businessData.updateData(value)
+        if($scope.customer.isEdit === true){
+            businessData.updateData(value).then(function(data){
+                $scope.changeAlert(data.msg)
+            })    
+        }
+        
         var id,
             cusdata;
         for(var i in $scope.company){
@@ -719,6 +724,10 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
         $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null}]};     //初始空数据
     }
 
+    /*提示框*/
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
     
 }]);;/********************************************************************************************************************
  *                                                      客户设置页面
@@ -1120,7 +1129,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     })
     $scope.saveData = function(value){
         clueData.addData(value).then(function (data) {
-            $scope.changeAlert('保存成功！','');
+            $scope.changeAlert(data.msg);
             window.history.go(-1)
         });
     }
@@ -1139,7 +1148,9 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
-                customerData.updateData($scope.customer);
+                customerData.updateData($scope.customer).then(function(){
+            $scope.changeAlert("操作成功！");
+        });
             }
         }
     }
@@ -1226,18 +1237,9 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     }
     $scope.saveEditSchedule = function(value){
         value.schedule[editIndex] = $scope.scheduleModal;
-        /* 发送数据到服务器 */
-        $http({
-                method: 'POST',
-                url: 'http://localhost/angularcode/src/',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                },
-                data: value
-            }).success(function(data){
-               
-            })
-            
+        clueData.updateData(value).then(function(){
+            $scope.changeAlert("操作成功！");
+        });
         $scope.cancleEditSchedule();    
     }
     /* 添加日程提醒 */
@@ -1261,8 +1263,8 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
  ********************************************************************************************************************/
 
 angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl', 
-    ['$scope', '$http','$state','$stateParams','clueData','groupData','tagData',
-    function($scope, $http, $state,$stateParams,clueData,groupData,tagData) {
+    ['$scope', '$http','$state','$alert','$stateParams','clueData','groupData','tagData',
+    function($scope, $http, $state,$alert,$stateParams,clueData,groupData,tagData) {
     $scope.isEdit = true;
     $scope.sexs = [
             {"value":"0","label":"男"},
@@ -1314,7 +1316,9 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
-                customerData.updateData($scope.customer);
+                customerData.updateData($scope.customer).then(function(){
+                    $scope.changeAlert("操作成功！");
+                });
             }
         }
     }
@@ -1334,7 +1338,9 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         var deleteConfirm = confirm('您确定要删除此日程？');
         if(deleteConfirm){
             $scope.customer[type].splice(index,1);
-            clueData.updateData(value);
+            clueData.updateData(value).then(function(){
+                $scope.changeAlert("操作成功！");
+            });
         }
 
     }
@@ -1345,13 +1351,17 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         completeData.nowDate = now_date.getTime();
         $scope.customer.schedule_complete.unshift($scope.customer[type][index]);
         $scope.customer[type].splice(index,1);
-         clueData.updateData(value)
+        clueData.updateData(value).then(function(){
+            $scope.changeAlert("操作成功！");
+        });
     }
     /* 撤销日程 */
     $scope.schereply = function(index,type,value){
         $scope.customer.schedule.unshift($scope.customer[type][index]);
         $scope.customer[type].splice(index,1);
-         clueData.updateData(value)
+        clueData.updateData(value).then(function(){
+            $scope.changeAlert("操作成功！");
+        });
     }
 
 
@@ -1374,7 +1384,9 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
     $scope.saveSchedule = function(value){
         value.schedule.unshift($scope.schedule);
         /* 发送数据到服务器 */
-         clueData.updateData(value)
+        clueData.updateData(value).then(function(){
+            $scope.changeAlert("操作成功！");
+        });
             
         $scope.cancleSchedule();    
     }
@@ -1404,7 +1416,9 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
     $scope.saveEditSchedule = function(value){
         value.schedule[editIndex] = $scope.scheduleModal;
         /* 发送数据到服务器 */
-         clueData.updateData(value)
+        clueData.updateData(value).then(function(){
+            $scope.changeAlert("操作成功！");
+        });
             
         $scope.cancleEditSchedule();    
     }
@@ -1421,6 +1435,9 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
     /* 清空日程弹出框数据 */
     $scope.cancleEditSchedule = function(){  
         $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null}]};     //初始空数据
+    }
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
     }
 
 }]);;/********************************************************************************************************************

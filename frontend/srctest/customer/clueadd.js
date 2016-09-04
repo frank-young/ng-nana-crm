@@ -49,7 +49,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     })
     $scope.saveData = function(value){
         clueData.addData(value).then(function (data) {
-            $scope.changeAlert('保存成功！','');
+            $scope.changeAlert(data.msg);
             window.history.go(-1)
         });
     }
@@ -68,7 +68,9 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
-                customerData.updateData($scope.customer);
+                customerData.updateData($scope.customer).then(function(){
+            $scope.changeAlert("操作成功！");
+        });
             }
         }
     }
@@ -155,18 +157,9 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     }
     $scope.saveEditSchedule = function(value){
         value.schedule[editIndex] = $scope.scheduleModal;
-        /* 发送数据到服务器 */
-        $http({
-                method: 'POST',
-                url: 'http://localhost/angularcode/src/',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                },
-                data: value
-            }).success(function(data){
-               
-            })
-            
+        clueData.updateData(value).then(function(){
+            $scope.changeAlert("操作成功！");
+        });
         $scope.cancleEditSchedule();    
     }
     /* 添加日程提醒 */
