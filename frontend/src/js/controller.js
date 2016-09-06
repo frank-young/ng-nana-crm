@@ -786,7 +786,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
         groupData.addData({"value":value,"isEdit":true,"label":'分组名称'});
         groupData.getData().then(function (data) {
             $scope.groups = data.groups;
-            console.log($scope.groups);
+            $scope.changeAlert(data.msg);
         });
     }
     /* 保存单条分组信息 */
@@ -809,7 +809,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             var index = findIndex(value,$scope.groups);
             $scope.groups.splice(index,1);   //删除
             groupData.deleteData(value).then(function(data){
-                $scope.changeAlert('删除成功！');
+                $scope.changeAlert(data.msg);
                 console.log($scope.groups);
             })
             /* 更新数据value索引值 */
@@ -1078,8 +1078,26 @@ angular.module('clueMoudle',[]).controller('ClueCtrl',
             $scope.schedule.remind.splice(index,1);
         }
     }
+    /* google  地理数据*/
+    // $scope.getAddress = function(viewValue) {
+    //     var params = {address: viewValue, sensor: false};
+    //     return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {params: params})
+    //     .then(function(res) {
+    //       return res.data.results;
+    //     });
+    // };
 
-}]);;/********************************************************************************************************************
+    
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+}]);
+
+
+
+
+
+;/********************************************************************************************************************
  *                                                      添加潜在客户
  ********************************************************************************************************************/
 
@@ -1108,6 +1126,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
+        $scope.colors = data.colors;
 
     })
 
@@ -1257,7 +1276,43 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     $scope.cancleEditSchedule = function(){  
         $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null,}]};     //初始空数据
     }
+    /* 添加分组 */
+    $scope.saveGroup = function(value){
+         
+        var val = $scope.groups.length;
+        var msgadd = {
+            "value":val,
+            "label":value,
+            "isEdit":true
+        }
 
+        groupData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        groupData.getData().then(function (data) {
+            $scope.groups = data.groups;
+
+        });
+    }
+    /* 添加标签 */
+    $scope.saveTag = function(value){
+        color = "primary" || value.color;
+        var val = $scope.tags.length;
+        var msgadd = {
+            "value":val,
+            "text":value.text,
+            "color":color,
+            "isEdit":true
+        }
+
+        tagData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        tagData.getData().then(function (data) {
+            $scope.tags = data.tags;
+
+        });
+    }
     
 }]);;/********************************************************************************************************************
  *                                                      潜在客户详情页

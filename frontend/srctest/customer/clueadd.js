@@ -27,6 +27,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
+        $scope.colors = data.colors;
 
     })
 
@@ -176,6 +177,42 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     $scope.cancleEditSchedule = function(){  
         $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null,}]};     //初始空数据
     }
+    /* 添加分组 */
+    $scope.saveGroup = function(value){
+         
+        var val = $scope.groups.length;
+        var msgadd = {
+            "value":val,
+            "label":value,
+            "isEdit":true
+        }
 
+        groupData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        groupData.getData().then(function (data) {
+            $scope.groups = data.groups;
+
+        });
+    }
+    /* 添加标签 */
+    $scope.saveTag = function(value){
+        color = "primary" || value.color;
+        var val = $scope.tags.length;
+        var msgadd = {
+            "value":val,
+            "text":value.text,
+            "color":color,
+            "isEdit":true
+        }
+
+        tagData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        tagData.getData().then(function (data) {
+            $scope.tags = data.tags;
+
+        });
+    }
     
 }]);

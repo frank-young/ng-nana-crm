@@ -207,5 +207,22 @@ angular.module('clueMoudle',[]).controller('ClueCtrl',
             $scope.schedule.remind.splice(index,1);
         }
     }
+    /* google  地理数据*/
+    // $scope.getAddress = function(viewValue) {
+    //     var params = {address: viewValue, sensor: false};
+    //     return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {params: params})
+    //     .then(function(res) {
+    //       return res.data.results;
+    //     });
+    // };
 
+    
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
 }]);
+
+
+
+
+

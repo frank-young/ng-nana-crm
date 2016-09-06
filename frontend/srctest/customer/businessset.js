@@ -55,7 +55,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
         groupData.addData({"value":value,"isEdit":true,"label":'分组名称'});
         groupData.getData().then(function (data) {
             $scope.groups = data.groups;
-            console.log($scope.groups);
+            $scope.changeAlert(data.msg);
         });
     }
     /* 保存单条分组信息 */
@@ -78,7 +78,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             var index = findIndex(value,$scope.groups);
             $scope.groups.splice(index,1);   //删除
             groupData.deleteData(value).then(function(data){
-                $scope.changeAlert('删除成功！');
+                $scope.changeAlert(data.msg);
                 console.log($scope.groups);
             })
             /* 更新数据value索引值 */

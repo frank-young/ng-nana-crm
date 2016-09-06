@@ -346,6 +346,9 @@
                 <button type="button" class="form-control form-select" ng-model="customer.group" data-html="1" data-toggle="true" bs-options="group.value as group.label for group in groups" placeholder="分组" data-animation="am-flip-x" bs-select>
                     分组<span class="caret"></span>
                 </button>
+
+                <a class="inl-add" href="" data-animation="am-fade-and-scale" placement="center" data-template-url="addGroup.tpl.html" bs-modal><i class="fa fa-plus fa-lg"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加"></i></a>
+
             </div>
         </div>
         <!-- /.form-group -->
@@ -361,7 +364,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">国家/地区</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" ng-model="customer.country" bs-options="state for state in states" placeholder="国家/地区" data-animation="am-flip-x" bs-typeahead >
+                <input type="text" class="form-control" ng-model="customer.country" placeholder="国家/地区" data-animation="am-flip-x" >
             </div>
         </div>
         <!-- /.form-group -->
@@ -374,7 +377,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">主营业务</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" ng-model="customer.st" bs-options="st for st in sts" placeholder="主营业务" data-animation="am-flip-x" bs-typeahead >
+                <input type="text" class="form-control" ng-model="customer.st"placeholder="主营业务" data-animation="am-flip-x" >
             </div>
         </div>
         <!-- /.form-group --> </div>
@@ -399,7 +402,7 @@
                 <button type="button" class="form-control form-select" ng-model="customer.tags" data-html="1" data-multiple="1" data-toggle="true" bs-options="tag.value as tag.text for tag in tags" placeholder="客户标签" max-length="4"  max-length-html="个标签" all-text="全选" none-text="取消全选" all-none-buttons="1"  data-animation="am-flip-x" bs-select>
                     客户标签<span class="caret"></span>
                 </button>
-
+                <a class="inl-add" href="" data-animation="am-fade-and-scale" placement="center" data-template-url="addTag.tpl.html" bs-modal><i class="fa fa-plus fa-lg"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加"></i></a>
             </div>
         </div>
         <!-- /.form-group -->
@@ -551,6 +554,76 @@
 </div>
 <!-- /.row -->
 
+<!-- 添加分组 -->
+<script type="text/ng-template" id="addGroup.tpl.html">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" style="margin-top: 100px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$hide()">&times;</button>
+                    <h4 class="modal-title">添加分组</h4>
+                </div>
+                <div class="modal-body" >
+                    <form name="groupModalForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">分组名称</label>
+                                    <div class="col-sm-9" ng-class="{'has-danger': groupModalForm.text.$invalid}">
+                                        <input name="text" class="form-control" placeholder="请输入分组名称（必须填写）" ng-model="groupMsg" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                    <button type="button" class="btn btn-success" ng-click="saveGroup(groupMsg);$hide()" ng-disabled="groupModalForm.$invalid">保存</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- 添加标签 -->
+<script type="text/ng-template" id="addTag.tpl.html">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" style="margin-top: 100px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$hide()">&times;</button>
+                    <h4 class="modal-title">添加标签</h4>
+                </div>
+                <div class="modal-body" >
+                    <form name="tagModalForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">标签名称</label>
+                                    <div class="col-sm-7" ng-class="{'has-danger': tagModalForm.text.$invalid}">
+                                        <input name="text" class="form-control" placeholder="请输入标签名称（必须填写）" ng-model="tagMsg.text" required>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button type="button" class="form-control form-select" ng-model="tagMsg.color" data-html="1" data-toggle="true" bs-options="color.value as color.label for color in colors" placeholder="" data-animation="am-flip-x" bs-select>
+                                            <span class="caret"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                    <button type="button" class="btn btn-success" ng-click="saveTag(tagMsg);$hide()" ng-disabled="tagModalForm.$invalid">保存</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
 
 
 
