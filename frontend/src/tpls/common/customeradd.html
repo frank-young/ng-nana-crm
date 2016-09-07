@@ -455,7 +455,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">姓名</label>
                         <div class="col-sm-9" ng-class="{'has-danger': customerForm.personName{{$index}}.$invalid}">
-                            <input type="text" name="personName{{$index}}" class="form-control" placeholder="姓名" ng-model="people.name" required ng-maxlength="50"></div>
+                            <input type="text" name="personName{{$index}}" class="form-control" placeholder="姓名（必填）" ng-model="people.name" required ng-maxlength="50"></div>
                     </div>
                 </div>
                 <!-- /.col-sm-5 -->
@@ -463,7 +463,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">邮箱</label>
                         <div class="col-sm-9" ng-class="{'has-danger': customerForm.personMail{{$index}}.$invalid}">
-                            <input type="email" name="personMail{{$index}}" class="form-control" placeholder="邮箱" ng-model="people.email" required ng-maxlength="50"></div>
+                            <input type="email" name="personMail{{$index}}" class="form-control" placeholder="邮箱（必填）" ng-model="people.email" required ng-maxlength="50"></div>
                     </div>
                 </div>
                 <!-- /.col-sm-5 -->
@@ -497,25 +497,21 @@
                 <div class="col-sm-5 col-sm-offset-1">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">生日</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="personBirthed{{$index}}" class="form-control"  data-date-format="yyyy-MM-dd" data-date-type="number" data-min-date="" data-max-date="today" data-autoclose="1"  ng-model="people.birthed" placeholder="生日" data-animation="am-flip-x" bs-datepicker>
-                            
-                         </div>
-                         <div class="col-sm-3">
-                            <button type="button" class="form-control form-select" ng-model="customer.group" data-html="1" data-toggle="true" bs-options="group.value as group.label for group in groups" placeholder="分组" data-animation="am-flip-x" bs-select>
-                                分组<span class="caret"></span>
+                            <div class="col-sm-3">
+                            <button type="button" class="form-control form-select" ng-model="people.birthed.year" data-html="1" data-toggle="true" bs-options="year.value as year.value for year in birthday.year" placeholder="年" data-animation="am-flip-x" bs-select>
+                                年<span class="caret"></span>
                             </button>
-                         </div>
-                         <div class="col-sm-3">
-                            <button type="button" class="form-control form-select" ng-model="customer.group" data-html="1" data-toggle="true" bs-options="group.value as group.label for group in groups" placeholder="分组" data-animation="am-flip-x" bs-select>
-                                分组<span class="caret"></span>
+                            </div>
+                            <div class="col-sm-3">
+                            <button type="button" class="form-control form-select" ng-model="people.birthed.month" data-html="1" data-toggle="true" bs-options="year.value as year.value for year in birthday.month" placeholder="月" data-animation="am-flip-x" bs-select>
+                                月<span class="caret"></span>
                             </button>
-                         </div>
-                         <div class="col-sm-3">
-                            <button type="button" class="form-control form-select" ng-model="customer.group" data-html="1" data-toggle="true" bs-options="group.value as group.label for group in groups" placeholder="分组" data-animation="am-flip-x" bs-select>
-                                分组<span class="caret"></span>
+                            </div>
+                            <div class="col-sm-3">
+                            <button type="button" class="form-control form-select" ng-model="people.birthed.day" data-html="1" data-toggle="true" bs-options="year.value as year.value for year in birthday.day" placeholder="日" data-animation="am-flip-x" bs-select>
+                                日<span class="caret"></span>
                             </button>
-                         </div>
+                            </div>
                     </div>
                 </div>
                 <!-- /.col-sm-5 -->

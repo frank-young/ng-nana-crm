@@ -547,6 +547,7 @@
  *                                            额外调整css
  * ************************************************************************************************
  */
+ /* 添加内部标签 */
 .inl-add{
   position: absolute;
   right: -18px;
@@ -555,6 +556,17 @@
   display: block;
   padding: 10px;
 }
+/*下拉列表*/
+
+.dropdown-menu{
+  max-height: 195px;
+  overflow: auto;
+}
+
+
+
+
+
 
 
 

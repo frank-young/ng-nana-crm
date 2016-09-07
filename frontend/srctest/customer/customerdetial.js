@@ -48,6 +48,7 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
     });
     /* 编辑客户信息 */
     $scope.editCustomer = function(value){
+
         customerData.updateData(value);
         customerData.getIdData($state.id).then(function (data) {
             $scope.customer=data.customer; 

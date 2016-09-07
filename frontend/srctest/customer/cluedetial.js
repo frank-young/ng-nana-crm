@@ -56,15 +56,17 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
             var deleteConfirm = confirm('您确定要删除此联系人？');
             if(deleteConfirm){
                 $scope.customer.peoples.splice(index,1);
-                customerData.updateData($scope.customer).then(function(){
-                    $scope.changeAlert("操作成功！");
+                customerData.updateData($scope.customer).then(function(data){
+                    $scope.changeAlert(data.msg);
                 });
             }
         }
     }
     $scope.editCustomer = function(value){
-        clueData.updateData(value);
-        clueData.getIdData($state.id).then(function (data) {
+        clueData.updateData(value).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        clueData.getIdData($stateParams.id).then(function (data) {
             $scope.customer=data.clue; 
         });
     }
@@ -78,8 +80,8 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         var deleteConfirm = confirm('您确定要删除此日程？');
         if(deleteConfirm){
             $scope.customer[type].splice(index,1);
-            clueData.updateData(value).then(function(){
-                $scope.changeAlert("操作成功！");
+            clueData.updateData(value).then(function(data){
+                $scope.changeAlert(data.msg);
             });
         }
 
@@ -91,16 +93,16 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         completeData.nowDate = now_date.getTime();
         $scope.customer.schedule_complete.unshift($scope.customer[type][index]);
         $scope.customer[type].splice(index,1);
-        clueData.updateData(value).then(function(){
-            $scope.changeAlert("操作成功！");
+        clueData.updateData(value).then(function(data){
+            $scope.changeAlert(data.msg);
         });
     }
     /* 撤销日程 */
     $scope.schereply = function(index,type,value){
         $scope.customer.schedule.unshift($scope.customer[type][index]);
         $scope.customer[type].splice(index,1);
-        clueData.updateData(value).then(function(){
-            $scope.changeAlert("操作成功！");
+        clueData.updateData(value).then(function(data){
+            $scope.changeAlert(data.msg);
         });
     }
 
@@ -124,8 +126,8 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
     $scope.saveSchedule = function(value){
         value.schedule.unshift($scope.schedule);
         /* 发送数据到服务器 */
-        clueData.updateData(value).then(function(){
-            $scope.changeAlert("操作成功！");
+        clueData.updateData(value).then(function(data){
+            $scope.changeAlert(data.msg);
         });
             
         $scope.cancleSchedule();    
@@ -156,8 +158,8 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
     $scope.saveEditSchedule = function(value){
         value.schedule[editIndex] = $scope.scheduleModal;
         /* 发送数据到服务器 */
-        clueData.updateData(value).then(function(){
-            $scope.changeAlert("操作成功！");
+        clueData.updateData(value).then(function(data){
+            $scope.changeAlert(data.msg);
         });
             
         $scope.cancleEditSchedule();    
@@ -216,5 +218,51 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
 
         });
     }
+    /* 年分－－生日使用 */
+    $scope.birthday = {
+        year:[],
+        month:[],
+        day:[]
+    }
+    var dateTool = {
+        setYear:function (){
+            var date = new Date(),
+                year = date.getFullYear(),
+                arr = [];
+            
+            for(var i = 1970;i<=year;i++){
+                arr.push({value:i});
+
+            } 
+            console.log(arr)
+            return arr;
+        },
+        setMonth:function (){
+            var arr = [];
+            
+            for(var i = 1;i<=12;i++){
+                if(i<10){
+                    i = "0"+i
+                }
+                arr.push({value:i});
+            } 
+            return arr;
+        },
+        setDay:function (){
+            var arr = [];
+            
+            for(var i = 1;i<=31;i++){
+                if(i<10){
+                    i = "0"+i
+                }
+                arr.push({value:i});
+            } 
+            return arr;
+        } 
+    }
+    $scope.birthday.year = angular.copy(dateTool.setYear());
+    $scope.birthday.month = angular.copy(dateTool.setMonth());
+    $scope.birthday.day = angular.copy(dateTool.setDay());
+
 
 }]);

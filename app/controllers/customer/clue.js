@@ -65,6 +65,7 @@ var _ = require('underscore')
 	}
 	//潜在客户更新、新建
 	exports.update = function(req,res){
+		console.log(req.body.clue._id)
 		var id = req.body.clue._id
 		var clueObj = req.body.clue 	//从路由传过来的 clue对象
 		var _clue

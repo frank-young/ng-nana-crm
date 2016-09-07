@@ -31,6 +31,54 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
 
     })
 
+    /* 年分－－生日使用 */
+    $scope.birthday = {
+        year:[],
+        month:[],
+        day:[]
+    }
+
+    var dateTool = {
+        setYear:function (){
+            var date = new Date(),
+                year = date.getFullYear(),
+                arr = [];
+            
+            for(var i = 1970;i<=year;i++){
+                arr.push({value:i});
+
+            } 
+            console.log(arr)
+            return arr;
+        },
+        setMonth:function (){
+            var arr = [];
+            
+            for(var i = 1;i<=12;i++){
+                if(i<10){
+                    i = "0"+i
+                }
+                arr.push({value:i});
+            } 
+            return arr;
+        },
+        setDay:function (){
+            var arr = [];
+            
+            for(var i = 1;i<=31;i++){
+                if(i<10){
+                    i = "0"+i
+                }
+                arr.push({value:i});
+            } 
+            return arr;
+        } 
+    }
+    
+    $scope.birthday.year = angular.copy(dateTool.setYear());
+    $scope.birthday.month = angular.copy(dateTool.setMonth());
+    $scope.birthday.day = angular.copy(dateTool.setDay());
+
     /* 分组 */
     groupData.getData().then(function (data) {
         $scope.groups = data.groups;

@@ -102,7 +102,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">邮箱</label>
             <div class="col-sm-9" ng-class="{'has-danger': customerForm.email.$invalid}">
-                <input type="email" name="email" class="form-control" ng-disabled="isEdit" placeholder="邮箱" ng-model="customer.email" required ng-maxlength="50"></div>
+                <input type="email" name="email" class="form-control" ng-disabled="isEdit" placeholder="邮箱" ng-model="customer.email" ng-maxlength="50"></div>
         </div>
         <!-- /.form-group -->
         <div class="form-group">
@@ -130,8 +130,8 @@
             </div>
         </div>
         <!-- /.form-group --> </div>
-    <div class="col-md-11 col-md-offset-1">
-        <button class="btn btn-success" ng-show="!isEdit" ng-click="isEdit=!isEdit;editCustomer(customer)" ng-disabled="customerForm.$invalid">保存</button>
+<!--     <div class="col-md-11 col-md-offset-1">
+        <button class="btn btn-success" ng-show="!isEdit" ng-click="isEdit=!isEdit;editCustomer(customer)" ng-disabled="customerForm.$invalid">保存</button> -->
     </div>
 </div>
 
