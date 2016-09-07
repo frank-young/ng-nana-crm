@@ -1141,21 +1141,26 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
 
     });
     /* 客户详情对象 */
-    $http({
-        url:'data/clueadd.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.customer=data;   
-    })
+    if(localStorage.clue){
+        $scope.customer = JSON.parse(localStorage.clue)
+    }else{
+        $http({
+            url:'data/clueadd.json',
+            method:'GET'
+        }).success(function(data){
+            $scope.customer=data;   
+        })
+    }
     $scope.saveData = function(value){
         clueData.addData(value).then(function (data) {
             $scope.changeAlert(data.msg);
-            window.history.go(-1)
+            window.history.go(-1);
+            localStorage.removeItem("clue");
         });
     }
     /*提示框*/
     $scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:5});
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
     }
     /* 添加联系人 */
     $scope.cusadd = function(){
@@ -1218,18 +1223,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     /* 保存数据，并且添加到原始数据里 */
     $scope.saveSchedule = function(value){
         value.schedule.unshift($scope.schedule);
-        /* 发送数据到服务器 */
-        $http({
-                method: 'POST',
-                url: 'http://localhost/angularcode/src/',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                },
-                data: value
-            }).success(function(data){
-               
-            })
-            
+
         $scope.cancleSchedule();    
     }
     /* 清空日程弹出框数据 */
@@ -1313,7 +1307,16 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
 
         });
     }
-    
+
+    /* 本地储存 */
+    setInterval(function(){
+        localStorage.clue= JSON.stringify($scope.customer);
+        // $scope.changeAlert('实时保存成功！')
+    }, 10000)
+    // window.onbeforeunload = function(event){    
+    //     return '您可能有数据没有保存'; 
+    // };
+
 }]);;/********************************************************************************************************************
  *                                                      潜在客户详情页
  ********************************************************************************************************************/
@@ -1495,6 +1498,49 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});
     }
+    /* 添加分组 */
+    $scope.saveGroup = function(value){
+         
+        var val = $scope.groups.length;
+        var msgadd = {
+            "value":val,
+            "label":value,
+            "isEdit":true
+        }
+
+        groupData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        groupData.getData().then(function (data) {
+            $scope.groups = data.groups;
+
+        });
+    }
+    /* 添加标签 */
+    $scope.saveTag = function(value){
+        color = "primary" || value.color;
+        var val = $scope.tags.length;
+        var msgadd = {
+            "value":val,
+            "text":value.text,
+            "color":color,
+            "isEdit":true
+        }
+
+        tagData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        tagData.getData().then(function (data) {
+            $scope.tags = data.tags;
+
+        });
+    }
+
+    /* 本地储存 */
+    setInterval(function(){
+        localStorage.clue= JSON.stringify($scope.customer);
+        // $scope.changeAlert('实时保存成功！')
+    }, 10000)
 
 }]);;/********************************************************************************************************************
  *                                                      客户列表页
