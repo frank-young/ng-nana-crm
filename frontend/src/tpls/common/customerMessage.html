@@ -26,7 +26,7 @@
                 <button type="button" class="form-control form-select" ng-model="customer.group" data-html="1" data-toggle="true" bs-options="group.value as group.label for group in groups" ng-disabled="isEdit" placeholder="分组" data-animation="am-flip-x" bs-select>
                     分组<span class="caret"></span>
                 </button>
-                <a class="inl-add" href="" data-animation="am-fade-and-scale" placement="center" data-template-url="addGroup.tpl.html" bs-modal><i class="fa fa-plus fa-lg"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加"></i></a>
+                <a class="inl-add" ng-show="!isEdit" href="" data-animation="am-fade-and-scale" placement="center" data-template-url="addGroup.tpl.html" bs-modal><i class="fa fa-plus fa-lg"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加"></i></a>
             </div>
         </div>
         <!-- /.form-group -->
@@ -80,7 +80,7 @@
                 <button type="button" class="form-control form-select" ng-model="customer.tags" data-html="1" data-multiple="1" data-toggle="true" bs-options="tag.value as tag.text for tag in tags" ng-disabled="isEdit" placeholder="客户标签" max-length="4"  max-length-html="个标签" all-text="全选" none-text="取消全选" all-none-buttons="1"  data-animation="am-flip-x" bs-select>
                     客户标签<span class="caret"></span>
                 </button>
-                <a class="inl-add" href="" data-animation="am-fade-and-scale" placement="center" data-template-url="addTag.tpl.html" bs-modal><i class="fa fa-plus fa-lg"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加"></i></a>
+                <a class="inl-add"  ng-show="!isEdit" href="" data-animation="am-fade-and-scale" placement="center" data-template-url="addTag.tpl.html" bs-modal><i class="fa fa-plus fa-lg"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加"></i></a>
             </div>
         </div>
         <!-- /.form-group -->

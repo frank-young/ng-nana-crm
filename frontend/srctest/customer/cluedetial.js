@@ -28,12 +28,12 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
+        $scope.colors = data.colors;
 
     })
     /* 分组 */
     groupData.getData().then(function (data) {
         $scope.groups = data.groups;
-
     });
     /* 客户标签*/
     tagData.getData().then(function (data) {
@@ -216,11 +216,5 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
 
         });
     }
-
-    /* 本地储存 */
-    setInterval(function(){
-        localStorage.clue= JSON.stringify($scope.customer);
-        // $scope.changeAlert('实时保存成功！')
-    }, 10000)
 
 }]);

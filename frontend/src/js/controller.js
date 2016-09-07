@@ -1151,11 +1151,19 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
             $scope.customer=data;   
         })
     }
+
+    /* 本地储存 */
+    var time = setInterval(function(){
+        localStorage.clue= JSON.stringify($scope.customer);
+    }, 10000);
+
     $scope.saveData = function(value){
         clueData.addData(value).then(function (data) {
             $scope.changeAlert(data.msg);
             window.history.go(-1);
             localStorage.removeItem("clue");
+            console.log(time)
+            clearInterval(time);
         });
     }
     /*提示框*/
@@ -1308,16 +1316,9 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
         });
     }
 
-    /* 本地储存 */
-    setInterval(function(){
-        localStorage.clue= JSON.stringify($scope.customer);
-        // $scope.changeAlert('实时保存成功！')
-    }, 10000)
-    // window.onbeforeunload = function(event){    
-    //     return '您可能有数据没有保存'; 
-    // };
+}]);
 
-}]);;/********************************************************************************************************************
+;/********************************************************************************************************************
  *                                                      潜在客户详情页
  ********************************************************************************************************************/
 
@@ -1347,12 +1348,12 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
+        $scope.colors = data.colors;
 
     })
     /* 分组 */
     groupData.getData().then(function (data) {
         $scope.groups = data.groups;
-
     });
     /* 客户标签*/
     tagData.getData().then(function (data) {
@@ -1535,12 +1536,6 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
 
         });
     }
-
-    /* 本地储存 */
-    setInterval(function(){
-        localStorage.clue= JSON.stringify($scope.customer);
-        // $scope.changeAlert('实时保存成功！')
-    }, 10000)
 
 }]);;/********************************************************************************************************************
  *                                                      客户列表页
