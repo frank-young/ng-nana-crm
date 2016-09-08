@@ -17,12 +17,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     }).success(function(data){
         /* 客户来源 */
         $scope.origins = data.origins;
-        /* 国家/地区 */
-        $scope.states = data.states;
-        /* 国家/地区 */
-        $scope.sts =data.sts;
-        /* 客户标签 */
-        $scope.tags = data.tags;
+
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
@@ -48,7 +43,6 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
                 arr.push({value:i});
 
             } 
-            console.log(arr)
             return arr;
         },
         setMonth:function (){
@@ -89,7 +83,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
         $scope.tags = data.tags;
 
     });
-    /* 客户详情对象 */
+    /* 客户详情对象 -- 带本地储存*/
     if(localStorage.clue){
         $scope.customer = JSON.parse(localStorage.clue)
     }else{
@@ -104,14 +98,13 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     /* 本地储存 */
     var time = setInterval(function(){
         localStorage.clue= JSON.stringify($scope.customer);
-    }, 10000);
+    }, 6000);
 
     $scope.saveData = function(value){
         clueData.addData(value).then(function (data) {
             $scope.changeAlert(data.msg);
             window.history.go(-1);
             localStorage.removeItem("clue");
-            console.log(time)
             clearInterval(time);
         });
     }

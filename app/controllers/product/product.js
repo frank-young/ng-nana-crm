@@ -1,5 +1,7 @@
 var Product = require('../../models/product/product')	//引入模型
 var _ = require('underscore')
+var fs = require('fs')
+var path = require('path')
 	
 	//产品列表页
 	exports.list = function(req,res){
@@ -80,3 +82,7 @@ var _ = require('underscore')
 		}
 	}
 
+	exports.saveImg = function(req,res,next){
+		var imgData = req.body
+		console.log(imgData)
+	}

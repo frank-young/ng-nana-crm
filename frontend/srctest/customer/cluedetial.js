@@ -18,12 +18,7 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
     }).success(function(data){
         /* 客户来源 */
         $scope.origins = data.origins;
-        /* 国家/地区 */
-        $scope.states = data.states;
-        /* 国家/地区 */
-        $scope.sts =data.sts;
-        /* 客户标签 */
-        $scope.tags = data.tags;
+
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
@@ -234,7 +229,6 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
                 arr.push({value:i});
 
             } 
-            console.log(arr)
             return arr;
         },
         setMonth:function (){

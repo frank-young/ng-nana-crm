@@ -42,7 +42,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">国家/地区</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" ng-model="customer.country" bs-options="state for state in states" placeholder="国家/地区" ng-disabled="isEdit" data-animation="am-flip-x" bs-typeahead >
+                <input type="text" class="form-control" ng-model="customer.country" placeholder="国家/地区" ng-disabled="isEdit" data-animation="am-flip-x" >
             </div>
         </div>
         <!-- /.form-group -->
@@ -55,7 +55,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">主营业务</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" ng-model="customer.st" bs-options="st for st in sts" placeholder="主营业务" ng-disabled="isEdit" data-animation="am-flip-x" bs-typeahead >
+                <input type="text" class="form-control" ng-model="customer.st" placeholder="主营业务" ng-disabled="isEdit" data-animation="am-flip-x" >
             </div>
         </div>
         <!-- /.form-group --> </div>
@@ -132,7 +132,7 @@
         <!-- /.form-group --> </div>
 <!--     <div class="col-md-11 col-md-offset-1">
         <button class="btn btn-success" ng-show="!isEdit" ng-click="isEdit=!isEdit;editCustomer(customer)" ng-disabled="customerForm.$invalid">保存</button> -->
-    </div>
+    <!-- </div> -->
 </div>
 
 <!-- 添加分组 -->

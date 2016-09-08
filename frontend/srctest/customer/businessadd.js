@@ -15,28 +15,23 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-
         /* 客户来源 */
         $scope.origins = data.origins;
-        /* 国家/地区 */
-        $scope.states = data.states;
-        /* 国家/地区 */
-        $scope.sts =data.sts;
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
-
         /* 推进状态*/
         $scope.status = data.status;
     })
-    $http({
-        url:'data/person.json',
-        method:'GET'
-    }).success(function(data){
-        /*  添加日程 --联系人 */
-        $scope.person = data.person;
-    })
+    // $http({
+    //     url:'data/person.json',
+    //     method:'GET'
+    // }).success(function(data){
+    //     /*  添加日程 --联系人 */
+    //     $scope.person = data.person;
+    // })
+
     /* 自定义 -- 公司*/
     customerData.getData().then(function (data) {
         var company=[];
@@ -50,13 +45,23 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
         $scope.company = company
     })
 
-    /* 初始化项目 */
-    $http({
-        url:'data/businessadd.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.customer=data;
-    })
+    /* 初始化项目 -- 带本地储存*/
+    if(localStorage.business){
+        $scope.customer = JSON.parse(localStorage.business)
+    }else{
+        $http({
+            url:'data/businessadd.json',
+            method:'GET'
+        }).success(function(data){
+            $scope.customer=data;
+        })
+    }
+
+    /* 本地储存 */
+    var time = setInterval(function(){
+        localStorage.business= JSON.stringify($scope.customer);
+    },6000);
+
     /* 分组 */
     groupData.getData().then(function (data) {
         $scope.groups = data.groups;
@@ -69,8 +74,11 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     });
     $scope.saveData = function(value){
         businessData.addData(value).then(function (data) {
-            window.history.go(-1);
             $scope.changeAlert(data.msg);
+            window.history.go(-1)
+            localStorage.removeItem("business");
+            clearInterval(time);
+            
         })
     }
     /*提示框*/
@@ -117,27 +125,15 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     /*日程单条数据 */
     var date =  new Date();
     today = date.getTime();
-    $scope.schedule = {"fromDate":today,"untilDate":today+172800000,"remind":[{"date":today+86400000,}]};     //初始空数据
+    $scope.schedule = {"fromDate":today,"untilDate":today,"remind":[{"date":today,}]};     //初始空数据
     /* 保存数据，并且添加到原始数据里 */
     $scope.saveSchedule = function(value){
-        value.schedule.unshift($scope.schedule);
-        /* 发送数据到服务器 */
-        $http({
-                method: 'POST',
-                url: 'http://localhost/angularcode/src/',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                },
-                data: value
-            }).success(function(data){
-               
-            })
-            
+        value.schedule.unshift($scope.schedule);  
         $scope.cancleSchedule();    
     }
     /* 清空日程弹出框数据 */
     $scope.cancleSchedule = function(){  
-        $scope.schedule = {"fromDate":today,"untilDate":today+172800000,"remind":[{"date":today+86400000,}]};     //初始空数据
+        $scope.schedule = {"fromDate":today,"untilDate":today,"remind":[{"date":today,}]};     //初始空数据
     }
     /* 添加日程提醒 */
     $scope.remindadd = function(){
@@ -160,18 +156,6 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     }
     $scope.saveEditSchedule = function(value){
         value.schedule[editIndex] = $scope.scheduleModal;
-        /* 发送数据到服务器 */
-        $http({
-                method: 'POST',
-                url: 'http://localhost/angularcode/src/',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                },
-                data: value
-            }).success(function(data){
-               
-            })
-            
         $scope.cancleEditSchedule();    
     }
     /* 添加日程提醒 */

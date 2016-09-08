@@ -2,8 +2,8 @@
  *                                                      添加客户页面
  ********************************************************************************************************************/
 angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl', 
-    ['$scope', '$http', '$state', '$stateParams','customerData','groupData','tagData',
-    function($scope, $http, $state, $stateParams,customerData,groupData,tagData) {
+    ['$scope', '$http','$alert', '$state', '$stateParams','customerData','groupData','tagData',
+    function($scope, $http,$alert, $state, $stateParams,customerData,groupData,tagData) {
 
     $scope.sexs = [
             {"value":"0","label":"男"},
@@ -17,26 +17,31 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     }).success(function(data){
         /* 客户来源 */
         $scope.origins = data.origins;
-        /* 国家/地区 */
-        $scope.states = data.states;
-        /* 国家/地区 */
-        $scope.sts =data.sts;
-        /* 客户标签 */
-        $scope.tags = data.tags;
+
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
-
+        $scope.colors = data.colors;
     })
 
-    /* 客户详情初始化值 */
-    $http({
-        url:'data/clueadd.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.customer=data;   
-    })
+    /* 客户详情对象 -- 带本地储存*/
+    if(localStorage.customer){
+        $scope.customer = JSON.parse(localStorage.customer)
+    }else{
+        $http({
+            url:'data/clueadd.json',
+            method:'GET'
+        }).success(function(data){
+            $scope.customer=data;   
+        })
+    }
+
+    /* 本地储存 */
+    var time = setInterval(function(){
+        localStorage.customer= JSON.stringify($scope.customer);
+    }, 6000);
+
 
     /* 分组 */
     groupData.getData().then(function (data) {
@@ -50,8 +55,10 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     });
     $scope.saveData = function(value){
         customerData.addData(value).then(function (data) {
+            $scope.changeAlert(data.msg);
             window.history.go(-1)
-            $scope.changeAlert('保存成功！','');
+            localStorage.removeItem("customer");
+            clearInterval(time);
         });
     }
 
@@ -170,5 +177,89 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
         if ($scope.scheduleModal.remind.length >1){
             $scope.scheduleModal.remind.splice(index,1);
         }
+    }
+    /* 年分－－生日使用 */
+    $scope.birthday = {
+        year:[],
+        month:[],
+        day:[]
+    }
+
+    var dateTool = {
+        setYear:function (){
+            var date = new Date(),
+                year = date.getFullYear(),
+                arr = [];
+            
+            for(var i = 1970;i<=year;i++){
+                arr.push({value:i});
+
+            } 
+            return arr;
+        },
+        setMonth:function (){
+            var arr = [];
+            
+            for(var i = 1;i<=12;i++){
+                if(i<10){
+                    i = "0"+i
+                }
+                arr.push({value:i});
+            } 
+            return arr;
+        },
+        setDay:function (){
+            var arr = [];
+            
+            for(var i = 1;i<=31;i++){
+                if(i<10){
+                    i = "0"+i
+                }
+                arr.push({value:i});
+            } 
+            return arr;
+        } 
+    }
+    
+    $scope.birthday.year = angular.copy(dateTool.setYear());
+    $scope.birthday.month = angular.copy(dateTool.setMonth());
+    $scope.birthday.day = angular.copy(dateTool.setDay());
+
+/* 添加分组 */
+    $scope.saveGroup = function(value){
+         
+        var val = $scope.groups.length;
+        var msgadd = {
+            "value":val,
+            "label":value,
+            "isEdit":true
+        }
+
+        groupData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        groupData.getData().then(function (data) {
+            $scope.groups = data.groups;
+
+        });
+    }
+    /* 添加标签 */
+    $scope.saveTag = function(value){
+        color = "primary" || value.color;
+        var val = $scope.tags.length;
+        var msgadd = {
+            "value":val,
+            "text":value.text,
+            "color":color,
+            "isEdit":true
+        }
+
+        tagData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        tagData.getData().then(function (data) {
+            $scope.tags = data.tags;
+
+        });
     }
 }]);

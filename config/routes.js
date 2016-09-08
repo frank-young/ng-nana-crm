@@ -75,6 +75,7 @@ module.exports = function(app){
   app.post('/product/add', Product.save)
   app.delete('/product/delete', Product.del)
   app.get('/product/detail/:id', Product.detail)
+  app.post('/product/upload', Product.saveImg)
  
   //产品分类
   app.get('/cate', Cate.list)

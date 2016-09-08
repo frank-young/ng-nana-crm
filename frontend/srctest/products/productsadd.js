@@ -3,15 +3,21 @@
  ********************************************************************************************************************/
 
 angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtrl', 
-    ['$scope', '$http', '$state','$alert','productData','cateData',
-    function($scope, $http, $state,$alert,productData,cateData) {
+    ['$scope', '$http', '$state','$alert','productData','cateData','Upload',
+    function($scope, $http, $state,$alert,productData,cateData,Upload) {
 	/*产品分类*/
     cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
     var date = new Date();
-    $scope.product ={	
-			"id":0,
+    
+
+    $scope.mulImages = [];
+
+    if(localStorage.product){
+        $scope.product = JSON.parse(localStorage.product)
+    }else{
+        $scope.product ={   
             "isTop":false,
             "name":"",
             "model":"",
@@ -21,12 +27,16 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
             "description":"",
             "size":"",
             "quantity":"",
-			"weight":"",
+            "weight":"",
             "path":"",
             "img":""
         }
+    }
 
-    $scope.mulImages = [];
+    /* 本地储存 */
+    var time = setInterval(function(){
+        localStorage.product= JSON.stringify($scope.product);
+    }, 6000);
 
     $scope.$watch('files', function () {
         $scope.selectImage($scope.files);
@@ -55,34 +65,61 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
         }
 
     } 
+
     $scope.upload = function () {
         if (!$scope.mulImages.length) {
             return; 
         }
-        var url = $scope.params.url;
-        var data = angular.copy($scope.params.data || {});
-        data.file = $scope.mulImages;
 
-        Upload.upload({
-            url: url,
-            data: data
-        }).success(function (data) {
-            $scope.hide(data);
-            $rootScope.alert('success');
-        }).error(function () {
-            $rootScope.alert('error');
-        });
+        // var url = $scope.params.url;
+        console.log($scope.mulImages[0][0])
+
+        var files = $scope.mulImages;
+        // if (!files.$error) {
+            Upload.upload({
+                url: '/product/upload',
+                data: {
+                    files: files
+                }
+            }).then(function (resp) {
+                console.log('success')
+            }, null, function (evt) {
+                console.log('fail')
+            });
+        // }
 
     };
+
     $scope.saveProduct = function(value){
         productData.addData(value).then(function(data){
             $scope.changeAlert(data.msg);
             window.history.go(-1);
+            localStorage.removeItem("product");
+            clearInterval(time);
         });
     }
 
     /*提示框*/
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+
+    /* 添加分類 */
+    $scope.saveCate = function(value){
+         
+        var val = $scope.cate.length;
+        var msgadd = {
+            "value":val,
+            "label":value,
+            "isEdit":true
+        }
+
+        cateData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        cateData.getData().then(function (data) {
+            $scope.cate = data.cates;
+
+        });
     }
 }]);

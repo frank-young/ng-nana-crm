@@ -166,10 +166,6 @@ angular.module("businessMoudle", []).controller('BusinessCtrl',
     }).success(function(data){
         /* 客户来源 */
         $scope.origins = data.origins;
-        /* 国家/地区 */
-        $scope.states = data.states;
-        /* 国家/地区 */
-        $scope.sts =data.sts;
         /* 客户标签 */
         $scope.tags = data.tags;
         /*客户状态*/
@@ -361,28 +357,23 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
         url:'data/customerSet.json',
         method:'GET'
     }).success(function(data){
-
         /* 客户来源 */
         $scope.origins = data.origins;
-        /* 国家/地区 */
-        $scope.states = data.states;
-        /* 国家/地区 */
-        $scope.sts =data.sts;
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
-
         /* 推进状态*/
         $scope.status = data.status;
     })
-    $http({
-        url:'data/person.json',
-        method:'GET'
-    }).success(function(data){
-        /*  添加日程 --联系人 */
-        $scope.person = data.person;
-    })
+    // $http({
+    //     url:'data/person.json',
+    //     method:'GET'
+    // }).success(function(data){
+    //     /*  添加日程 --联系人 */
+    //     $scope.person = data.person;
+    // })
+
     /* 自定义 -- 公司*/
     customerData.getData().then(function (data) {
         var company=[];
@@ -396,13 +387,23 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
         $scope.company = company
     })
 
-    /* 初始化项目 */
-    $http({
-        url:'data/businessadd.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.customer=data;
-    })
+    /* 初始化项目 -- 带本地储存*/
+    if(localStorage.business){
+        $scope.customer = JSON.parse(localStorage.business)
+    }else{
+        $http({
+            url:'data/businessadd.json',
+            method:'GET'
+        }).success(function(data){
+            $scope.customer=data;
+        })
+    }
+
+    /* 本地储存 */
+    var time = setInterval(function(){
+        localStorage.business= JSON.stringify($scope.customer);
+    },6000);
+
     /* 分组 */
     groupData.getData().then(function (data) {
         $scope.groups = data.groups;
@@ -415,8 +416,11 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     });
     $scope.saveData = function(value){
         businessData.addData(value).then(function (data) {
-            window.history.go(-1);
             $scope.changeAlert(data.msg);
+            window.history.go(-1)
+            localStorage.removeItem("business");
+            clearInterval(time);
+            
         })
     }
     /*提示框*/
@@ -463,27 +467,15 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     /*日程单条数据 */
     var date =  new Date();
     today = date.getTime();
-    $scope.schedule = {"fromDate":today,"untilDate":today+172800000,"remind":[{"date":today+86400000,}]};     //初始空数据
+    $scope.schedule = {"fromDate":today,"untilDate":today,"remind":[{"date":today,}]};     //初始空数据
     /* 保存数据，并且添加到原始数据里 */
     $scope.saveSchedule = function(value){
-        value.schedule.unshift($scope.schedule);
-        /* 发送数据到服务器 */
-        $http({
-                method: 'POST',
-                url: 'http://localhost/angularcode/src/',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                },
-                data: value
-            }).success(function(data){
-               
-            })
-            
+        value.schedule.unshift($scope.schedule);  
         $scope.cancleSchedule();    
     }
     /* 清空日程弹出框数据 */
     $scope.cancleSchedule = function(){  
-        $scope.schedule = {"fromDate":today,"untilDate":today+172800000,"remind":[{"date":today+86400000,}]};     //初始空数据
+        $scope.schedule = {"fromDate":today,"untilDate":today,"remind":[{"date":today,}]};     //初始空数据
     }
     /* 添加日程提醒 */
     $scope.remindadd = function(){
@@ -506,18 +498,6 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     }
     $scope.saveEditSchedule = function(value){
         value.schedule[editIndex] = $scope.scheduleModal;
-        /* 发送数据到服务器 */
-        $http({
-                method: 'POST',
-                url: 'http://localhost/angularcode/src/',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-                },
-                data: value
-            }).success(function(data){
-               
-            })
-            
         $scope.cancleEditSchedule();    
     }
     /* 添加日程提醒 */
@@ -1116,12 +1096,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     }).success(function(data){
         /* 客户来源 */
         $scope.origins = data.origins;
-        /* 国家/地区 */
-        $scope.states = data.states;
-        /* 国家/地区 */
-        $scope.sts =data.sts;
-        /* 客户标签 */
-        $scope.tags = data.tags;
+
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
@@ -1147,7 +1122,6 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
                 arr.push({value:i});
 
             } 
-            console.log(arr)
             return arr;
         },
         setMonth:function (){
@@ -1188,7 +1162,7 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
         $scope.tags = data.tags;
 
     });
-    /* 客户详情对象 */
+    /* 客户详情对象 -- 带本地储存*/
     if(localStorage.clue){
         $scope.customer = JSON.parse(localStorage.clue)
     }else{
@@ -1203,14 +1177,13 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
     /* 本地储存 */
     var time = setInterval(function(){
         localStorage.clue= JSON.stringify($scope.customer);
-    }, 10000);
+    }, 6000);
 
     $scope.saveData = function(value){
         clueData.addData(value).then(function (data) {
             $scope.changeAlert(data.msg);
             window.history.go(-1);
             localStorage.removeItem("clue");
-            console.log(time)
             clearInterval(time);
         });
     }
@@ -1386,12 +1359,7 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
     }).success(function(data){
         /* 客户来源 */
         $scope.origins = data.origins;
-        /* 国家/地区 */
-        $scope.states = data.states;
-        /* 国家/地区 */
-        $scope.sts =data.sts;
-        /* 客户标签 */
-        $scope.tags = data.tags;
+
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
@@ -1602,7 +1570,6 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
                 arr.push({value:i});
 
             } 
-            console.log(arr)
             return arr;
         },
         setMonth:function (){
@@ -1837,8 +1804,8 @@ angular.module('customerlistMoudle',[]).controller('CustomerCtrl',
  *                                                      添加客户页面
  ********************************************************************************************************************/
 angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl', 
-    ['$scope', '$http', '$state', '$stateParams','customerData','groupData','tagData',
-    function($scope, $http, $state, $stateParams,customerData,groupData,tagData) {
+    ['$scope', '$http','$alert', '$state', '$stateParams','customerData','groupData','tagData',
+    function($scope, $http,$alert, $state, $stateParams,customerData,groupData,tagData) {
 
     $scope.sexs = [
             {"value":"0","label":"男"},
@@ -1852,26 +1819,31 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     }).success(function(data){
         /* 客户来源 */
         $scope.origins = data.origins;
-        /* 国家/地区 */
-        $scope.states = data.states;
-        /* 国家/地区 */
-        $scope.sts =data.sts;
-        /* 客户标签 */
-        $scope.tags = data.tags;
+
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
         $scope.class = data.class;
-
+        $scope.colors = data.colors;
     })
 
-    /* 客户详情初始化值 */
-    $http({
-        url:'data/clueadd.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.customer=data;   
-    })
+    /* 客户详情对象 -- 带本地储存*/
+    if(localStorage.customer){
+        $scope.customer = JSON.parse(localStorage.customer)
+    }else{
+        $http({
+            url:'data/clueadd.json',
+            method:'GET'
+        }).success(function(data){
+            $scope.customer=data;   
+        })
+    }
+
+    /* 本地储存 */
+    var time = setInterval(function(){
+        localStorage.customer= JSON.stringify($scope.customer);
+    }, 6000);
+
 
     /* 分组 */
     groupData.getData().then(function (data) {
@@ -1885,8 +1857,10 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     });
     $scope.saveData = function(value){
         customerData.addData(value).then(function (data) {
+            $scope.changeAlert(data.msg);
             window.history.go(-1)
-            $scope.changeAlert('保存成功！','');
+            localStorage.removeItem("customer");
+            clearInterval(time);
         });
     }
 
@@ -2006,11 +1980,95 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
             $scope.scheduleModal.remind.splice(index,1);
         }
     }
+    /* 年分－－生日使用 */
+    $scope.birthday = {
+        year:[],
+        month:[],
+        day:[]
+    }
+
+    var dateTool = {
+        setYear:function (){
+            var date = new Date(),
+                year = date.getFullYear(),
+                arr = [];
+            
+            for(var i = 1970;i<=year;i++){
+                arr.push({value:i});
+
+            } 
+            return arr;
+        },
+        setMonth:function (){
+            var arr = [];
+            
+            for(var i = 1;i<=12;i++){
+                if(i<10){
+                    i = "0"+i
+                }
+                arr.push({value:i});
+            } 
+            return arr;
+        },
+        setDay:function (){
+            var arr = [];
+            
+            for(var i = 1;i<=31;i++){
+                if(i<10){
+                    i = "0"+i
+                }
+                arr.push({value:i});
+            } 
+            return arr;
+        } 
+    }
+    
+    $scope.birthday.year = angular.copy(dateTool.setYear());
+    $scope.birthday.month = angular.copy(dateTool.setMonth());
+    $scope.birthday.day = angular.copy(dateTool.setDay());
+
+/* 添加分组 */
+    $scope.saveGroup = function(value){
+         
+        var val = $scope.groups.length;
+        var msgadd = {
+            "value":val,
+            "label":value,
+            "isEdit":true
+        }
+
+        groupData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        groupData.getData().then(function (data) {
+            $scope.groups = data.groups;
+
+        });
+    }
+    /* 添加标签 */
+    $scope.saveTag = function(value){
+        color = "primary" || value.color;
+        var val = $scope.tags.length;
+        var msgadd = {
+            "value":val,
+            "text":value.text,
+            "color":color,
+            "isEdit":true
+        }
+
+        tagData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        tagData.getData().then(function (data) {
+            $scope.tags = data.tags;
+
+        });
+    }
 }]);;/********************************************************************************************************************
  *                                                      客户详情页
  ********************************************************************************************************************/
 angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
-    ['$scope','$http','$state', '$stateParams','$alert','customerData','groupData','tagData',
+    ['$scope','$http','$alert','$state', '$stateParams','customerData','groupData','tagData',
     function($scope, $http, $alert, $state, $stateParams,customerData,groupData,tagData) {
         $scope.isEdit = true;
         $scope.sexs = [
@@ -2025,12 +2083,6 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
     }).success(function(data){
         /* 客户来源 */
         $scope.origins = data.origins;
-        /* 国家/地区 */
-        $scope.states = data.states;
-        /* 国家/地区 */
-        $scope.sts =data.sts;
-        /* 客户标签 */
-        $scope.tags = data.tags;
         /*客户状态*/
         $scope.progress = data.progress;
         /*客户类型*/
@@ -2038,10 +2090,11 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
 
         /* 项目状态 */
         $scope.status = data.status;
+        $scope.colors = data.colors;
     })
 
     /* 客户详情请求 */
-    customerData.getIdData($state.id).then(function (data) {
+    customerData.getIdData($stateParams.id).then(function (data) {
        $scope.customer=data.customer; 
     });
     /* 分组 */
@@ -2057,9 +2110,11 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
     /* 编辑客户信息 */
     $scope.editCustomer = function(value){
 
-        customerData.updateData(value);
-        customerData.getIdData($state.id).then(function (data) {
-            $scope.customer=data.customer; 
+        customerData.updateData(value).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        customerData.getIdData($stateParams.id).then(function (data) {
+            $scope.customer=data.customer;
         });
 
     }
@@ -2210,6 +2265,91 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
         if ($scope.scheduleModal.remind.length >1){
             $scope.scheduleModal.remind.splice(index,1);
         }
+    }
+
+    /* 年分－－生日使用 */
+    $scope.birthday = {
+        year:[],
+        month:[],
+        day:[]
+    }
+
+    var dateTool = {
+        setYear:function (){
+            var date = new Date(),
+                year = date.getFullYear(),
+                arr = [];
+            
+            for(var i = 1970;i<=year;i++){
+                arr.push({value:i});
+
+            } 
+            return arr;
+        },
+        setMonth:function (){
+            var arr = [];
+            
+            for(var i = 1;i<=12;i++){
+                if(i<10){
+                    i = "0"+i
+                }
+                arr.push({value:i});
+            } 
+            return arr;
+        },
+        setDay:function (){
+            var arr = [];
+            
+            for(var i = 1;i<=31;i++){
+                if(i<10){
+                    i = "0"+i
+                }
+                arr.push({value:i});
+            } 
+            return arr;
+        } 
+    }
+    
+    $scope.birthday.year = angular.copy(dateTool.setYear());
+    $scope.birthday.month = angular.copy(dateTool.setMonth());
+    $scope.birthday.day = angular.copy(dateTool.setDay());
+
+/* 添加分组 */
+    $scope.saveGroup = function(value){
+         
+        var val = $scope.groups.length;
+        var msgadd = {
+            "value":val,
+            "label":value,
+            "isEdit":true
+        }
+
+        groupData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        groupData.getData().then(function (data) {
+            $scope.groups = data.groups;
+
+        });
+    }
+    /* 添加标签 */
+    $scope.saveTag = function(value){
+        color = "primary" || value.color;
+        var val = $scope.tags.length;
+        var msgadd = {
+            "value":val,
+            "text":value.text,
+            "color":color,
+            "isEdit":true
+        }
+
+        tagData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        tagData.getData().then(function (data) {
+            $scope.tags = data.tags;
+
+        });
     }
 }]);
 ;/********************************************************************************************************************
@@ -2549,15 +2689,21 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
  ********************************************************************************************************************/
 
 angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtrl', 
-    ['$scope', '$http', '$state','$alert','productData','cateData',
-    function($scope, $http, $state,$alert,productData,cateData) {
+    ['$scope', '$http', '$state','$alert','productData','cateData','Upload',
+    function($scope, $http, $state,$alert,productData,cateData,Upload) {
 	/*产品分类*/
     cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
     var date = new Date();
-    $scope.product ={	
-			"id":0,
+    
+
+    $scope.mulImages = [];
+
+    if(localStorage.product){
+        $scope.product = JSON.parse(localStorage.product)
+    }else{
+        $scope.product ={   
             "isTop":false,
             "name":"",
             "model":"",
@@ -2567,12 +2713,16 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
             "description":"",
             "size":"",
             "quantity":"",
-			"weight":"",
+            "weight":"",
             "path":"",
             "img":""
         }
+    }
 
-    $scope.mulImages = [];
+    /* 本地储存 */
+    var time = setInterval(function(){
+        localStorage.product= JSON.stringify($scope.product);
+    }, 6000);
 
     $scope.$watch('files', function () {
         $scope.selectImage($scope.files);
@@ -2601,35 +2751,62 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
         }
 
     } 
+
     $scope.upload = function () {
         if (!$scope.mulImages.length) {
             return; 
         }
-        var url = $scope.params.url;
-        var data = angular.copy($scope.params.data || {});
-        data.file = $scope.mulImages;
 
-        Upload.upload({
-            url: url,
-            data: data
-        }).success(function (data) {
-            $scope.hide(data);
-            $rootScope.alert('success');
-        }).error(function () {
-            $rootScope.alert('error');
-        });
+        // var url = $scope.params.url;
+        console.log($scope.mulImages[0][0])
+
+        var files = $scope.mulImages;
+        // if (!files.$error) {
+            Upload.upload({
+                url: '/product/upload',
+                data: {
+                    files: files
+                }
+            }).then(function (resp) {
+                console.log('success')
+            }, null, function (evt) {
+                console.log('fail')
+            });
+        // }
 
     };
+
     $scope.saveProduct = function(value){
         productData.addData(value).then(function(data){
             $scope.changeAlert(data.msg);
             window.history.go(-1);
+            localStorage.removeItem("product");
+            clearInterval(time);
         });
     }
 
     /*提示框*/
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});
+    }
+
+    /* 添加分類 */
+    $scope.saveCate = function(value){
+         
+        var val = $scope.cate.length;
+        var msgadd = {
+            "value":val,
+            "label":value,
+            "isEdit":true
+        }
+
+        cateData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        cateData.getData().then(function (data) {
+            $scope.cate = data.cates;
+
+        });
     }
 }]);;/********************************************************************************************************************
  *                                                      产品分类页面
