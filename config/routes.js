@@ -9,9 +9,11 @@ var Index = require('../app/controllers/index'),
     Product = require('../app/controllers/product/product')
     Cate = require('../app/controllers/product/cate')
     Setting = require('../app/controllers/setting'),
-    Quotation = require('../app/controllers/quotation/quotation')
-    Quotationhead = require('../app/controllers/quotation/quotationhead')
-    Quotationfoot = require('../app/controllers/quotation/quotationfoot')
+    Quotation = require('../app/controllers/quotation/quotation'),
+    Quotationhead = require('../app/controllers/quotation/quotationhead'),
+    Quotationfoot = require('../app/controllers/quotation/quotationfoot'),
+    multipart = require('connect-multiparty'),
+    multipartMiddleware = multipart()
 
 module.exports = function(app){
 	app.use(function(req, res, next) {
@@ -75,7 +77,7 @@ module.exports = function(app){
   app.post('/product/add', Product.save)
   app.delete('/product/delete', Product.del)
   app.get('/product/detail/:id', Product.detail)
-  app.post('/product/upload', Product.saveImg)
+  app.post('/product/upload',multipartMiddleware, Product.saveImg)
  
   //产品分类
   app.get('/cate', Cate.list)
@@ -117,4 +119,5 @@ module.exports = function(app){
   // app.post('/admin/customer', User.adminRequired,Customer.save)
   // app.get('/admin/customer/list',User.adminRequired,Customer.list)
   // app.delete('/admin/customer/list',User.adminRequired,Customer.del)
+  
 }

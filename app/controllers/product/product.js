@@ -2,7 +2,7 @@ var Product = require('../../models/product/product')	//引入模型
 var _ = require('underscore')
 var fs = require('fs')
 var path = require('path')
-	
+
 	//产品列表页
 	exports.list = function(req,res){
 		var user = req.session.user
@@ -83,6 +83,38 @@ var path = require('path')
 	}
 
 	exports.saveImg = function(req,res,next){
-		var imgData = req.body
-		console.log(imgData)
+		console.log(req.files.file)
+		var imgData = req.files.file[0],
+			filePath = imgData.path,
+			originalFilename = imgData.originalFilename
+
+		if(originalFilename){
+			fs.readFile(filePath, function(err,data){
+				var timestamp = Date.now(),
+					type = imgData.type.split('/')[1],
+					img = timestamp + '.' +type,
+					newPath = path.join(__dirname,'../../../','/upload/'+img)
+					console.log(newPath)
+					
+					fs.writeFile(newPath,data,function(err){
+						console.log('数据写入成功')
+						res.json({
+							status:1,
+							msg:'图片上传成功'
+						})
+					})
+
+			})
+		}
+
+		// var path = './upload/' + imgData[0].name; 
+  //       console.log(path)
+  //            //跨域传递文件
+  //            var is = fs.createReadStream(filePath);
+  //            var os = fs.createWriteStream(path);
+  //                is.pipe(os);
+  //                is.on('end',function() {
+  //                    fs.unlinkSync(filePath);
+  //                });
+
 	}

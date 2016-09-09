@@ -2756,23 +2756,26 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
         if (!$scope.mulImages.length) {
             return; 
         }
-
+ 
         // var url = $scope.params.url;
         console.log($scope.mulImages[0][0])
 
         var files = $scope.mulImages;
-        // if (!files.$error) {
-            Upload.upload({
-                url: '/product/upload',
-                data: {
-                    files: files
-                }
-            }).then(function (resp) {
-                console.log('success')
-            }, null, function (evt) {
-                console.log('fail')
-            });
-        // }
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+                Upload.upload({
+                url: '/product/upload',   
+                // fields: {'username': $scope.username},
+                file: files
+                }).progress(function (evt) {
+                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                }).success(function (data, status, headers, config) {
+                    console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                }).error(function (data, status, headers, config) {
+                    console.log('error status: ' + status);
+            })
+        }
 
     };
 
