@@ -36,6 +36,15 @@
 					        <button type="button" ng-click="deteleImage(image)" class="btn btn-danger btn-sm">&times;</button>
 					    </div>
 					</div>
+					<div class="col-md-12 mb-40 mt-20">
+						<div class="col-md-3 " ng-repeat="path in product.path">
+							<div class="show-img">
+								<img src="{{path}}" alt="">
+					        	<button type="button" ng-click="deteleShowImage(path)" class="btn btn-danger btn-sm">&times;</button>
+							</div>
+							
+						</div>
+					</div>
 					
 				</div>
 			</div>
@@ -61,6 +70,7 @@
 							<button type="button" class="form-control form-select" name="cate" ng-model="product.cate" data-html="1"  data-toggle="true" bs-options="ca.value as ca.label for ca in cate" placeholder="请选择产品分类"   data-animation="am-flip-x" ng-disabled="isEdit" bs-select required>
 								<span class="caret"></span>
 							</button>
+							<a class="inl-add" href=""  data-animation="am-fade-and-scale" placement="center" data-template-url="addCate.tpl.html" bs-modal><i class="fa fa-plus fa-lg"  data-animation="am-flip-x" data-placement="bottom" bs-tooltip data-title="添加"></i></a>
 						</div>
 					</div>
 
@@ -104,3 +114,36 @@
 		</div>
 	</form>
 </div>
+
+<!-- 添加分类 -->
+<script type="text/ng-template" id="addCate.tpl.html">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" style="margin-top: 100px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$hide()">&times;</button>
+                    <h4 class="modal-title">添加分类</h4>
+                </div>
+                <div class="modal-body" >
+                    <form name="cateModalForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">分类名称</label>
+                                    <div class="col-sm-9" ng-class="{'has-danger': cateModalForm.text.$invalid}">
+                                        <input name="text" class="form-control" placeholder="请输入分类名称（必须填写）" ng-model="cateMsg" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                    <button type="button" class="btn btn-success" ng-click="saveCate(cateMsg);$hide()" ng-disabled="cateModalForm.$invalid">保存</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

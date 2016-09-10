@@ -494,6 +494,19 @@ angular.module('serviceData', [])
                     defer.reject(msg);
                 });
                 return defer.promise;
+            },
+            deleteImgData: function (value) {
+                var defer = $q.defer();
+                $http({
+                    method: 'DELETE',
+                    url: '/product/deleteimg?path='+value,
+                })
+                .success(function (data, status, headers, config) {
+                    defer.resolve(data);
+                }).error(function (msg) {
+                    defer.reject(msg);
+                });
+                return defer.promise;
             }
         }
     }])

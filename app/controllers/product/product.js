@@ -83,7 +83,6 @@ var path = require('path')
 	}
 
 	exports.saveImg = function(req,res,next){
-		console.log(req.files.file)
 		var imgData = req.files.file[0],
 			filePath = imgData.path,
 			originalFilename = imgData.originalFilename
@@ -94,8 +93,6 @@ var path = require('path')
 					type = imgData.type.split('/')[1],
 					img = timestamp + '.' +type,
 					newPath = path.join(__dirname,'../../../','/frontend/src/upload/'+img)
-					console.log(newPath)
-					
 					fs.writeFile(newPath,data,function(err){
 						console.log('数据写入成功')
 						res.json({
@@ -108,14 +105,22 @@ var path = require('path')
 			})
 		}
 
-		// var path = './upload/' + imgData[0].name; 
-  //       console.log(path)
-  //            //跨域传递文件
-  //            var is = fs.createReadStream(filePath);
-  //            var os = fs.createWriteStream(path);
-  //                is.pipe(os);
-  //                is.on('end',function() {
-  //                    fs.unlinkSync(filePath);
-  //                });
-
 	}
+
+	exports.deleteImg = function(req,res,next){
+		var path = req.query.path
+		fs.rmdir(path,function(err){
+		    res.json({
+				status:1,
+				msg:'删除图片成功'
+			})
+		})
+	}
+
+
+
+
+
+
+
+

@@ -29,8 +29,14 @@
 					        <button type="button" ng-click="deteleImage(image)" class="btn btn-danger btn-sm">&times;</button>
 					    </div>
 					</div>
-					<div class="col-md-12">
-						<div class="col-md-3" style="height:200px;overflow:hidden;" ng-repeat="path in showImages"><img style="width:100%" src="{{path}}" alt=""></div>
+					<div class="col-md-12 mb-40 mt-20">
+						<div class="col-md-3 " ng-repeat="path in product.path">
+							<div class="show-img">
+								<img src="{{path}}" alt="">
+					        	<button type="button" ng-click="deteleShowImage(path)" class="btn btn-danger btn-sm">&times;</button>
+							</div>
+							
+						</div>
 					</div>
 				</div>
 			</div>

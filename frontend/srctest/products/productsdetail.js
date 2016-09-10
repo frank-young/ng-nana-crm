@@ -3,8 +3,8 @@
  ********************************************************************************************************************/
 
 angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', 
-    ['$scope', '$http', '$stateParams','$alert','productData','cateData',
-    function($scope, $http, $stateParams,$alert,productData,cateData) {
+    ['$scope', '$http', '$stateParams','$alert','productData','cateData','Upload',
+    function($scope, $http, $stateParams,$alert,productData,cateData, Upload) {
 	/* 是否可编辑 */
 	$scope.isEdit = true;
 	/*产品分类*/
@@ -15,15 +15,14 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
     /* 产品详情请求 */
     productData.getIdData($stateParams.id).then(function (data) {
        $scope.product=data.product; 
+
     });
     $scope.mulImages = [];
-
     $scope.$watch('files', function () {
         $scope.selectImage($scope.files);
     });
 
     $scope.saveProduct = function(value){
-        $scope.isEdit = !$scope.isEdit;
         productData.updateData(value).then(function(data){
             $scope.changeAlert(data.msg);
         });
@@ -50,31 +49,67 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
         if(delconfirm){
             var index = $scope.mulImages.indexOf(value);
             $scope.mulImages.splice(index,1);
+
         } 
 
-    }   
+    }
+    $scope.deteleShowImage = function(value){
+        var delconfirm = confirm('是否要删除这张图片？');
+        if(delconfirm){
+            var index = $scope.product.path.indexOf(value);
+
+            productData.deleteImgData(value).then(function(data){
+                $scope.product.path.splice(index,1);
+            })
+        }
+
+    } 
     $scope.upload = function () {
         if (!$scope.mulImages.length) {
-            return;
+            return; 
         }
-        var url = $scope.params.url;
-        var data = angular.copy($scope.params.data || {});
-        data.file = $scope.mulImages;
 
-        Upload.upload({
-            url: url,
-            data: data
-        }).success(function (data) {
-            $scope.hide(data);
-            $rootScope.alert('success');
-        }).error(function () {
-            $rootScope.alert('error');
-        });
-
-    };
+        var files = $scope.mulImages;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+                Upload.upload({
+                url: '/product/upload',   
+                file: file
+                }).progress(function (evt) {
+                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                }).success(function (data, status, headers, config) {
+                    console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    $scope.mulImages = [];
+                    $scope.changeAlert(data.msg);
+                    $scope.product.path.push(data.path)
+                }).error(function (data, status, headers, config) {
+                    console.log('error status: ' + status);
+            })
+        }
+    }
     /*提示框*/
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});
     }
+      /* 添加分類 */
+    $scope.saveCate = function(value){
+         
+        var val = $scope.cate.length;
+        var msgadd = {
+            "value":val,
+            "label":value,
+            "isEdit":true
+        }
+
+        cateData.addData(msgadd).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
+        cateData.getData().then(function (data) {
+            $scope.cate = data.cates;
+
+        });
+    }
+
 
 }]);

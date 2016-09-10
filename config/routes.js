@@ -78,6 +78,7 @@ module.exports = function(app){
   app.delete('/product/delete', Product.del)
   app.get('/product/detail/:id', Product.detail)
   app.post('/product/upload',multipartMiddleware, Product.saveImg)
+  app.delete('/product/deleteimg', Product.deleteImg)
  
   //产品分类
   app.get('/cate', Cate.list)

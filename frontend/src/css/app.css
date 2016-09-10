@@ -563,7 +563,26 @@
   overflow: auto;
 }
 
+/*  产品图片上传 */
+.show-img {
+  position: relative;
+  height:140px;
+  background-color: #fff;
+  overflow:hidden;
+  box-shadow: 4px 4px 8px #bbb;
+  margin-right:
+}
+.show-img img{
+  width: 100%;
+}
 
+.show-img .btn{
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 16px;
+  outline: none;
+}
 
 
 
