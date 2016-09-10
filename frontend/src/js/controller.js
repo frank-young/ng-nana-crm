@@ -2697,8 +2697,8 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
     })
     var date = new Date();
     
-
     $scope.mulImages = [];
+    $scope.showImages = [];
 
     if(localStorage.product){
         $scope.product = JSON.parse(localStorage.product)
@@ -2756,7 +2756,6 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
         if (!$scope.mulImages.length) {
             return; 
         }
- 
         // var url = $scope.params.url;
         console.log($scope.mulImages[0][0])
 
@@ -2766,18 +2765,20 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
                 Upload.upload({
                 url: '/product/upload',   
                 // fields: {'username': $scope.username},
-                file: files
+                file: file
                 }).progress(function (evt) {
                     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                     console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
                 }).success(function (data, status, headers, config) {
                     console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    $scope.mulImages = [];
+                    $scope.changeAlert(data.msg);
+                    $scope.showImages.push(data.path)
                 }).error(function (data, status, headers, config) {
                     console.log('error status: ' + status);
             })
         }
-
-    };
+    }
 
     $scope.saveProduct = function(value){
         productData.addData(value).then(function(data){
@@ -2790,7 +2791,7 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
 
     /*提示框*/
     $scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:5});
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
     }
 
     /* 添加分類 */

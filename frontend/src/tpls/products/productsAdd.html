@@ -29,7 +29,9 @@
 					        <button type="button" ng-click="deteleImage(image)" class="btn btn-danger btn-sm">&times;</button>
 					    </div>
 					</div>
-					
+					<div class="col-md-12">
+						<div class="col-md-3" style="height:200px;overflow:hidden;" ng-repeat="path in showImages"><img style="width:100%" src="{{path}}" alt=""></div>
+					</div>
 				</div>
 			</div>
 			<h4>基本信息</h4>

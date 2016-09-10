@@ -93,14 +93,15 @@ var path = require('path')
 				var timestamp = Date.now(),
 					type = imgData.type.split('/')[1],
 					img = timestamp + '.' +type,
-					newPath = path.join(__dirname,'../../../','/upload/'+img)
+					newPath = path.join(__dirname,'../../../','/frontend/src/upload/'+img)
 					console.log(newPath)
 					
 					fs.writeFile(newPath,data,function(err){
 						console.log('数据写入成功')
 						res.json({
 							status:1,
-							msg:'图片上传成功'
+							msg:'图片上传成功',
+							path: '/upload/'+img
 						})
 					})
 
