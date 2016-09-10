@@ -58,10 +58,6 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl',
 					text:'新建产品',
 					link:'web.productsAdd'
 				},
-				{
-					text:'添加图片',
-					link:'web.addimg'
-				},
 
 			]
 		},
@@ -2720,8 +2716,6 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
         $scope.product.path = JSON.parse(localStorage.showImages)
     }
 
-    
-
     /* 本地储存 */
     var time = setInterval(function(){
         localStorage.product= JSON.stringify($scope.product);
@@ -2795,7 +2789,9 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
     }
 
     $scope.saveProduct = function(value){
-
+        if(value.path!=[]){
+            value.img = value.path[0]
+        }
         productData.addData(value).then(function(data){
             $scope.changeAlert(data.msg);
             window.history.go(-1);
@@ -3003,6 +2999,10 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
         });
     }
 
+    $scope.clone = function(){
+        localStorage.product= JSON.stringify($scope.product);
+        localStorage.showImages= JSON.stringify($scope.product.path);
+    }
 
 }]);;/********************************************************************************************************************
  *                                                      报价单列表页面
@@ -3142,7 +3142,7 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl',
     }
     /*提示框*/
     $scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:5});
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
     }
 }])
 ;/********************************************************************************************************************
@@ -3152,8 +3152,12 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl',
 angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', 
     ['$scope', '$http', '$state','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
     function($scope, $http, $state,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
-	$scope.quotation = {	
-			"id":0,
+	
+    if(localStorage.quotation){
+        $scope.quotation = JSON.parse(localStorage.quotation)
+    }else{
+        $scope.quotation = {    
+            "id":0,
             "isTop":false,
             "isChecked":false,
             "name":"",
@@ -3166,6 +3170,9 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
             "foot":"0",
             "products":[]
         }
+    }
+
+    
     /* 货币计量单位 */
     $http({
         url:'data/units.json',
@@ -3210,6 +3217,11 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
     	$scope.quotation.foot = selected
     }
 
+    /* 本地储存 */
+    var time = setInterval(function(){
+        localStorage.quotation= JSON.stringify($scope.quotation);
+    }, 6000);
+
     /* 报价详情 */
     //产品分类
     cateData.getData().then(function(data){
@@ -3224,6 +3236,8 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
         quotationData.addData(value).then(function(data){
             $scope.changeAlert('添加成功！');
             window.history.go(-1);
+            localStorage.removeItem("quotation");
+            clearInterval(time);
         });
     }
 
@@ -3434,8 +3448,8 @@ angular.module("quotationDetailMoudle", [])
 
 angular.module("quotationSettingMoudle", ['ng-sortable'])
 .controller('QuotationSettingCtrl', 
-    ['$scope', '$http', '$state','quotationheadData','quotationfootData',
-    function($scope, $http, $state,quotationheadData,quotationfootData) {
+    ['$scope', '$http', '$state','quotationheadData','quotationfootData','businessData',
+    function($scope, $http, $state,quotationheadData,quotationfootData,businessData) {
 	/* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -3504,11 +3518,17 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         $scope.heads = data.quotationheads;
     })
     /* 项目选择设置 */
-    $http({
-        url:'data/businesssample.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.business = data.business;
+    /* 自定义 -- 公司*/
+    businessData.getData().then(function (data) {
+        var business=[];
+        for(var i in data.businesss){
+            business.push({
+                value:i,
+                id:data.businesss[i]._id,
+                label:data.businesss[i].bname
+            })
+        }
+        $scope.business = business
     })
 
     /******** 报价单弹窗 ********/
@@ -3761,6 +3781,7 @@ angular.module("teamAddMoudle", []).controller('TeamAddCtrl',
     $scope.saveUser = function(value){
     	settingData.addData(value).then(function(data){
                 $scope.changeAlert(data.msg)
+                window.history.go(-1);
         });
     }
 

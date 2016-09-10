@@ -6,7 +6,7 @@ var path = require('path')
 	//产品列表页
 	exports.list = function(req,res){
 		var user = req.session.user
-		Product.fetch({"userlocal":user.email},function(err,products){
+		Product.fetch({"domainlocal":user.domain},function(err,products){
 			res.json({
 				products:products
 			})
@@ -72,6 +72,18 @@ var path = require('path')
 	exports.del = function(req,res){
 		var id = req.query.id
 		if(id){
+			
+			// Product.findById(id,function(err,product){
+			// 	console.log(product.path)
+			// 	if(product.path.length != 0){
+			// 		for(var i =0;i<product.path.length;i++){
+			// 			fs.unlink('./frontend/src'+product.path[i],function(err){
+			// 			})
+			// 		}
+			// 	}
+
+			// })
+			
 			Product.remove({_id: id},function(err,product){
 				if(err){
 					console.log(err)
@@ -85,20 +97,29 @@ var path = require('path')
 	exports.saveImg = function(req,res,next){
 		var imgData = req.files.file[0],
 			filePath = imgData.path,
-			originalFilename = imgData.originalFilename
+			originalFilename = imgData.originalFilename,
+			selfDir = req.session.user.domain
 
+		fs.exists('./frontend/src/upload/'+selfDir, function (exists) {
+		  	if(!exists){
+		  		fs.mkdirSync('./frontend/src/upload/'+selfDir,0777, function (err) {
+					console.log('dir create success')
+				});
+		  	}
+		});
+		
 		if(originalFilename){
 			fs.readFile(filePath, function(err,data){
 				var timestamp = Date.now(),
 					type = imgData.type.split('/')[1],
 					img = timestamp + '.' +type,
-					newPath = path.join(__dirname,'../../../','/frontend/src/upload/'+img)
+					newPath = path.join(__dirname,'../../../','/frontend/src/upload/'+selfDir+'/'+img)
 					fs.writeFile(newPath,data,function(err){
 						console.log('数据写入成功')
 						res.json({
 							status:1,
 							msg:'图片上传成功',
-							path: '/upload/'+img
+							path: '/upload/'+selfDir+'/'+img
 						})
 					})
 
@@ -109,7 +130,7 @@ var path = require('path')
 
 	exports.deleteImg = function(req,res,next){
 		var path = req.query.path
-		fs.rmdir(path,function(err){
+		fs.unlink('./frontend/src'+path,function(err){
 		    res.json({
 				status:1,
 				msg:'删除图片成功'

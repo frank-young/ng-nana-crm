@@ -111,5 +111,9 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
         });
     }
 
+    $scope.clone = function(){
+        localStorage.product= JSON.stringify($scope.product);
+        localStorage.showImages= JSON.stringify($scope.product.path);
+    }
 
 }]);

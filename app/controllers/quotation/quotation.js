@@ -14,7 +14,7 @@ var _ = require('underscore')
 	//产品更新、新建
 	exports.save = function(req,res){
 		var quotationObj = req.body.quotation 	//从路由传过来的 quotation对象
-		var user = req.session.user
+		
 		var _quotation
 			_quotation = new Quotation({
 				isTop: quotationObj.isTop,
@@ -27,7 +27,9 @@ var _ = require('underscore')
 				units:quotationObj.units,
 				head:quotationObj.head,
 				foot:quotationObj.foot,
-				products:quotationObj.products
+				products:quotationObj.products,
+				userlocal:user.email,
+				domainlocal:user.domain
 			})
 			_quotation.save(function(err,quotation){
 				res.json({msg:"添加成功",success: 1})

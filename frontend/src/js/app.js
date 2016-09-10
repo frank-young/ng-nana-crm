@@ -23,7 +23,6 @@ var app = angular.module('app', [
         'productsCateMoudle',
         'productsAddMoudle',
         'productsDetailMoudle',
-        'addImgMoudle',
         'quotationMoudle',
         'quotationAddMoudle',
         'quotationDetailMoudle',
@@ -124,10 +123,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('web.productsDetail', {
             url: '/productsDetail/:id',
             templateUrl: 'tpls/products/productsDetail.html'
-        })
-        .state('web.addimg', {
-            url: '/addimg',
-            templateUrl: 'tpls/products/addimg.html'
         })
         .state('web.quotation', {
             url: '/quotation',

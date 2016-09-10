@@ -26,6 +26,7 @@ angular.module("teamAddMoudle", []).controller('TeamAddCtrl',
     $scope.saveUser = function(value){
     	settingData.addData(value).then(function(data){
                 $scope.changeAlert(data.msg)
+                window.history.go(-1);
         });
     }
 

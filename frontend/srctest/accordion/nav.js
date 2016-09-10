@@ -58,10 +58,6 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl',
 					text:'新建产品',
 					link:'web.productsAdd'
 				},
-				{
-					text:'添加图片',
-					link:'web.addimg'
-				},
 
 			]
 		},

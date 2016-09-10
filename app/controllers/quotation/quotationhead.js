@@ -14,6 +14,7 @@ var _ = require('underscore')
 	//产品更新、新建
 	exports.save = function(req,res){
 		var quotationheadObj = req.body.quotationhead 	//从路由传过来的 quotationhead对象
+		var user = req.session.user
 		var _quotationhead
 			_quotationhead = new Quotationhead({
 				value: quotationheadObj.value,
@@ -28,7 +29,9 @@ var _ = require('underscore')
 				mobile: quotationheadObj.mobile,
 				fromDate: quotationheadObj.fromDate,
 				untilDate: quotationheadObj.untilDate,
-				logo: quotationheadObj.logo
+				logo: quotationheadObj.logo,
+				userlocal:user.email,
+				domainlocal:user.domain
 			})
 			_quotationhead.save(function(err,quotationhead){
 				res.json({msg:"添加成功",status: 1})

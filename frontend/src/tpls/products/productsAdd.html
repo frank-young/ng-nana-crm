@@ -1,6 +1,9 @@
 <div ng-controller="ProductsAddCtrl">
 	<form name="productForm">
-		<h2 class="page-header">新建产品</h2>
+		<h2 class="page-header">新建产品
+			<a href="javascript:window.history.go(-1)" type="button" class="btn btn-primary ml-20"><i class="fa fa-angle-left"></i> 返回</a>
+			<button type="button" class="btn btn-success" ng-click="saveProduct(product)"><i class="fa fa-save"></i> 保存</button>
+		</h2>
 		<div class="pro-wrap">
 
 			<div class="row">

@@ -34,8 +34,6 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
         $scope.product.path = JSON.parse(localStorage.showImages)
     }
 
-    
-
     /* 本地储存 */
     var time = setInterval(function(){
         localStorage.product= JSON.stringify($scope.product);
@@ -109,7 +107,9 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
     }
 
     $scope.saveProduct = function(value){
-
+        if(value.path!=[]){
+            value.img = value.path[0]
+        }
         productData.addData(value).then(function(data){
             $scope.changeAlert(data.msg);
             window.history.go(-1);

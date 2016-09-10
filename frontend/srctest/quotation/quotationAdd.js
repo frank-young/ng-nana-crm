@@ -5,8 +5,12 @@
 angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', 
     ['$scope', '$http', '$state','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
     function($scope, $http, $state,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
-	$scope.quotation = {	
-			"id":0,
+	
+    if(localStorage.quotation){
+        $scope.quotation = JSON.parse(localStorage.quotation)
+    }else{
+        $scope.quotation = {    
+            "id":0,
             "isTop":false,
             "isChecked":false,
             "name":"",
@@ -19,6 +23,9 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
             "foot":"0",
             "products":[]
         }
+    }
+
+    
     /* 货币计量单位 */
     $http({
         url:'data/units.json',
@@ -63,6 +70,11 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
     	$scope.quotation.foot = selected
     }
 
+    /* 本地储存 */
+    var time = setInterval(function(){
+        localStorage.quotation= JSON.stringify($scope.quotation);
+    }, 6000);
+
     /* 报价详情 */
     //产品分类
     cateData.getData().then(function(data){
@@ -77,6 +89,8 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
         quotationData.addData(value).then(function(data){
             $scope.changeAlert('添加成功！');
             window.history.go(-1);
+            localStorage.removeItem("quotation");
+            clearInterval(time);
         });
     }
 

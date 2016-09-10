@@ -136,6 +136,6 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl',
     }
     /*提示框*/
     $scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:5});
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
     }
 }])

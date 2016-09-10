@@ -1,7 +1,0 @@
-{
-	"foots":[
-            {"value":"0","text":"大客户","isEdit":true,"content":"<p>这是报价单尾巴111 <b>footer</b> </p>"},
-            {"value":"1","text":"新客户","isEdit":true,"content":"<p>这是报价单尾巴222 <b>footer</b> </p>"},
-            {"value":"2","text":"老客户","isEdit":true,"content":"<p>这是报价单尾巴333 <b>footer</b> </p>"}
-        ]
-}

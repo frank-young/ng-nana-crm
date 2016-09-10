@@ -14,12 +14,15 @@ var _ = require('underscore')
 	//产品更新、新建
 	exports.save = function(req,res){
 		var quotationfootObj = req.body.quotationfoot 	//从路由传过来的 quotationfoot对象
+		var user = req.session.user
 		var _quotationfoot
 			_quotationfoot = new Quotationfoot({
 				value: quotationfootObj.value,
 				text: quotationfootObj.text,
 				isEdit: quotationfootObj.isEdit,
 				content: quotationfootObj.content,
+				userlocal:user.email,
+				domainlocal:user.domain
 
 			})
 			_quotationfoot.save(function(err,quotationfoot){

@@ -569,8 +569,8 @@
   height:140px;
   background-color: #fff;
   overflow:hidden;
-  box-shadow: 4px 4px 8px #bbb;
-  margin-right:
+  box-shadow: 0 0 8px #ccc,4px 4px 8px #bbb;
+  margin-bottom:20px;
 }
 .show-img img{
   width: 100%;
@@ -582,6 +582,22 @@
   right: 0;
   font-size: 16px;
   outline: none;
+}
+/*  报价单 */
+.dw-quo{
+  display: inline-block;
+  width: 115px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 5px 20px 5px 5px;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+}
+.dw-quo i{
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
 
 

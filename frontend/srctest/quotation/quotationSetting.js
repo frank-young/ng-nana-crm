@@ -4,8 +4,8 @@
 
 angular.module("quotationSettingMoudle", ['ng-sortable'])
 .controller('QuotationSettingCtrl', 
-    ['$scope', '$http', '$state','quotationheadData','quotationfootData',
-    function($scope, $http, $state,quotationheadData,quotationfootData) {
+    ['$scope', '$http', '$state','quotationheadData','quotationfootData','businessData',
+    function($scope, $http, $state,quotationheadData,quotationfootData,businessData) {
 	/* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -74,11 +74,17 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         $scope.heads = data.quotationheads;
     })
     /* 项目选择设置 */
-    $http({
-        url:'data/businesssample.json',
-        method:'GET'
-    }).success(function(data){
-        $scope.business = data.business;
+    /* 自定义 -- 公司*/
+    businessData.getData().then(function (data) {
+        var business=[];
+        for(var i in data.businesss){
+            business.push({
+                value:i,
+                id:data.businesss[i]._id,
+                label:data.businesss[i].bname
+            })
+        }
+        $scope.business = business
     })
 
     /******** 报价单弹窗 ********/
