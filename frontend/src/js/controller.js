@@ -2367,26 +2367,20 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
             currentTimezone: 'America/Chicago'
     };
     
-    customerData.getData().then(function(data){
-      data.customers.schedule
-    })
-    
-    customerData.getData().then(function(data){
-        var people=[];
-
-        data.customers.forEach( function(ele, i) {
-            ele.peoples.forEach( function(element, index) {
-                element.company = ele.companyName;
-                element.origin = ele.origin;
-                element.people = ele.charge;
-                element.date = ele.meta.createAt;
-                element.id = ele._id;
-                people.push(element);
+    clueData.getData().then(function(data){
+        var schedule=[];
+        data.clues.forEach( function(ele, i) {
+            ele.schedule.forEach( function(element, index) {
+                element.title = ele.content;
+                element.start = ele.untilDate;
+                element.end = ele.fromDate;
+                element.allDay = true;
+                schedule.push(element);
 
             });
         });
 
-        $scope.people = people
+        $scope.events = schedule
     })
 
     $scope.events = [
