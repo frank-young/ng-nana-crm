@@ -2353,7 +2353,7 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
  ********************************************************************************************************************/
 
 angular.module("homeMoudle", []).controller('HomeCtrl', 
-  ['$scope', '$compile', '$timeout', 'uiCalendarConfig','customerData','clueData',
+  ['$scope','$compile', '$timeout', 'uiCalendarConfig','customerData','clueData',
   function($scope, $compile, $timeout, uiCalendarConfig,customerData,clueData) {
 
 	  var date = new Date();
@@ -2361,31 +2361,36 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
     var m = date.getMonth();
     var y = date.getFullYear();
 
-    $scope.eventSource = {
-            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
-            className: 'gcal-event',          
-            currentTimezone: 'America/Chicago'
-    };
-    
-    clueData.getData().then(function(data){
-        var schedule=[];
-        data.clues.forEach( function(ele, i) {
-            ele.schedule.forEach( function(element, index) {
-                element.title = ele.content;
-                element.start = ele.untilDate;
-                element.end = ele.fromDate;
-                element.allDay = true;
-                schedule.push(element);
+    // $scope.eventSource = []
+    // $scope.events = [];
 
-            });
-        });
+    var obj = clueData.getData().then(function(data){
+      var schedule=[];
+      var event = {};
+      data.clues.forEach( function(ele, i) {
+        ele.schedule.forEach( function(element, index) {
+            var dateStart = new Date(element.fromDate),
+                dStart = dateStart.getDate(),
+                mStart = dateStart.getMonth(),
+                yStart = dateStart.getFullYear(),
 
-        $scope.events = schedule
+                dateEnd = new Date(element.untilDate),
+                dEnd = dateEnd.getDate(),
+                mEnd = dateEnd.getMonth(),
+                yEnd = dateEnd.getFullYear();
+
+             event.title = element.content;
+             event.start = new Date(yStart, mStart, dStart);
+             event.end = new Date(yEnd, mEnd, dEnd);
+             event.allDay = false;
+             schedule.push(event);
+          });
+
+      });
+      $scope.events = angular.copy(schedule)
+      return schedule
     })
-
-    $scope.events = [
-      {title: '和叶子约会',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-    ];
+    // console.log(obj.$$state)
 
     $scope.eventsF = function (start, end, timezone, callback) {
       var s = new Date(start).getTime() / 1000;
@@ -2398,11 +2403,11 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
     $scope.calEventsExt = {
        color: '#f00',
        textColor: 'yellow',
-       events: [
-          {type:'party',title: 'Lunch',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
-          {type:'party',title: 'Lunch 2',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
-          {type:'party',title: 'Click for Google',start: new Date(y, m, 21),end: new Date(y, m, 29),url: 'http://google.com/'}
-        ]
+       // events: [
+       //    {type:'party',title: 'Lunch',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
+       //    {type:'party',title: 'Lunch 2',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
+       //    {type:'party',title: 'Click for Google',start: new Date(y, m, 21),end: new Date(y, m, 29),url: 'http://google.com/'}
+       //  ]
     };
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
@@ -2414,7 +2419,7 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
     };
     /* alert on Resize */
     $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
-       $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
+       $scope.alertMessage = ('修改时间 ' + delta);
     };
     /* add and removes an event source of choice */
     $scope.addRemoveEventSource = function(sources,source) {
@@ -2469,11 +2474,9 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
       }
     };
 
-
-
     /* event sources array*/
-    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
-    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
+    // $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
+    // $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 
     /* 默认配置 */
     $scope.uiConfig.calendar.dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
