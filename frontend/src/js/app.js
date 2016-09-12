@@ -2,6 +2,7 @@ var app = angular.module('app', [
         'ngAnimate',
         'ui.router',
         'mgcrea.ngStrap',
+        'ui.calendar',
         'ui.bootstrap',
         'angular-loading-bar',
         'angular-simditor',

@@ -7,9 +7,11 @@
 }
 .container-fluid{
   height: inherit;
+
 }
 .container-fluid .row{
   height: inherit;
+
 }
 
 /**
@@ -559,7 +561,7 @@
 /*下拉列表*/
 
 .dropdown-menu{
-  max-height: 195px;
+  max-height: 305px;
   overflow: auto;
 }
 
@@ -600,7 +602,64 @@
   top: 5px;
 }
 
+/* 首页 日历 */
 
+.fc-toolbar {
+  background-color: #30A6A3;
+    margin-bottom: 0;
+    padding: 8px 20px 12px 20px;
+    color: #fff;
+}
+.fc-toolbar h2{
+  font-size: 18px;
+  margin-top: 8px;
+}
+.fc-basic-view .fc-body .fc-row{
+  min-height: 115px;
+}
+.fc-scroller.fc-day-grid-container{
+  overflow-x: inherit !important;
+    overflow-y: inherit !important;
+    height: inherit !important;
+}
+th.fc-day-header.fc-widget-header{
+  height: 36px;
+  vertical-align:middle;
+  font-weight: 300;
+}
+.fc-basic-view td.fc-day-number{
+  padding-top: 10px;
+  padding-right: 10px;
+  font-size: 16px;
+}
+.fc-day-grid-event {
+    margin: 3px 3px 0px;
+    padding: 3px 4px;
+    border-radius: 0;
+}
+.fc-event{
+  border: 1px solid #30A6A3;
+  background-color: #30A6A3;
+}
+.fc-unthemed .fc-today{
+  background-color: #E5FFFF;
+  color: #30A6A3;
+    font-size: 20px !important;
+}
+.fc-right {
+  margin-top: 6px;
+}
+.fc-right button.fc-button{
+  border-radius: 0;
+  outline: none;
+  color: #fff;
+  background: rgba(0, 0, 0, 0);
+  border: 1px solid #fff;
+  text-shadow: none;
+}
+.fc button .fc-icon {
+    margin-top: -3px;
+}
 
 
 

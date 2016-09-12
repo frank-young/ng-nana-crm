@@ -593,10 +593,13 @@ p.no-drag-p{
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   border-radius: 10px;
+  position: absolute;
+  right: 0;
 }
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
   height: 6px;
+
 }
 ::-webkit-scrollbar-thumb {
   background-color: #aaa;
@@ -607,6 +610,7 @@ p.no-drag-p{
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   border-radius: 10px;
+
 }
 ::-webkit-scrollbar-thumb:hover {
   background-color: #bbb;
