@@ -605,7 +605,7 @@
 /* 首页 日历 */
 
 .fc-toolbar {
-  background-color: #30A6A3;
+  background-color: #5D9CEC;
     margin-bottom: 0;
     padding: 8px 20px 12px 20px;
     color: #fff;
@@ -616,6 +616,7 @@
 }
 .fc-basic-view .fc-body .fc-row{
   min-height: 115px;
+  height: 120px;
 }
 .fc-scroller.fc-day-grid-container{
   overflow-x: inherit !important;
@@ -638,12 +639,13 @@ th.fc-day-header.fc-widget-header{
     border-radius: 0;
 }
 .fc-event{
-  border: 1px solid #30A6A3;
-  background-color: #30A6A3;
+  border: 1px solid #5D9CEC;
+  background-color: #5D9CEC;
+  cursor: pointer;
 }
 .fc-unthemed .fc-today{
   background-color: #E5FFFF;
-  color: #30A6A3;
+  color: #5D9CEC;
     font-size: 20px !important;
 }
 .fc-right {
@@ -660,7 +662,54 @@ th.fc-day-header.fc-widget-header{
 .fc button .fc-icon {
     margin-top: -3px;
 }
-
-
+.sche-tag{
+  float: right;
+}
+.sche-tag .sche-cust,
+.sche-tag .sche-clue{
+  display: inline-block;
+  position: relative;
+  margin-right: 28px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+.sche-tag .sche-cust:before,
+.sche-tag .sche-clue:before{
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  left: -15px;
+  top: 5px;
+}
+.sche-tag .sche-cust:before{
+  background-color: #5D9CEC;
+}
+.sche-tag .sche-clue:before{
+  background-color: #27C24C;
+}
+.sche-msg{
+  
+}
+.sche-msg .msg-head{
+  background-color: #5D9CEC;
+  padding: 16px 20px;
+  margin-top: 49px;
+}
+.sche-msg .msg-head h2{
+  font-size: 18px;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+}
+.sche-msg .msg-body{
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  min-height: 154px;
+  line-height: 1.8em;
+}
 
 

@@ -1,21 +1,39 @@
 <div ng-controller="HomeCtrl">
 	<h2 class="page-header">首页</h2>
 
-	{{events}}
 	<div class="row">
 		<div class="col-md-8">
 			<div class="btn-toolbar" style="margin-bottom:15px;">
 				<div class="btn-group">
-					<button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar1')">本周</button>
-					<button class="btn btn-success" ng-click="changeView('month', 'myCalendar1')">本月</button>
+					<button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar1')">周</button>
+					<button class="btn btn-success" ng-click="changeView('month', 'myCalendar1')" style="margin-left:2px;">月</button>
+				<!-- 	<button class="btn btn-info" type="button" ng-click="addEvent()">点击</button> -->
+				</div>
+				<div class="sche-tag">
+					<span class="sche-cust">潜在客户</span>
+					<span class="sche-clue">客户</span>
 				</div>
 			</div>
 			<div class="calendar" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar"></div>
 
 		</div>
 		<div class="col-md-4">
-			<div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
-				<h4>{{alertMessage}}</h4>
+			<div class="sche-msg">
+				<div class="msg-head">
+					<h2>日程内容</h2>
+				</div>
+				<div  class="msg-body" ng-bind-html="alertMessage">
+			
+				</div>
+			</div>
+
+			<div class="sche-msg">
+				<div class="msg-head">
+					<h2>时间</h2>
+				</div>
+				<div  class="msg-body" ng-bind-html="alertMessage">
+					{{timeArr}}
+				</div>
 			</div>
 		</div>
 	</div>
