@@ -20,6 +20,44 @@
 		<div class="col-md-4">
 			<div class="sche-msg">
 				<div class="msg-head">
+					<h2>时间</h2>
+				</div>
+				<div  class="msg-body" >
+					<a href="" class="time-select"  bs-dropdown aria-haspopup="true" aria-expanded="false">
+                        
+                        <div class="time-time">
+                            {{selectTimeSure.time}}
+                        </div>
+                       	<div class="time-date">
+                            {{selectTimeSure.date}} 
+                            {{selectTimeSure.week}}<br>
+                        </div>
+                        <div class="time-text">
+                        	{{selectTimeSure.text}}
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-repeat="time in timeArr" class="time-select-d" >
+                            <a href="" ng-click="selectTime(time)">
+                                <div class="time-time">
+		                            {{time.time}}
+		                        </div>
+		                       	<div class="time-date">
+		                            {{time.date}} 
+		                            {{time.week}}<br>
+		                        </div>
+		                        <div class="time-text">
+		                        	{{time.text}}
+		                        </div>
+
+                            </a>
+                        </li>
+                    </ul>
+				</div>
+			</div>
+
+			<div class="sche-msg">
+				<div class="msg-head">
 					<h2>日程内容</h2>
 				</div>
 				<div  class="msg-body" ng-bind-html="alertMessage">
@@ -27,14 +65,7 @@
 				</div>
 			</div>
 
-			<div class="sche-msg">
-				<div class="msg-head">
-					<h2>时间</h2>
-				</div>
-				<div  class="msg-body" ng-bind-html="alertMessage">
-					{{timeArr}}
-				</div>
-			</div>
+			
 		</div>
 	</div>
 </div>

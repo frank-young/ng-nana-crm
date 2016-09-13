@@ -15,9 +15,9 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
       this.m = date.getMonth();
       this.y = date.getFullYear();
       this.w = weekArr[date.getDay()];
-      this.h = date.getHours()>10 ? date.getHours() : "0"+date.getHours(); 
-      this.mi = date.getMinutes()>10 ? date.getMinutes() : "0"+date.getMinutes();
-      this.s = date.getSeconds()>10 ? date.getSeconds() : "0"+date.getSeconds();
+      this.h = date.getHours()>=10 ? date.getHours() : "0"+date.getHours(); 
+      this.mi = date.getMinutes()>=10 ? date.getMinutes() : "0"+date.getMinutes();
+      this.s = date.getSeconds()>=10 ? date.getSeconds() : "0"+date.getSeconds();
     }
     createTime.prototype = {
       d:this.d,
@@ -207,9 +207,9 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
         var dt = new Date(),
           def = dt.getTimezoneOffset()/60,
           timeStamp = dt.getTime(),
-          curStamp = timeStamp + dt.getTimezoneOffset()*60*1000;  // GMT 时间
+          originStamp = timeStamp + dt.getTimezoneOffset()*60*1000-12*60*60*1000;  // GMT 时间
         
-          // ti = new createTime(curStamp);
+          // ti = new createTime(originStamp);
           // console.log(ti.y+'年'+(ti.m+1)+'月'+ti.d+'日 '+ti.w+' '+ti.h+':'+ti.mi+':'+ti.s)
         
         $scope.timeArr = [
@@ -316,17 +316,25 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
         ]
         $scope.timeShow = [];
         $scope.timeArr.forEach(function(ele,i){
-          var ti = new createTime(curStamp);
-          ele.data = ti.y+'年'+(ti.m+1)+'月'+ti.d+'日 ';
+          var ti = new createTime(originStamp);
+          ele.date = ti.y+'年'+(ti.m+1)+'月'+ti.d+'日 ';
           ele.week = ti.w;
           ele.time = ti.h+':'+ti.mi+':'+ti.s;
+          originStamp += 60*60*1000
         })
 
-        console.log($scope.timeArr)
+        // console.log($scope.timeArr)
         setTimeout(function(){
           $scope.timeInit()
         }, 1000)
+        
     }
     $scope.timeInit();
-    
+    $scope.selectTimeSure = $scope.timeArr[20]
+    $scope.selectTime = function(value){
+      $scope.selectTimeSure = value
+    }
 }])
+
+
+

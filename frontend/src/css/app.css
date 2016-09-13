@@ -711,5 +711,48 @@ th.fc-day-header.fc-widget-header{
   min-height: 154px;
   line-height: 1.8em;
 }
+/* 时间选择 */
+a.time-select{
+  color: #333;
+}
+a.time-select:hover{
+  color:#333;
+}
+.time-text,
+.time-date,
+.time-time{
+  text-align: center;
+  line-height: 1.65em;
+  font-family: 'PT Sans';
+}
+.time-select .time-text{
+  font-size: 14px;
+}
+.time-select .time-date{
+  font-size: 20px;
+}
+.time-select .time-time{
+  font-size: 32px;
+
+}
+.time-select-d{
+  border-bottom: 1px solid #ccc;
+}
+
+.time-select-d .time-text{
+  font-size: 14px;
+}
+.time-select-d .time-date{
+  font-size: 18px;
+}
+.time-select-d .time-time{
+  font-size: 26px;
+
+}
+
+
+
+
+
 
 
