@@ -12,6 +12,7 @@ var Index = require('../app/controllers/index'),
     Quotation = require('../app/controllers/quotation/quotation'),
     Quotationhead = require('../app/controllers/quotation/quotationhead'),
     Quotationfoot = require('../app/controllers/quotation/quotationfoot'),
+    Feedbackl = require('../app/controllers/feedbackl'),
     multipart = require('connect-multiparty'),
     multipartMiddleware = multipart()
 
@@ -115,6 +116,11 @@ module.exports = function(app){
   app.get('/setting/detail/:id', Setting.placeAdminRequired,Setting.detail)
   app.post('/setting/updatecopy', Setting.placeAdminRequired,Setting.updatecopy)
   app.get('/setting/rbac', Setting.rbac)
+
+  /* 意见反馈 */
+  app.get('/admin/feedbackl', User.signinRequired,User.adminRequired,Feedbackl.list)
+  app.post('/feedbackl/add', Feedbackl.save)
+  app.delete('/feedbackl/delete', User.signinRequired,User.adminRequired,Feedbackl.del)
 
   // app.get('/admin/customer/update/:id',User.adminRequired,Customer.update)
   // app.post('/admin/customer', User.adminRequired,Customer.save)

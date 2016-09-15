@@ -6,17 +6,17 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl',
 	['$scope', '$http','settingData',
 	function ($scope, $http,settingData) {
 		var menus = [
-		{
-			icon:'fa fa-paper-plane-o',
-			title:'圈内信',
-			role:0,
-			subs:[
-				{
-					text:'圈内信',
-					link:''
-				}
-			]
-		},
+		// {
+		// 	icon:'fa fa-paper-plane-o',
+		// 	title:'圈内信',
+		// 	role:0,
+		// 	subs:[
+		// 		{
+		// 			text:'圈内信',
+		// 			link:''
+		// 		}
+		// 	]
+		// },
 		{
 			icon:'fa fa-users',
 			title:'客户管理',
@@ -119,5 +119,6 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl',
 		 	return $scope.menu; 
 		});
 	})
+	
 
 }]);

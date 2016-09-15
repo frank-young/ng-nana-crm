@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  .container
+    .row
+      table.table.table-hover.table-bordered
+        thead
+          tr
+            th 姓名
+            th 邮箱
+            th 反馈内容
+            th 反馈时间时间
+            th 删除
+        tbody
+          each item in feedbackls
+           tr(class="item-id-#{item._id}")
+            td #{item.name}
+            td #{item.user}
+            td #{item.content}
+            td #{moment(item.meta.updateAt).format('YYYY-MM-DD')}
+            td
+              button.btn.btn-danger.del(type="button", data-id="#{item._id}") 删除
+  //- script(src="/js/admin.js")

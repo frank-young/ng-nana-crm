@@ -6,17 +6,17 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl',
 	['$scope', '$http','settingData',
 	function ($scope, $http,settingData) {
 		var menus = [
-		{
-			icon:'fa fa-paper-plane-o',
-			title:'圈内信',
-			role:0,
-			subs:[
-				{
-					text:'圈内信',
-					link:''
-				}
-			]
-		},
+		// {
+		// 	icon:'fa fa-paper-plane-o',
+		// 	title:'圈内信',
+		// 	role:0,
+		// 	subs:[
+		// 		{
+		// 			text:'圈内信',
+		// 			link:''
+		// 		}
+		// 	]
+		// },
 		{
 			icon:'fa fa-users',
 			title:'客户管理',
@@ -119,16 +119,28 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl',
 		 	return $scope.menu; 
 		});
 	})
+	
 
 }]);;/**
  * 顶部导航
  * 
  */
 
-angular.module('navtopMoudle',[]).controller('NavtopCtrl', function ($scope) {
+angular.module('navtopMoudle',[]).controller('NavtopCtrl', 
+	['$scope','feedbacklData',
+	
+	function ($scope,feedbacklData) {
+		$scope.content = "";
+		$scope.send = function(value){
+			feedbacklData.addData(value).then(function(data){
+				$scope.changeAlert(data.msg);
+			})
+		}
 
-
-});;/********************************************************************************************************************
+	$scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
+    }
+}]);;/********************************************************************************************************************
  *                                                      项目列表页
  ********************************************************************************************************************/
 angular.module("businessMoudle", []).controller('BusinessCtrl', 
@@ -2353,8 +2365,8 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
  ********************************************************************************************************************/
 
 angular.module("homeMoudle", []).controller('HomeCtrl', 
-  ['$scope','$compile', '$timeout', 'uiCalendarConfig','customerData','clueData',
-  function($scope, $compile, $timeout, uiCalendarConfig,customerData,clueData) {
+  ['$scope','$compile', '$timeout', 'uiCalendarConfig','customerData','clueData','$interval',
+  function($scope, $compile, $timeout, uiCalendarConfig,customerData,clueData,$interval) {
 
 	  
     var createTime = function (value) {
@@ -2552,17 +2564,7 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
     $scope.eventSources = [$scope.events, $scope.eventSource, $scope.calendarFunction,$scope.calendarFunctionOther];
     
     /* 时间和时区 */
-
-    $scope.timeInit = function(){
-        var dt = new Date(),
-          def = dt.getTimezoneOffset()/60,
-          timeStamp = dt.getTime(),
-          originStamp = timeStamp + dt.getTimezoneOffset()*60*1000-12*60*60*1000;  // GMT 时间
-        
-          // ti = new createTime(originStamp);
-          // console.log(ti.y+'年'+(ti.m+1)+'月'+ti.d+'日 '+ti.w+' '+ti.h+':'+ti.mi+':'+ti.s)
-        
-        $scope.timeArr = [
+    $scope.timeArr = [
           {
             "value":0,
             "text":'IDL- 国际换日线 (GMT-12)',
@@ -2664,25 +2666,45 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
             "text":'PSTB - 太平洋标准时间B (GMT +12)',
           }
         ]
+    $scope.timeInit = function(){
+        var dt = new Date(),
+          def = dt.getTimezoneOffset()/60,
+          timeStamp = dt.getTime(),
+          originStamp = timeStamp + dt.getTimezoneOffset()*60*1000-12*60*60*1000;  // GMT 时间
+        
+          // ti = new createTime(originStamp);
+          // console.log(ti.y+'年'+(ti.m+1)+'月'+ti.d+'日 '+ti.w+' '+ti.h+':'+ti.mi+':'+ti.s)
+        
+        
         $scope.timeShow = [];
         $scope.timeArr.forEach(function(ele,i){
           var ti = new createTime(originStamp);
           ele.date = ti.y+'年'+(ti.m+1)+'月'+ti.d+'日 ';
           ele.week = ti.w;
           ele.time = ti.h+':'+ti.mi+':'+ti.s;
-          originStamp += 60*60*1000
+          originStamp += 60*60*1000;
         })
-
-        // console.log($scope.timeArr)
-        setTimeout(function(){
-          $scope.timeInit()
-        }, 1000)
+        // return $scope.timeArr
         
     }
     $scope.timeInit();
+    $interval(function(){    
+      $scope.timeInit()
+    },1000)
+
+    var defaultTime = $interval(function(){    
+      if(localStorage.selectTimeIndex){
+        $scope.selectTimeSure = $scope.timeArr[localStorage.selectTimeIndex]
+      }else{
+        $scope.selectTimeSure = $scope.timeArr[20]
+      }
+    },1000)
+
     $scope.selectTimeSure = $scope.timeArr[20]
     $scope.selectTime = function(value){
-      $scope.selectTimeSure = value
+      $scope.selectTimeSure = value;
+      localStorage.selectTimeIndex = value.value;
+      $interval.cancel(defaultTime);
     }
 }])
 
@@ -2954,7 +2976,6 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
                 $scope.checkArr.splice(index,1);
             }
         }
-        
     }
     /* 删除单件产品 */
     $scope.deleteProduct = function(value){
@@ -3141,7 +3162,6 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
 
     /* 添加分類 */
     $scope.saveCate = function(value){
-         
         var val = $scope.cate.length;
         var msgadd = {
             "value":val,
@@ -3154,7 +3174,6 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
         });
         cateData.getData().then(function (data) {
             $scope.cate = data.cates;
-
         });
     }
 }]);;/********************************************************************************************************************

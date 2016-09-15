@@ -704,6 +704,9 @@ th.fc-day-header.fc-widget-header{
   padding: 0;
   margin: 0;
 }
+.sche-msg .msg-head h2 small{
+  color: #fff;
+}
 .sche-msg .msg-body{
   padding: 10px;
   border: 1px solid #ddd;

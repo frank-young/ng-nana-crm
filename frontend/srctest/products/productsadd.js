@@ -126,7 +126,6 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
 
     /* 添加分類 */
     $scope.saveCate = function(value){
-         
         var val = $scope.cate.length;
         var msgadd = {
             "value":val,
@@ -139,7 +138,6 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
         });
         cateData.getData().then(function (data) {
             $scope.cate = data.cates;
-
         });
     }
 }]);

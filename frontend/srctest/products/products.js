@@ -56,7 +56,6 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
                 $scope.checkArr.splice(index,1);
             }
         }
-        
     }
     /* 删除单件产品 */
     $scope.deleteProduct = function(value){
