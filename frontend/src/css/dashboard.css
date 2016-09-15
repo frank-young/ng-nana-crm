@@ -63,6 +63,7 @@ a:focus, a:hover {
 .has-danger .form-control,
 .has-danger .form-control:focus{
   box-shadow: none;
+
 }
 .control-label{
   color: #666;    /* 字体 label */
@@ -184,12 +185,24 @@ textarea.form-control[disabled]{
 .has-danger .form-control,
 .has-danger .form-control:focus {
   border-color: #F05050;
+
 }
 .has-danger .control-label,
 .has-danger .form-control-feedback{
   color: #F05050;
 }
-
+.has-danger .form-control::-webkit-input-placeholder { 
+    color: #F05050;
+}
+.has-danger .form-control:-moz-placeholder { 
+    color: #F05050 !important; 
+}
+.has-danger .form-control::-moz-placeholder { 
+    color: #F05050 !important; 
+} /* for the future */
+.has-danger .form-control:-ms-input-placeholder { 
+    color: #F05050 !important; 
+}
 /**
  * radio样式   #5D9CEC
  */
