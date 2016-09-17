@@ -206,13 +206,6 @@ angular.module("businessMoudle", []).controller('BusinessCtrl',
         $scope.tags = data.tags;
 
     });
-    $http({
-        url:'data/person.json',
-        method:'GET'
-    }).success(function(data){
-        /*  添加日程 --联系人 */
-        $scope.person = data.person;
-    })
     
     /*项目*/
     businessData.getData().then(function(data){
@@ -2892,33 +2885,7 @@ angular.module("peopleDetailMoudle", []).controller('PeopleDetailCtrl',
     $scope.changeAlert = function(title,content){
         $alert({title: title, content: content, type: "info", show: true,duration:5});
     }
-}]);;/********************************************************************************************************************
- *                                                      添加图片
- ********************************************************************************************************************/
-
-
-angular.module("addImgMoudle", ['ngFileUpload']).controller('AddImgCtrl', function($scope, $http) {
-     $scope.files = [];
-    $scope.capture = 'camera';
-    $scope.pattern = 'image/*';
-    $scope.acceptSelect = 'image/*';
-    $scope.modelOptions = '{debounce:100}';
-    $scope.dragOverClass = '{accept:\'dragover\', reject:\'dragover-err\', pattern:\'image/*,audio/*,video/*,text/*\'}';
-    $scope.multiple =  true;
-    $scope.allowDir =  true;
-    $scope.validate = '{size: {max: \'2MB\', min: \'10B\'}, height: {max: 12000}, width: {max: 12000}, duration: {max: \'5m\'}}';
-    $scope.keep = true;
-    $scope.keepDistinct = true;
-    $scope.orientation = false;
-    $scope.resize = '{width: 1000, height: 1000, centerCrop: true}';
-    $scope.resizeIf = "$width > 5000 || $height > 5000";
-    $scope.dimensions = "$width < 12000 || $height < 12000";
-    $scope.duration = "$duration < 10000";
-
-    $scope.id = "123";
-
-})
-;    /********************************************************************************************************************
+}]);;    /********************************************************************************************************************
  *                                                      全部产品页面
  ********************************************************************************************************************/
 
@@ -3198,7 +3165,9 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
     /* 添加分类信息 */
     $scope.addCate= function(){
         var value = $scope.cate.length;
-        cateData.addData({"value":value,"isEdit":true,"label":'默认分类'});
+        cateData.addData({"value":value,"isEdit":true,"label":'默认分类'+(value+1)}).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
         cateData.getData().then(function (data) {
             $scope.cate = data.cates;
         })
@@ -3643,6 +3612,7 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
                     $scope.totalPrice += parseFloat(value);
 
                 });
+
                 $scope.quotation.amount = angular.copy($scope.totalPrice)+" "+ $scope.units[$scope.quotation.units].label;
             }
         }
@@ -3652,7 +3622,7 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
     }, true);
     /*提示框*/
     $scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:5});
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
     }
 }])
 ;/********************************************************************************************************************

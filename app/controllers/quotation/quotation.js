@@ -14,6 +14,7 @@ var _ = require('underscore')
 	//产品更新、新建
 	exports.save = function(req,res){
 		var quotationObj = req.body.quotation 	//从路由传过来的 quotation对象
+		var user = req.session.user
 		
 		var _quotation
 			_quotation = new Quotation({

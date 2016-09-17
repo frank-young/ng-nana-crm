@@ -22,7 +22,7 @@ var Domain = require('../models/domain'),	//引入模型
 					User.update({_id:userObj._id},
 						{$set:{domain:_domain.name}},function(err){
 							req.session.user.domain = _domain.name 		//更新session,添加domain来模拟存在
-							res.redirect("/")
+							res.redirect("/#/index")
 						})
 				})
 			}
@@ -34,7 +34,7 @@ var Domain = require('../models/domain'),	//引入模型
 		var userObj = req.session.user
 		//判断是否有域名
 		if(userObj.domain){
-			res.redirect("/")
+			res.redirect("/#/index")
 			return 
 		}
 		next()

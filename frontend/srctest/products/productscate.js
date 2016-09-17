@@ -20,7 +20,9 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
     /* 添加分类信息 */
     $scope.addCate= function(){
         var value = $scope.cate.length;
-        cateData.addData({"value":value,"isEdit":true,"label":'默认分类'});
+        cateData.addData({"value":value,"isEdit":true,"label":'默认分类'+(value+1)}).then(function(data){
+            $scope.changeAlert(data.msg);
+        });
         cateData.getData().then(function (data) {
             $scope.cate = data.cates;
         })

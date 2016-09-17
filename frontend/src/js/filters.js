@@ -89,10 +89,14 @@ app.filter('schetime', function(){
 
 });
 /* 分页 */
-app.filter('offset', function() { 
+app.filter('offset', function() {
   return function(input, start) {
     var start = parseInt(start, 10);
-    return input.splice(start);
+    if(start != 0 ){
+      return input.splice(start);
+    }else{
+      return input;
+    }
   };
 });
 

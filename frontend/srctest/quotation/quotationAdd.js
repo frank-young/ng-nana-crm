@@ -144,6 +144,7 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
                     $scope.totalPrice += parseFloat(value);
 
                 });
+
                 $scope.quotation.amount = angular.copy($scope.totalPrice)+" "+ $scope.units[$scope.quotation.units].label;
             }
         }
@@ -153,6 +154,6 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
     }, true);
     /*提示框*/
     $scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:5});
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
     }
 }])

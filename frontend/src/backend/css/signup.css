@@ -170,3 +170,29 @@ button.btn-primary:focus{
     color: #FC675A; 
     font-size: 20px;
 }
+/* 添加域名 */
+.add-input .form-control{
+    width: 55%;
+    display: inline-block;
+    padding: 5px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    background-color: transparent;
+    box-shadow: none;
+    font-size: 18px;
+    color: #333;
+}
+.add-input h3{
+    width: 35%;
+    display: inline-block;
+}
+
+
+
+
+
+
+
+
+

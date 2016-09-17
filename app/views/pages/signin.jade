@@ -1,40 +1,43 @@
 doctype html(lang='en')
-head
-    meta(charset='utf-8')
-    |     
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    |     
-    meta(http-equiv='x-ua-compatible', content='ie=edge')
-    |     
-    link(rel='stylesheet', href='backend/libs/bootstrap/dist/css/bootstrap.min.css')
-    |     
-    link(rel='stylesheet', href='backend/css/signup.css')
-  body
-    canvas#Mycanvas
-    .container
-      .row
-        .sign-wrap
-          form(method="POST", action="/user/signin")
-            h2 呐呐科技登录
-            h3 极致的产品，永远不缺乏订单
-            |                                         
-            .form-group
-              label.sr-only(for='inputEmail') 邮箱
-              |                         
-              input#inputEmail.form-control(name="user[email]",type='email', placeholder='邮箱地址', required='', autofocus='')
-              |                         
-              span.email
-            |                     
-            .form-group
-              label.sr-only(for='inputPassword') 密码
-              |                         
-              input#inputPassword.form-control(name="user[password]",type='password', placeholder='密码', required='')
-              |                         
-              span.password
-            |                    
-            .form-group.mt-20
-              button.btn.btn-lg.btn-primary.btn-block(type='submit') 登录
-      .footer
-        .text-center
-          © 2016 呐呐科技 
-  script(src='backend/js/line.js')
+html
+  head
+      meta(charset='utf-8')
+      |     
+      meta(name='viewport', content='width=device-width, initial-scale=1')
+      |     
+      meta(http-equiv='x-ua-compatible', content='ie=edge')
+      |     
+      link(rel='stylesheet', href='backend/libs/bootstrap/dist/css/bootstrap.min.css')
+      |     
+      link(rel='stylesheet', href='backend/css/signup.css')
+    body
+      canvas#Mycanvas
+      .container
+        .row
+          .sign-wrap
+            form(method="POST", action="/user/signin")
+              h2 呐呐科技登录
+              h3 极致的产品，永远不缺乏订单
+              |                                         
+              .form-group
+                label.sr-only(for='inputEmail') 邮箱
+                |                         
+                input#inputEmail.form-control(name="user[email]",type='email', placeholder='邮箱地址', required='', autofocus='')
+                |                         
+                span.email
+              |                     
+              .form-group
+                label.sr-only(for='inputPassword') 密码
+                |                         
+                input#inputPassword.form-control(name="user[password]",type='password', placeholder='密码', required='')
+                |                         
+                span.password
+              |                    
+              .form-group.mt-20
+                button.btn.btn-lg.btn-primary.btn-block(type='submit') 登录
+              .form-group.mt-20
+                a(href="/register") 立即注册
+        .footer
+          .text-center
+            © 2016 呐呐科技 
+    script(src='backend/js/line.js')

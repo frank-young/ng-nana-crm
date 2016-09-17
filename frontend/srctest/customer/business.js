@@ -64,13 +64,6 @@ angular.module("businessMoudle", []).controller('BusinessCtrl',
         $scope.tags = data.tags;
 
     });
-    $http({
-        url:'data/person.json',
-        method:'GET'
-    }).success(function(data){
-        /*  添加日程 --联系人 */
-        $scope.person = data.person;
-    })
     
     /*项目*/
     businessData.getData().then(function(data){
