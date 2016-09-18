@@ -109,14 +109,7 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
     var date =  new Date();
     today = date.getTime();
     $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null}]};     //初始空数据
-    /* 客户设置 */
-    $http({
-        url:'data/person.json',
-        method:'GET'
-    }).success(function(data){
-        /*  添加日程 --联系人 */
-        $scope.person = data.person;
-    })
+
     /* 保存数据，并且添加到原始数据里 */
     $scope.saveSchedule = function(value){
         value.schedule.unshift($scope.schedule);
