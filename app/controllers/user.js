@@ -64,6 +64,10 @@
 					return res.redirect('/#/index')	// 跳转至程序主入口，由主入口来判断域名验证
 				}else{
 					console.log('登录失败')
+					// res.json({
+					// 	status:1,
+					// 	msg:"账号或者密码错误！"
+					// })
 					return res.redirect('/signin')
 				}
 			})

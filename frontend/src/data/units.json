@@ -2,7 +2,17 @@
     "units":[
         {"value":"0","label":"美元"},
         {"value":"1","label":"元"},
-        {"value":"2","label":"韩元"},
-        {"value":"3","label":"日元"}
+		{"value":"2", "label":"英镑"},
+		{"value":"3", "label":"卢布"},
+		{"value":"4", "label":"马克"},
+		{"value":"5", "label":"荷兰盾"},
+		{"value":"6", "label":"法郎"},
+		{"value":"7", "label":"比利时法郎"},
+		{"value":"8", "label":"马币"},
+		{"value":"9", "label":"泰铢"},
+		{"value":"10", "label":"缅元"},
+		{"value":"11", "label":"加元"},
+		{"value":"12","label":"韩元"},
+        {"value":"13","label":"日元"}
     ]
 }
