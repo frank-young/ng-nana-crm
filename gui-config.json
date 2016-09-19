@@ -1,0 +1,27 @@
+{
+"configs" : [
+  {
+"server" : "45.78.62.100",
+"server_port" : 443,
+"password" : "ZDM3ZTVhYT",
+"method" : "rc4-md5",
+"remarks" : ""}
+,
+  {
+"server" : "104.224.182.179",
+"server_port" : 443,
+"password" : "MjlmN2E3Zj",
+"method" : "rc4-md5",
+"remarks" : "80G 服务器ss"}
+
+],
+"strategy" : null,
+"index" : 0,
+"global" : false,
+"enabled" : true,
+"shareOverLan" : false,
+"isDefault" : false,
+"localPort" : 1080,
+"pacUrl" : null,
+"useOnlinePac" : false,
+"availabilityStatistics" : false}
