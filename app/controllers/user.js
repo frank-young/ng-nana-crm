@@ -45,8 +45,9 @@
 	exports.signin = function(req,res){
 		var _user = req.body.user,
 		 	email = _user.email,
-		 	password = _user.password
-
+		 	password = _user.password,
+		 	verify = _user.luotest_response
+		console.log(verify)
 		User.findOne({email: email},function(err,user){
 			if(err){
 				console.log(err)

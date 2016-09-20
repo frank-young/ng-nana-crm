@@ -1,7 +1,7 @@
 {
-  "name": "nodetest",
+  "name": "nanacrm",
   "version": "0.0.1",
-  "description": "My movie ",
+  "description": "nanacrm客户关系管理系统",
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.15.0",

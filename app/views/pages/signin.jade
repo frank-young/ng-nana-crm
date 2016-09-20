@@ -1,6 +1,7 @@
 doctype html(lang='en')
 html
   head
+      title 呐呐CRM客户关系管理系统-登录
       meta(charset='utf-8')
       |     
       meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -32,16 +33,22 @@ html
                 input#inputPassword.form-control(name="user[password]",type='password', placeholder='密码', required='')
                 |                         
                 span.password
-              |                    
+              .form-group
+                .l-captcha(data-site-key="c49666894bc768a0d7c42957ccbad9f4",data-width="360",data-callback="getResponse")
+                input#lc-captcha-response(type="hidden",name="user[luotest_response]")
               .form-group.mt-20
                 button.btn.btn-lg.btn-primary.btn-block(type='submit') 登录
               .form-group.mt-20
                 a(href="/register") 立即注册
         .footer
-          .text-center
-            © 2016 呐呐科技 
+          .text-center © 2016 呐呐科技 
     script(src='backend/js/line.js')
-    script
+    script(src='backend/js/verify.js')
+    script(src="http://captcha.luosimao.com/static/js/api.js")
+
+      
+    
+
       
 
 
