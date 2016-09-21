@@ -33,6 +33,8 @@ module.exports = function(app){
   app.get('/register', User.signinUnRequired, User.showSignup)
   app.get('/logout', User.logout)
   app.get('/success', User.signSuccess)
+  app.get('/verify', User.signVerify)
+  app.get('/activation/:verify', User.signActivation)
   app.get('/admin/user/list', User.signinRequired,User.adminRequired, User.list)
 
   // 域名信息设置

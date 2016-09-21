@@ -22,7 +22,7 @@ $(document).ready(function() {
 				if(data.status == 1){
 					$('#f-alert').html(data.msg).slideDown(300)
 					setTimeout(function(){
-						window.location.href = "/signin"
+						window.location.href = "/verify"
 					},1000)
 				}else{
 					$('#f-alert').html(data.msg).slideDown(300)
@@ -48,6 +48,12 @@ $(document).ready(function() {
 					setTimeout(function(){
 						window.location.href = "/#/index"
 					},1000)
+				}else if(data.status == 2){
+					$('#f-alert').html(data.msg).slideDown(300)
+					setTimeout(function(){
+						window.location.href = "/verify"
+						
+					},2000)
 				}else{
 					$('#f-alert').html(data.msg).slideDown(300)
 					setTimeout(function(){

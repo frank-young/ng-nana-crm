@@ -1,0 +1,27 @@
+doctype 
+html
+head
+    title 呐呐CRM客户关系管理系统-验证邮箱
+    meta(charset='utf-8')
+    |     
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    |     
+    meta(http-equiv='x-ua-compatible', content='ie=edge')
+    |     
+    link(rel='stylesheet', href='backend/libs/bootstrap/dist/css/bootstrap.min.css')
+    |     
+    link(rel='stylesheet', href='backend/css/signup.css')
+  body
+    canvas#Mycanvas
+    .container
+      .row
+        .sign-wrap
+          h2 验证邮箱，完成激活
+          p 我们已经给您发了一封邮件到您的邮箱，
+            br
+            span #{email}
+            br 
+            请您点击邮箱中的链接完成激活。
+      .footer
+        .text-center © 2016 呐呐科技 
+  script(src='backend/js/line.js')

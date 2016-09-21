@@ -31,7 +31,7 @@ var User = require('../models/user')	//引入模型
 					}},function(err){
 						if(err){
 							res.json({
-								status:"2",
+								status:"0",
 								msg:"发生错误!",
 								err:err
 							})
@@ -53,7 +53,7 @@ var User = require('../models/user')	//引入模型
 		User.findOne({email:_user.email},function(err,user){
 			if(err){
 				res.json({
-					status:"2",
+					status:"0",
 					msg:"发生错误!",
 					err:err
 				})
@@ -64,7 +64,7 @@ var User = require('../models/user')	//引入模型
 				var user = new User(_user)
 				user.save(function(err,user){
 					if(err){
-						res.json({status:"2",msg:"发生错误!"})
+						res.json({status:"0",msg:"发生错误!"})
 					}else {
 						res.json({status:"1",msg:"成员保存成功!"})
 					}
@@ -78,7 +78,7 @@ var User = require('../models/user')	//引入模型
 			User.remove({_id: id},function(err,quotation){
 				if(err){
 					res.json({
-						status:"2",
+						status:"0",
 						msg:"发生错误!",
 						err:err
 					})
@@ -108,7 +108,7 @@ var User = require('../models/user')	//引入模型
 		User.findById(id,function(err,user){
 			if(err){
 				res.json({
-					status:"2",
+					status:"0",
 					msg:"发生错误!",
 					err:err
 				})
@@ -138,7 +138,7 @@ var User = require('../models/user')	//引入模型
 					}},function(err){
 						if(err){
 							res.json({
-								status:"2",
+								status:"0",
 								msg:"发生错误!",
 								err:err
 							})

@@ -48,7 +48,9 @@ var UserSchema = new mongoose.Schema({
 			type:Date,
 			default:Date.now()
 		}
-	}
+	},
+	status:Number,
+	verify:String
 })
 
 UserSchema.pre('save',function(next){	//每次存数据之前都要调用这个方法
