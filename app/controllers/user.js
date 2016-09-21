@@ -53,7 +53,7 @@ var smtpTransport = require('nodemailer-smtp-transport')
 		}else if(_user.password == ""){
 			res.json({
 				status:0,
-				msg:"手机号能为空！"
+				msg:"密码不能为空！"
 			})
 		}else if(rePassword.test(_user.password)==false){
 			res.json({
@@ -189,6 +189,11 @@ var smtpTransport = require('nodemailer-smtp-transport')
 			res.json({
 				status:0,
 				msg:"邮箱格式不正确！"
+			})
+		}else if(password == ""){
+			res.json({
+				status:0,
+				msg:"密码不能为空！"
 			})
 		}else if(rePassword.test(password)==false){
 			res.json({
