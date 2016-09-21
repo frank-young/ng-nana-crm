@@ -130,7 +130,7 @@ span.password{
      background-image: url(../img/icon/password-d.png);
 }
 button.btn-primary{
-    background-color: #F77B6F;
+    background-color: #5D9CEC;
     border-radius: 1px;
     font-family: '微软雅黑';
     font-weight: 300;
@@ -147,7 +147,7 @@ button.btn-primary:active:focus,
 button.btn-primary:hover,
 button.btn-primary:focus{
     outline: none;
-    background-color: #FC675A;
+    background-color: #5D8CEC;
 }
 .mt-20{
     margin-top: 20px;
@@ -167,7 +167,7 @@ button.btn-primary:focus{
 }
 .red{
     font-weight: normal;
-    color: #FC675A; 
+    color: #5D9CEC; 
     font-size: 20px;
 }
 /* 添加域名 */
@@ -186,6 +186,20 @@ button.btn-primary:focus{
 .add-input h3{
     width: 35%;
     display: inline-block;
+}
+span,a{
+    font-family: '微软雅黑';
+}
+.alert{
+    display: none;
+    border-radius: 1px;
+    padding: 11px;
+    font-family: '微软雅黑';
+}
+.alert-danger{
+    color: #fff;
+    background-color: #F88E8B;
+    border-color: #F88E8B;
 }
 
 

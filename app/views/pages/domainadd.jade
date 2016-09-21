@@ -16,18 +16,19 @@ html
       .container
         .row
           .sign-wrap
-            form(method="POST", action="/domain/addctrl")
+            form#f-domain
+              //- method="POST", action="/domain/addctrl"
               h2 添加域名
-              h3 添加您的个性域名，在浏览器输入  yourdomain.nanacrm.com 就能访问了。
-              |                                         
+              h3 您需要添加您的个性域名，在浏览器输入  yourdomain.nanacrm.com 就能访问了。                                   
               .form-group.add-input                
-                input#inputEmail.form-control(name="domain[name]",type='text', placeholder='yourdomain', required='', autofocus='')
-                |                         
+                input#inputEmail.form-control(name="domain[name]",type='text', placeholder='yourdomain', required='', autofocus='')                    
                 h3 .nanacrm.com
-              |                                         
+              .form-group
+                div#f-alert.alert.alert-danger(role="alert")            
               .form-group.mt-20
                 button.btn.btn-lg.btn-primary.btn-block(type='submit') 添加
         .footer
-          .text-center
-            © 2016 呐呐科技 
-    script(src='../backend/js/line.js')
+          .text-center © 2016 呐呐科技 
+      script(src='../backend/js/line.js')
+      script(src="../backend/libs/jquery/dist/jquery.min.js")
+      script(src='../backend/js/domainverify.js')

@@ -16,7 +16,7 @@ html
       .container
         .row
           .sign-wrap
-            form(method="POST", action="/user/signin")
+            form(id="f-signin")
               h2 呐呐科技登录
               h3 极致的产品，永远不缺乏订单
               |                                         
@@ -36,15 +36,19 @@ html
               .form-group
                 .l-captcha(data-site-key="c49666894bc768a0d7c42957ccbad9f4",data-width="360",data-callback="getResponse")
                 input#lc-captcha-response(type="hidden",name="user[luotest_response]")
+              .form-group
+                div#f-alert.alert.alert-danger(role="alert")
               .form-group.mt-20
-                button.btn.btn-lg.btn-primary.btn-block(type='submit') 登录
+                button#f-submit.btn.btn-lg.btn-primary.btn-block(type='submit') 登录
               .form-group.mt-20
                 a(href="/register") 立即注册
         .footer
           .text-center © 2016 呐呐科技 
-    script(src='backend/js/line.js')
-    script(src='backend/js/verify.js')
-    script(src="http://captcha.luosimao.com/static/js/api.js")
+      script(src='backend/js/line.js')
+      script(src="http://captcha.luosimao.com/static/js/api.js")
+      script(src="backend/libs/jquery/dist/jquery.min.js")
+      script(src='backend/js/verify.js')
+      
 
       
     

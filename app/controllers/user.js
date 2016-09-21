@@ -16,23 +16,89 @@
 
 		var _user = req.body.user
 		_user.role = 10
+		var rePhone = /^1[3|5|7|8]\d{9}$/
+		var reEmail=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+		var rePassword = /^[\w\@\.\_]+$/
+
+		//验证
+		if(_user.email == ""){
+			res.json({
+				status:0,
+				msg:"邮箱不能为空！"
+			})
+		}else if(reEmail.test(_user.email) == false){
+			res.json({
+				status:0,
+				msg:"邮箱格式不正确！"
+			})
+		}else if(_user.phone == ""){
+			res.json({
+				status:0,
+				msg:"手机号不能为空！"
+			})
+		}else if(rePhone.test(_user.phone) == false){
+			res.json({
+				status:0,
+				msg:"手机号格式不正确！"
+			})
+		}
+		else if(_user.name == ""){
+			res.json({
+				status:0,
+				msg:"姓名不能为空！"
+			})
+		}else if(_user.password == ""){
+			res.json({
+				status:0,
+				msg:"手机号能为空！"
+			})
+		}else if(rePassword.test(_user.password)==false){
+			res.json({
+				status:0,
+				msg:"密码格式不正确，必须为字母、数字、下划线！"
+			})
+		}else if(_user.password.length<6){
+			res.json({
+				status:0,
+				msg:"密码长度必须大于6位，小于20位！"
+			})
+		}else if(_user.password.length>20){
+			res.json({
+				status:0,
+				msg:"密码长度必须大于6位，小于20位！"
+			})
+		}else{
+			User.findOne({email:_user.email},function(err,user){
+				if(err){
+					res.json({
+						status:0,
+						msg:"发生未知错误！"
+					})
+				}
+				if(user){
+					res.json({
+						status:0,
+						msg:"邮箱已经被注册！"
+					})
+				}else{
+					var user = new User(_user)
+					user.save(function(err,user){
+						if(err){
+							res.json({
+								status:0,
+								msg:"发生未知错误！"
+							})
+						}
+						res.json({
+							status:1,
+							msg:"注册成功！"
+						})
+					})
+				}
+			})
+		}
+
 		
-		User.findOne({email:_user.email},function(err,user){
-			if(err){
-				console.log(err)
-			}
-			if(user){
-				return res.redirect('/signin')
-			}else{
-				var user = new User(_user)
-				user.save(function(err,user){
-					if(err){
-						console.log(err)
-					}
-					res.redirect("/signin")
-				})
-			}
-		})
 	}
 
 	exports.signSuccess = function(req,res){
@@ -47,32 +113,73 @@
 		 	email = _user.email,
 		 	password = _user.password,
 		 	verify = _user.luotest_response
+ 		var reEmail=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+ 		var rePassword = /^[\w\@\.\_]+$/
+
 		console.log(verify)
-		User.findOne({email: email},function(err,user){
-			if(err){
-				console.log(err)
-			}
-			if(!user){
-				return res.redirect('/register')
-			}
-			user.comparePassword(password,function(err,isMatch){
-				if(err){
-					console.log(err)
-				}
-				if(isMatch){
-					console.log('登录成功')
-					req.session.user = user
-					return res.redirect('/#/index')	// 跳转至程序主入口，由主入口来判断域名验证
-				}else{
-					console.log('登录失败')
-					// res.json({
-					// 	status:1,
-					// 	msg:"账号或者密码错误！"
-					// })
-					return res.redirect('/signin')
-				}
+
+		if(_user.email == ""){
+			res.json({
+				status:0,
+				msg:"邮箱不能为空！"
 			})
-		})
+		}else if(reEmail.test(email) == false){
+			res.json({
+				status:0,
+				msg:"邮箱格式不正确！"
+			})
+		}else if(rePassword.test(password)==false){
+			res.json({
+				status:0,
+				msg:"密码格式不正确，必须为字母、数字、下划线！"
+			})
+		}else if(password.length<6){
+			res.json({
+				status:0,
+				msg:"密码长度必须大于6位，小于20位！"
+			})
+		}else if(password.length>20){
+			res.json({
+				status:0,
+				msg:"密码长度必须大于6位，小于20位！"
+			})
+		}else{
+			User.findOne({email: email},function(err,user){
+				if(err){
+					res.json({
+						status:0,
+						msg:"发生未知错误！"
+					})
+				}
+				if(!user){
+					res.json({
+						status:0,
+						msg:"用户不存在！"
+					})
+				}
+				user.comparePassword(password,function(err,isMatch){
+					if(err){
+						res.json({
+							status:0,
+							msg:"发生未知错误！"
+						})
+					}
+					if(isMatch){
+						req.session.user = user
+						res.json({
+							status:1,
+							msg:"登录成功！"
+						})
+					}else{
+						res.json({
+							status:0,
+							msg:"账号或密码错误！"
+						})
+					}
+				})
+			})
+		}
+		
 	}
 	//登出
 	exports.logout = function(req,res){
