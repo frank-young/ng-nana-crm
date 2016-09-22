@@ -71,64 +71,74 @@ var smtpTransport = require('nodemailer-smtp-transport')
 				msg:"密码长度必须大于6位，小于20位！"
 			})
 		}else{
-			User.findOne({email:_user.email},function(err,user){
-				if(err){
-					res.json({
-						status:0,
-						msg:"发生未知错误！"
-					})
-				}
+			User.findOne({phone:_user.phone},function(err,user){
 				if(user){
 					res.json({
 						status:0,
-						msg:"邮箱已经被注册！"
+						msg:"手机号已经被注册！"
 					})
 				}else{
-
-					_user.verify = uuid.v4() //添加激活 token
-					var user = new User(_user)
-
-					user.save(function(err,user){
+					User.findOne({email:_user.email},function(err,user){
 						if(err){
 							res.json({
 								status:0,
 								msg:"发生未知错误！"
 							})
 						}
-						// 发送邮件验证
-						var transporter = nodemailer.createTransport(smtpTransport({
-						    host: "smtp.qq.com",
-						    port: 465,
-						    secure: true,
-						    auth: {
-						        user: "frankyoung@nanafly.com",
-						        pass: "yfgdwkehkfcgbdcf"
-						    }
-						}))
-						var host = 'http://127.0.0.1:3000'
-						var mailOptions = {
-						    from: '呐呐科技<frankyoung@nanafly.com>', // sender address 
-						    to: _user.email, // list of receivers 
-						    subject: '呐呐CRM客户系统注册', // Subject line 
-						    // text: 'Hello world ✔', // plaintext body 
-						    html:'<table width="100%" cellpadding="0" border="0" cellspacing="0" style="background: #43434d"><tbody><tr><td width="100%" style="padding-top:38px; padding-bottom: 35px; text-align: center "><a href="https://nanacrm.com/" style="text-decoration: none;color:#fff;font-size:20px;" target="_blank">呐呐科技CRM客户关系管理系统</a></td></tr><tr><td align="center"><table width="602" cellspacing="0" border="0" cellpadding="0" style="background: #fff;"><tbody><tr><td style="border-bottom: 1px solid #d2d2d2 ; padding:46px 0 36px; color:#000;font-size: 18px; text-align: center;;">恭喜您已注册成功</td></tr><tr><td style="padding:30px 52px 50px; border-bottom:1px solid #d2d2d2"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr><td style="font-size: 14px; margin-bottom:20px; text-align:left; padding-bottom:30px;"> 尊敬的&nbsp; '+_user.name+',</td></tr><tr><td style="color:#666; font-size: 14px; line-height: 24px; padding: 0 0 40px;"> 恭喜！您的呐呐CRM帐户“<strong>'+_user.name+'</strong>”已成功创建。<br> 现在，点击下面的按钮来激活您的账号！</td></tr><tr><td style="text-align: center; padding:0 50%"><a href="'+host+'/activation/'+_user.verify+'" style="padding:15px 0; width:220px; margin-left:-110px; display:block; background:#5D9CEC ;color:#fff; font-size: 14px; border-radius: 3px; text-decoration: none;" target="_blank"> 立即激活</a></td></tr></tbody></table></td></tr><tr><td style="padding:30px;text-align: left; font-size: 12px; line-height: 24px;"><table cellpadding="0" border="0" cellspacing="0"><tbody><tr style="text-align: left"><td style="color:#333;"> 在线客服</td></tr><tr><td style="color:#666 "> QQ &nbsp;<span style="border-bottom:1px dashed #ccc;z-index:1" t="7" onclick="return false;" data="742643619">742643619</span> &nbsp; ( 使用咨询 ) &nbsp; QQ &nbsp;<span style="border-bottom:1px dashed #ccc;z-index:1" t="7" onclick="return false;" data="631084625">631084625</span>&nbsp; ( 技术支持 )</td></tr><tr><td style="color:#333;">客服热线</td></tr><tr><td style="color:#666"><span style="border-bottom:1px dashed #ccc;z-index:1" t="7" onclick="return false;" data="15620616890">15620616890</span> &nbsp;( 使用咨询 )</td></tr><tr><td style="color:#333;">支持邮箱</td></tr><tr><td style="color:#666;"><a href="mailto:frankyoung@nanafly.com" style="text-decoration: none; color:#666;" target="_blank">frankyoung@nanafly.com</a></td></tr><tr><td style="padding-top: 30px; color:#333; font-size: 14px; line-height: 24px;">顺祝商祺!</td></tr><tr><td style="line-height: 24px; font-size: 14px; color:#333;">nana 团队敬上</td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="padding:45px 0 79px; font-size: 14px; line-height: 24px; color:#fff; text-align: center">nanacrm.com © 2016</td></tr></tbody></table>'
+						if(user){
+							res.json({
+								status:0,
+								msg:"邮箱已经被注册！"
+							})
+						}else{
+
+							_user.verify = uuid.v4() //添加激活 token
+							var user = new User(_user)
+
+							user.save(function(err,user){
+								if(err){
+									res.json({
+										status:0,
+										msg:"发生未知错误！"
+									})
+								}
+								// 发送邮件验证
+								var transporter = nodemailer.createTransport(smtpTransport({
+								    host: "smtp.qq.com",
+								    port: 465,
+								    secure: true,
+								    auth: {
+								        user: "frankyoung@nanafly.com",
+								        pass: "yfgdwkehkfcgbdcf"
+								    }
+								}))
+								var host = 'http://127.0.0.1:3000'
+								var mailOptions = {
+								    from: '呐呐科技<frankyoung@nanafly.com>', // sender address 
+								    to: _user.email, // list of receivers 
+								    subject: '呐呐CRM客户系统注册', // Subject line 
+								    // text: 'Hello world ✔', // plaintext body 
+								    html:'<table width="100%" cellpadding="0" border="0" cellspacing="0" style="background: #43434d"><tbody><tr><td width="100%" style="padding-top:38px; padding-bottom: 35px; text-align: center "><a href="https://nanacrm.com/" style="text-decoration: none;color:#fff;font-size:20px;" target="_blank">呐呐科技CRM客户关系管理系统</a></td></tr><tr><td align="center"><table width="602" cellspacing="0" border="0" cellpadding="0" style="background: #fff;"><tbody><tr><td style="border-bottom: 1px solid #d2d2d2 ; padding:46px 0 36px; color:#000;font-size: 18px; text-align: center;;">恭喜您已注册成功</td></tr><tr><td style="padding:30px 52px 50px; border-bottom:1px solid #d2d2d2"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr><td style="font-size: 14px; margin-bottom:20px; text-align:left; padding-bottom:30px;"> 尊敬的&nbsp; '+_user.name+'：</td></tr><tr><td style="color:#666; font-size: 14px; line-height: 24px; padding: 0 0 40px;"> 恭喜！您的呐呐CRM帐户“ <strong>'+_user.email+'</strong> ”已成功创建。<br> 现在，点击下面的按钮来激活您的账号！</td></tr><tr><td style="text-align: center; padding:0 50%"><a href="'+host+'/activation/'+_user.verify+'" style="padding:15px 0; width:220px; margin-left:-110px; display:block; background:#5D9CEC ;color:#fff; font-size: 14px; border-radius: 3px; text-decoration: none;" target="_blank"> 立即激活</a></td></tr></tbody></table></td></tr><tr><td style="padding:30px;text-align: left; font-size: 12px; line-height: 24px;"><table cellpadding="0" border="0" cellspacing="0"><tbody><tr style="text-align: left"><td style="color:#333;"> 在线客服</td></tr><tr><td style="color:#666 "> QQ &nbsp;<span style="border-bottom:1px dashed #ccc;z-index:1" t="7" onclick="return false;" data="742643619">742643619</span> &nbsp; ( 使用咨询 ) &nbsp; QQ &nbsp;<span style="border-bottom:1px dashed #ccc;z-index:1" t="7" onclick="return false;" data="631084625">631084625</span>&nbsp; ( 技术支持 )</td></tr><tr><td style="color:#333;">客服热线</td></tr><tr><td style="color:#666"><span style="border-bottom:1px dashed #ccc;z-index:1" t="7" onclick="return false;" data="15620616890">15620616890</span> &nbsp;( 使用咨询 )</td></tr><tr><td style="color:#333;">支持邮箱</td></tr><tr><td style="color:#666;"><a href="mailto:frankyoung@nanafly.com" style="text-decoration: none; color:#666;" target="_blank">frankyoung@nanafly.com</a></td></tr><tr><td style="padding-top: 30px; color:#333; font-size: 14px; line-height: 24px;">顺祝您生活愉快！</td></tr><tr><td style="line-height: 24px; font-size: 14px; color:#333;">nana 团队敬上</td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="padding:45px 0 79px; font-size: 14px; line-height: 24px; color:#fff; text-align: center">nanacrm.com © 2016</td></tr></tbody></table>'
+								}
+
+								transporter.sendMail(mailOptions, function(error, info){
+								    if(error){
+								        return console.log(error)
+								    }
+								 
+								})
+
+								req.session.emailVerify = _user.email
+								res.json({
+									status:1,
+									msg:"注册成功！"
+								})
+							})
 						}
-
-						transporter.sendMail(mailOptions, function(error, info){
-						    if(error){
-						        return console.log(error)
-						    }
-						 
-						})
-
-						req.session.emailVerify = _user.email
-						res.json({
-							status:1,
-							msg:"注册成功！"
-						})
 					})
 				}
 			})
+			
 		}
 
 		
