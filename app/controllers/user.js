@@ -112,7 +112,7 @@ var smtpTransport = require('nodemailer-smtp-transport')
 								        pass: "yfgdwkehkfcgbdcf"
 								    }
 								}))
-								var host = 'http://127.0.0.1:3000'
+								var host = 'http://60.205.157.200'
 								var mailOptions = {
 								    from: '呐呐科技<frankyoung@nanafly.com>', // sender address 
 								    to: _user.email, // list of receivers 
