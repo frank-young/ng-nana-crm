@@ -33,7 +33,12 @@ module.exports = function(app){
   app.get('/register', User.signinUnRequired, User.showSignup)
   app.get('/logout', User.logout)
   app.get('/success', User.signSuccess)
+  app.get('/forgot', User.forgot)
+  app.post('/forgotsend', User.forgotSend)
   app.get('/verify', User.signVerify)
+  app.get('/resetpassword/:verify', User.resetpassword)
+  app.post('/savepassword', User.savepassword)
+  app.get('/successpassword', User.successpassword)
   app.get('/activation/:verify', User.signActivation)
   app.get('/admin/user/list', User.signinRequired,User.adminRequired, User.list)
 

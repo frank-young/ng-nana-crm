@@ -1,0 +1,38 @@
+doctype 
+html
+head
+    title 呐呐CRM客户关系管理系统-忘记密码
+    meta(charset='utf-8')
+    |     
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    |     
+    meta(http-equiv='x-ua-compatible', content='ie=edge')
+    |     
+    link(rel='stylesheet', href='../backend/libs/bootstrap/dist/css/bootstrap.min.css')
+    |     
+    link(rel='stylesheet', href='../backend/css/signup.css')
+  body
+    canvas#Mycanvas
+    .container
+      .row
+        .sign-wrap
+          form(id="f-forgot")
+              h2 找回密码                                 
+              .form-group
+                label.sr-only(for='inputEmail') 邮箱
+                input#inputEmail.form-control(name="user[email]",type='email', placeholder='请输入您的邮箱', required='', autofocus='')           
+                span.email
+              .form-group
+                div#f-alert.alert.alert-danger(role="alert")
+              .form-group.mt-20
+                button#f-submit.btn.btn-lg.btn-primary.btn-block(type='submit') 发送
+              .form-group.mt-20.text-left
+                a(href="/signin") 登录
+                a(href="/register",style="float:right") 立即注册
+      .footer
+        .text-center © 2016 呐呐科技 
+    script(src='../backend/js/line.js')
+    script(src="backend/libs/jquery/dist/jquery.min.js")
+    script(src='backend/js/forgot.js')
+
+
