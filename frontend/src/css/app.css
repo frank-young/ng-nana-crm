@@ -144,6 +144,43 @@
   color: #1797BE;
 }
 
+@media (max-width: 768px) {
+  .f-aside {
+    position: fixed;
+    // left: 0;
+    top: 50px;
+    display: block;
+    z-index: 1040;
+    background-color: #3A3F51;
+    width: 200px;
+    height: 100%;
+  }
+  .aside-show{
+    left: 0;
+  }
+  .aside-hide{
+    left: -200px;
+  }
+  .navbar-toggle{
+    float: left;
+    margin-left: 15px;
+    margin-right: 0;
+    border: 0;
+
+  }
+  .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+    background-color: #5d9cec;
+}
+  .f-self{
+    float: right;
+  }
+  .f-self a{
+    display: inline-block;
+    margin-right: 25px;
+    margin-top: 12px;
+  }
+}
+
 /**
  * ************************************************************************************************
  *                                            客户页面
@@ -324,11 +361,29 @@
   margin-left: 10px;
 }
 .alert-info{
-  background-color: #fff;
+  background-color: #F88E8B;
   border: 0;
   border-radius: 1px;
   box-shadow: 0 0 1px #ccc,2px 2px 4px #ddd;
-  color: #333;
+  color: #fff;
+  min-width: 120px;
+}
+.alert-info button{
+  color: #fff;
+  opacity: 1;
+  text-shadow:none;
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -ms-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+}
+.alert-info button:hover{
+  color: #eee;
+  font-weight: normal;
+}
+.alert-info strong{
+  font-weight: normal ;
 }
 /**
  * ************************************************************************************************
@@ -602,8 +657,11 @@
   top: 5px;
 }
 
-/* 首页 日历 */
-
+/**
+ * ************************************************************************************************
+ *                                           首页 日历
+ * ************************************************************************************************
+ */
 .fc-toolbar {
   background-color: #5D9CEC;
     margin-bottom: 0;
@@ -714,7 +772,21 @@ th.fc-day-header.fc-widget-header{
   min-height: 154px;
   line-height: 1.8em;
 }
-/* 时间选择 */
+
+@media (max-width: 768px) {
+   .fc-basic-view .fc-body .fc-row{
+      min-height: 50px;
+      height: inherit;
+    }
+
+}
+
+/**
+ * ************************************************************************************************
+ *                                          时间选择
+ * ************************************************************************************************
+ */
+
 a.time-select{
   color: #333;
 }

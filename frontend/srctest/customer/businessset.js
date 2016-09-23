@@ -52,10 +52,12 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     
     $scope.addGroup = function(){
         var value = $scope.groups.length;
-        groupData.addData({"value":value,"isEdit":true,"label":'分组名称'});
+        groupData.addData({"value":value,"isEdit":true,"label":'分组名称'}).then(function(data){
+                $scope.changeAlert(data.msg);
+            })
         groupData.getData().then(function (data) {
             $scope.groups = data.groups;
-            $scope.changeAlert(data.msg);
+
         });
     }
     /* 保存单条分组信息 */
@@ -79,7 +81,6 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             $scope.groups.splice(index,1);   //删除
             groupData.deleteData(value).then(function(data){
                 $scope.changeAlert(data.msg);
-                console.log($scope.groups);
             })
             /* 更新数据value索引值 */
             $scope.groups.forEach( function(element, index) {
@@ -88,13 +89,13 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             });
         }
     }
-    /* 监听items ，发送数据 */
-    $scope.$watch('groups', function(newVal, oldVal) {
-        if (newVal !== oldVal) {
-           //向服务器发请求，顺序已改变
-           // console.log(newVal)
-        }
-    }, true);
+    // /* 监听items ，发送数据 */
+    // $scope.$watch('groups', function(newVal, oldVal) {
+    //     if (newVal !== oldVal) {
+    //        //向服务器发请求，顺序已改变
+    //        // console.log(newVal)
+    //     }
+    // }, true);
 
     /****************************** 客户标签 ************************************/
 
@@ -102,7 +103,9 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     $scope.addTag = function(){
         var value = $scope.tags.length;
 
-        tagData.addData({"value":value,"isEdit":true,"text":"标签名称","color":"primary"});
+        tagData.addData({"value":value,"isEdit":true,"text":"标签名称","color":"primary"}).then(function(data){
+                $scope.changeAlert(data.msg);
+            })
         tagData.getData().then(function (data) {
             $scope.tags = data.tags;
         });
@@ -111,7 +114,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     $scope.saveTag = function(value){
         if(value.isEdit == true){
             tagData.updateData(value).then(function (data) {
-                $scope.changeAlert('操作成功！','');
+                $scope.changeAlert(data.msg);
             });
         } 
     }
@@ -122,7 +125,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             var index = findIndex(value,$scope.tags);
             $scope.tags.splice(index,1);   //删除
             tagData.deleteData(value).then(function(data){
-                $scope.changeAlert('删除成功！');
+                $scope.changeAlert(data.msg);
             })
             /* 更新数据value索引值 */
             $scope.tags.forEach( function(element, index) {
@@ -131,11 +134,5 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             });
         }
     }
-    /* 监听items ，发送数据 */
-    $scope.$watch('tags', function(newVal, oldVal) {
-        if (newVal !== oldVal) {
-           //向服务器发请求，顺序已改变
-           console.log(newVal)
-        }
-    }, true);
+
 }]);

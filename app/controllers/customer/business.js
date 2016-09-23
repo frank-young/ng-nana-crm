@@ -23,6 +23,11 @@ var _ = require('underscore')
 		var businessObj = req.body.business 	//从路由传过来的 business对象
 		var user = req.session.user
 		var _business
+		if(!businessObj.bname){
+			res.json({msg:"项目名不能为空",status: 0})
+		}else if(!businessObj.people){
+			res.json({msg:"负责人不能为空",status: 0})
+		}else{
 			_business = new Business({
 				isTop: businessObj.isTop,
 				isChecked: businessObj.isChecked,
@@ -53,30 +58,39 @@ var _ = require('underscore')
 
 				}
 			})
+		}
+			
 	}
 	//项目更新、新建
 	exports.update = function(req,res){
 		var id = req.body.business._id
 		var businessObj = req.body.business 	//从路由传过来的 business对象
 		var _business
-		if(id !=="undefined"){
-			Business.findById(id,function(err,business){
-				if(err){
-					console.log(err)
-				}
-				_business = _.extend(business,businessObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
-				_business.save(function(err,business){
+		if(!businessObj.bname){
+			res.json({msg:"项目名不能为空",status: 0})
+		}else if(!businessObj.people){
+			res.json({msg:"负责人不能为空",status: 0})
+		}else{
+			if(id !=="undefined"){
+				Business.findById(id,function(err,business){
 					if(err){
-						res.json({msg:"更新失败！",status: 0})
 						console.log(err)
-					}else{
-						res.json({msg:"更新成功！",status: 1})
-
 					}
+					_business = _.extend(business,businessObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
+					_business.save(function(err,business){
+						if(err){
+							res.json({msg:"更新失败！",status: 0})
+							console.log(err)
+						}else{
+							res.json({msg:"更新成功！",status: 1})
 
+						}
+
+					})
 				})
-			})
+			}
 		}
+		
 		
 	}
 	//项目详情页

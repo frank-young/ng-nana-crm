@@ -8,13 +8,15 @@ angular.module('navtopMoudle',[]).controller('NavtopCtrl',
 	
 	function ($scope,feedbacklData) {
 		$scope.content = "";
+		$scope.myaside = false;
 		$scope.send = function(value){
 			feedbacklData.addData(value).then(function(data){
 				$scope.changeAlert(data.msg);
 			})
 		}
 
-	$scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:3});
-    }
+		$scope.changeAlert = function(title,content){
+	        $alert({title: title, content: content, type: "info", show: true,duration:3});
+	    }
+
 }]);

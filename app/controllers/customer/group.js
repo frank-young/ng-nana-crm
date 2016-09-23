@@ -37,30 +37,36 @@ var _ = require('underscore')
 				}
 				res.json({msg:"添加成功",status: 1})
 			})
+			
 	}
 	//分组更新、新建
 	exports.update = function(req,res){
 		var id = req.body.group._id
 		var groupObj = req.body.group 	//从路由传过来的 group对象
 		var _group
-		if(id !=="undefined"){
-			Group.findById(id,function(err,group){
-				if(err){
-					console.log(err)
-				}
-				_group = _.extend(group,groupObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
-				_group.save(function(err,group){
+
+		if(!groupObj.label){
+			res.json({msg:"分组名称不能为空",status: 0})
+		}else{
+			if(id !=="undefined"){
+				Group.findById(id,function(err,group){
 					if(err){
 						console.log(err)
-					}else{
-						res.json({msg:"更新成功",status: 1})
-
 					}
+					_group = _.extend(group,groupObj)
+					_group.save(function(err,group){
+						if(err){
+							console.log(err)
+						}else{
+							res.json({msg:"操作成功",status: 1})
 
+						}
+
+					})
+					
 				})
-			})
-		}
-		
+			}
+		}		
 	}
 
 	//删除分组

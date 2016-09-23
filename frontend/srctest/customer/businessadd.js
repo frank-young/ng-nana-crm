@@ -74,11 +74,14 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     });
     $scope.saveData = function(value){
         businessData.addData(value).then(function (data) {
-            $scope.changeAlert(data.msg);
-            window.history.go(-1)
-            localStorage.removeItem("business");
-            clearInterval(time);
-            
+            if(data.status == 0){
+                $scope.changeAlert(data.msg);
+            }else{
+                $scope.changeAlert(data.msg);
+                window.history.go(-1)
+                localStorage.removeItem("business");
+                clearInterval(time);
+            }
         })
     }
     /*提示框*/

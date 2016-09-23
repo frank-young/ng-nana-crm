@@ -5,6 +5,7 @@
 angular.module('navleftMoudle',[]).controller('NavleftCtrl', 
 	['$scope', '$http','settingData',
 	function ($scope, $http,settingData) {
+		
 		var menus = [
 		// {
 		// 	icon:'fa fa-paper-plane-o',

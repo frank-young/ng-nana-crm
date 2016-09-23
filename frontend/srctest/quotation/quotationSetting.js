@@ -4,8 +4,8 @@
 
 angular.module("quotationSettingMoudle", ['ng-sortable'])
 .controller('QuotationSettingCtrl', 
-    ['$scope', '$http', '$state','quotationheadData','quotationfootData','businessData',
-    function($scope, $http, $state,quotationheadData,quotationfootData,businessData) {
+    ['$scope', '$http', '$state','$alert','quotationheadData','quotationfootData','businessData',
+    function($scope, $http, $state, $alert,quotationheadData,quotationfootData,businessData) {
 	/* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -93,15 +93,17 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
     $scope.editHead = function(value){
     	$scope.headMsg = angular.copy(value);
     }
-    /* 保存单条报价单尾信息 */
+    /* 保存单条报价单头 信息 */
     $scope.saveHead = function(msg){
-        quotationheadData.updateData(msg);
+        quotationheadData.updateData(msg).then(function(data){
+                $scope.changeAlert(data.msg);
+            });
 		$scope.headMsg = {};
         quotationheadData.getData().then(function(data){
             $scope.heads = data.quotationheads;
         })
     }
-    /* 添加报价头尾信息 */
+    /* 添加报价头头 信息 */
     $scope.saveHeadAdd = function(value){
         var val = $scope.heads.length;
         var msgadd = {
@@ -119,7 +121,9 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
             "untilDate":value.untilDate,
             "logo":value.logo
         }
-        quotationheadData.addData(msgadd)
+        quotationheadData.addData(msgadd).then(function(data){
+                $scope.changeAlert(data.msg);
+            })
         quotationheadData.getData().then(function(data){
             $scope.heads = data.quotationheads;
         })
@@ -133,7 +137,7 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
             var index = findIndex(value,$scope.heads);
             $scope.heads.splice(index,1);   //删除
             quotationheadData.deleteData(value).then(function(data){
-                $scope.changeAlert('删除成功！');
+                $scope.changeAlert(data.msg);
             })
             /* 更新数据value索引值 */
             $scope.heads.forEach( function(element, index) {
@@ -156,7 +160,9 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
     }
     /* 保存单条报价单尾信息 */
     $scope.saveFoot = function(msg){
-        quotationfootData.updateData(msg);
+        quotationfootData.updateData(msg).then(function(data){
+                $scope.changeAlert(data.msg);
+            })
         $scope.footMsg = {};
         quotationfootData.getData().then(function(data){
             $scope.foots = data.quotationfoots;
@@ -171,7 +177,9 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         	"content":value.content,
         	"isEdit":false
         }
-        quotationfootData.addData(msgadd);
+        quotationfootData.addData(msgadd).then(function(data){
+                $scope.changeAlert(data.msg);
+            });
         quotationfootData.getData().then(function(data){
             $scope.foots = data.quotationfoots;
         })
@@ -185,7 +193,7 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
             var index = findIndex(value,$scope.foots);
             $scope.foots.splice(index,1);   //删除
             quotationfootData.deleteData(value).then(function(data){
-                $scope.changeAlert('删除成功！');
+                $scope.changeAlert(data.msg);
             })
             /* 更新数据value索引值 */
             $scope.foots.forEach( function(element, index) {
@@ -193,6 +201,9 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
                 quotationfootData.updateData(element);
             });
         }
+    }
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
     }
 }])
 

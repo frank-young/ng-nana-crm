@@ -1,24 +1,38 @@
-<div id="fullScreen" style="height:100%">  
-    <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavtopCtrl">
+<div id="fullScreen" style="height:100%" ng-controller="NavtopCtrl">  
+    <nav class="navbar navbar-inverse navbar-fixed-top" >
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <button type="button" class="navbar-toggle" ng-click="myaside=!myaside">
                     <span class="sr-only"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="">Nana CRM</a>
+                <span class="f-self visible-xs">
+                    <a href="" bs-dropdown aria-haspopup="true" aria-expanded="false" placement="bottom" ><i class="fa fa-user" style="font-size:25px;color:#fff;"></i></a>
+                        <ul class="dropdown-menu" role="menu" style="z-index:1100;">
+                            <li>
+                                <a ui-sref="web.setting" >
+                                    个人设置
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/logout" >
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                </span>
             </div>
-            <div id="navbar" class="navbar-phone">
-                <ul class="nav navbar-nav navbar-left phonenav">
+            <div id="navbar" class="navbar-phone hidden-xs">
+                <ul class="nav navbar-nav navbar-left phonefeed">
                     <li>
                         <a href="" class="feedback" data-animation="am-fade-and-scale" placement="center" data-template-url="feedback.tpl.html" bs-modal>意见反馈</a>
                     </li>
                 </ul>
                 
                 <ul class="nav navbar-nav navbar-right phonenav" style="margin-right: 10px;">
-
                     <li>
                         <a href="">
                             <i class="fa fa-bell" style="font-size:18px;"></i>
@@ -26,7 +40,7 @@
                     </li>
                     <li>
                         <a href="" data-animation="am-flip-x"  bs-dropdown aria-haspopup="true" aria-expanded="false" placement="bottom" ><i class="fa fa-user" style="font-size:18px;"></i></a>
-                        <ul class="dropdown-menu" role="menu">
+                        <ul class="dropdown-menu" role="menu" style="z-index:1100;">
                             <li>
                                 <a ui-sref="web.setting" >
                                     个人设置
@@ -49,7 +63,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="sidebar">
+            <div class="sidebar f-aside" ng-class="{true: 'aside-show', false: 'aside-hide'}[myaside]">
                 <div ng-controller="NavleftCtrl">
                     <uib-accordion >
 
@@ -121,4 +135,3 @@
         </div>
     </script>
 </div>
-

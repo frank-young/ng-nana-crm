@@ -500,7 +500,7 @@ input[type='checkbox']:checked+ span:after{
 }
 @media (max-width: 768px) {
   body {
-    padding-top: 94px;
+    padding-top: 50px;
   }
   .navbar{
     height: 50px;

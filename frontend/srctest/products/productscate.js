@@ -56,10 +56,10 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
         $alert({title: title, content: content, type: "info", show: true,duration:5});
     }
     /* 监听items ，发送数据 */
-    $scope.$watch('cate', function(newVal, oldVal) {
-        if (newVal !== oldVal) {
-           //向服务器发请求，顺序已改变
-           console.log(newVal)
-        }
-    }, true);
+    // $scope.$watch('cate', function(newVal, oldVal) {
+    //     if (newVal !== oldVal) {
+    //        //向服务器发请求，顺序已改变
+    //        console.log(newVal)
+    //     }
+    // }, true);
 }]);

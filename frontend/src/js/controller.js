@@ -5,6 +5,7 @@
 angular.module('navleftMoudle',[]).controller('NavleftCtrl', 
 	['$scope', '$http','settingData',
 	function ($scope, $http,settingData) {
+		
 		var menus = [
 		// {
 		// 	icon:'fa fa-paper-plane-o',
@@ -131,15 +132,17 @@ angular.module('navtopMoudle',[]).controller('NavtopCtrl',
 	
 	function ($scope,feedbacklData) {
 		$scope.content = "";
+		$scope.myaside = false;
 		$scope.send = function(value){
 			feedbacklData.addData(value).then(function(data){
 				$scope.changeAlert(data.msg);
 			})
 		}
 
-	$scope.changeAlert = function(title,content){
-        $alert({title: title, content: content, type: "info", show: true,duration:3});
-    }
+		$scope.changeAlert = function(title,content){
+	        $alert({title: title, content: content, type: "info", show: true,duration:3});
+	    }
+
 }]);;/********************************************************************************************************************
  *                                                      项目列表页
  ********************************************************************************************************************/
@@ -417,11 +420,14 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
     });
     $scope.saveData = function(value){
         businessData.addData(value).then(function (data) {
-            $scope.changeAlert(data.msg);
-            window.history.go(-1)
-            localStorage.removeItem("business");
-            clearInterval(time);
-            
+            if(data.status == 0){
+                $scope.changeAlert(data.msg);
+            }else{
+                $scope.changeAlert(data.msg);
+                window.history.go(-1)
+                localStorage.removeItem("business");
+                clearInterval(time);
+            }
         })
     }
     /*提示框*/
@@ -527,7 +533,6 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
         ];
-
     /* 客户设置 */
     $http({
         url:'data/customerSet.json',
@@ -571,8 +576,14 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
     $scope.saveData = function(value){
         if($scope.customer.isEdit === true){
             businessData.updateData(value).then(function(data){
-                $scope.changeAlert(data.msg)
-            })    
+                if(data.status == 0){
+                    $scope.changeAlert(data.msg);
+                    $scope.customer.isEdit = false;
+                }else{
+                    $scope.changeAlert(data.msg);
+                    
+                }
+            })
         }
         
         var id,
@@ -764,10 +775,12 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     
     $scope.addGroup = function(){
         var value = $scope.groups.length;
-        groupData.addData({"value":value,"isEdit":true,"label":'分组名称'});
+        groupData.addData({"value":value,"isEdit":true,"label":'分组名称'}).then(function(data){
+                $scope.changeAlert(data.msg);
+            })
         groupData.getData().then(function (data) {
             $scope.groups = data.groups;
-            $scope.changeAlert(data.msg);
+
         });
     }
     /* 保存单条分组信息 */
@@ -791,7 +804,6 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             $scope.groups.splice(index,1);   //删除
             groupData.deleteData(value).then(function(data){
                 $scope.changeAlert(data.msg);
-                console.log($scope.groups);
             })
             /* 更新数据value索引值 */
             $scope.groups.forEach( function(element, index) {
@@ -800,13 +812,13 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             });
         }
     }
-    /* 监听items ，发送数据 */
-    $scope.$watch('groups', function(newVal, oldVal) {
-        if (newVal !== oldVal) {
-           //向服务器发请求，顺序已改变
-           // console.log(newVal)
-        }
-    }, true);
+    // /* 监听items ，发送数据 */
+    // $scope.$watch('groups', function(newVal, oldVal) {
+    //     if (newVal !== oldVal) {
+    //        //向服务器发请求，顺序已改变
+    //        // console.log(newVal)
+    //     }
+    // }, true);
 
     /****************************** 客户标签 ************************************/
 
@@ -814,7 +826,9 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     $scope.addTag = function(){
         var value = $scope.tags.length;
 
-        tagData.addData({"value":value,"isEdit":true,"text":"标签名称","color":"primary"});
+        tagData.addData({"value":value,"isEdit":true,"text":"标签名称","color":"primary"}).then(function(data){
+                $scope.changeAlert(data.msg);
+            })
         tagData.getData().then(function (data) {
             $scope.tags = data.tags;
         });
@@ -823,7 +837,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
     $scope.saveTag = function(value){
         if(value.isEdit == true){
             tagData.updateData(value).then(function (data) {
-                $scope.changeAlert('操作成功！','');
+                $scope.changeAlert(data.msg);
             });
         } 
     }
@@ -834,7 +848,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             var index = findIndex(value,$scope.tags);
             $scope.tags.splice(index,1);   //删除
             tagData.deleteData(value).then(function(data){
-                $scope.changeAlert('删除成功！');
+                $scope.changeAlert(data.msg);
             })
             /* 更新数据value索引值 */
             $scope.tags.forEach( function(element, index) {
@@ -843,13 +857,7 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
             });
         }
     }
-    /* 监听items ，发送数据 */
-    $scope.$watch('tags', function(newVal, oldVal) {
-        if (newVal !== oldVal) {
-           //向服务器发请求，顺序已改变
-           console.log(newVal)
-        }
-    }, true);
+
 }]);;/********************************************************************************************************************
  *                                                      潜在客户列表页
  ********************************************************************************************************************/
@@ -1182,10 +1190,14 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
 
     $scope.saveData = function(value){
         clueData.addData(value).then(function (data) {
-            $scope.changeAlert(data.msg);
-            window.history.go(-1);
-            localStorage.removeItem("clue");
-            clearInterval(time);
+            if(data.status == 0){
+                $scope.changeAlert(data.msg);
+            }else{
+                 $scope.changeAlert(data.msg);
+                window.history.go(-1);
+                localStorage.removeItem("clue");
+                clearInterval(time);
+            }
         });
     }
     /*提示框*/
@@ -1844,10 +1856,15 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     });
     $scope.saveData = function(value){
         customerData.addData(value).then(function (data) {
-            $scope.changeAlert(data.msg);
-            window.history.go(-1)
-            localStorage.removeItem("customer");
-            clearInterval(time);
+            if(data.status == 0){
+                $scope.changeAlert(data.msg);
+            }else{
+                $scope.changeAlert(data.msg);
+                window.history.go(-1)
+                localStorage.removeItem("customer");
+                clearInterval(time);
+            }
+            
         });
     }
 
@@ -1901,14 +1918,6 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     var date =  new Date();
     today = date.getTime();
     $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null}]};     //初始空数据
-    /* 客户设置 */
-    $http({
-        url:'data/person.json',
-        method:'GET'
-    }).success(function(data){
-        /*  添加日程 --联系人 */
-        $scope.person = data.person;
-    })
     /* 保存数据，并且添加到原始数据里 */
     $scope.saveSchedule = function(value){
         value.schedule.unshift($scope.schedule);
@@ -3187,12 +3196,12 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
         $alert({title: title, content: content, type: "info", show: true,duration:5});
     }
     /* 监听items ，发送数据 */
-    $scope.$watch('cate', function(newVal, oldVal) {
-        if (newVal !== oldVal) {
-           //向服务器发请求，顺序已改变
-           console.log(newVal)
-        }
-    }, true);
+    // $scope.$watch('cate', function(newVal, oldVal) {
+    //     if (newVal !== oldVal) {
+    //        //向服务器发请求，顺序已改变
+    //        console.log(newVal)
+    //     }
+    // }, true);
 }]);;/********************************************************************************************************************
  *                                                      产品详情页面
  ********************************************************************************************************************/
@@ -3756,8 +3765,8 @@ angular.module("quotationDetailMoudle", [])
 
 angular.module("quotationSettingMoudle", ['ng-sortable'])
 .controller('QuotationSettingCtrl', 
-    ['$scope', '$http', '$state','quotationheadData','quotationfootData','businessData',
-    function($scope, $http, $state,quotationheadData,quotationfootData,businessData) {
+    ['$scope', '$http', '$state','$alert','quotationheadData','quotationfootData','businessData',
+    function($scope, $http, $state, $alert,quotationheadData,quotationfootData,businessData) {
 	/* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -3845,15 +3854,17 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
     $scope.editHead = function(value){
     	$scope.headMsg = angular.copy(value);
     }
-    /* 保存单条报价单尾信息 */
+    /* 保存单条报价单头 信息 */
     $scope.saveHead = function(msg){
-        quotationheadData.updateData(msg);
+        quotationheadData.updateData(msg).then(function(data){
+                $scope.changeAlert(data.msg);
+            });
 		$scope.headMsg = {};
         quotationheadData.getData().then(function(data){
             $scope.heads = data.quotationheads;
         })
     }
-    /* 添加报价头尾信息 */
+    /* 添加报价头头 信息 */
     $scope.saveHeadAdd = function(value){
         var val = $scope.heads.length;
         var msgadd = {
@@ -3871,7 +3882,9 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
             "untilDate":value.untilDate,
             "logo":value.logo
         }
-        quotationheadData.addData(msgadd)
+        quotationheadData.addData(msgadd).then(function(data){
+                $scope.changeAlert(data.msg);
+            })
         quotationheadData.getData().then(function(data){
             $scope.heads = data.quotationheads;
         })
@@ -3885,7 +3898,7 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
             var index = findIndex(value,$scope.heads);
             $scope.heads.splice(index,1);   //删除
             quotationheadData.deleteData(value).then(function(data){
-                $scope.changeAlert('删除成功！');
+                $scope.changeAlert(data.msg);
             })
             /* 更新数据value索引值 */
             $scope.heads.forEach( function(element, index) {
@@ -3908,7 +3921,9 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
     }
     /* 保存单条报价单尾信息 */
     $scope.saveFoot = function(msg){
-        quotationfootData.updateData(msg);
+        quotationfootData.updateData(msg).then(function(data){
+                $scope.changeAlert(data.msg);
+            })
         $scope.footMsg = {};
         quotationfootData.getData().then(function(data){
             $scope.foots = data.quotationfoots;
@@ -3923,7 +3938,9 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
         	"content":value.content,
         	"isEdit":false
         }
-        quotationfootData.addData(msgadd);
+        quotationfootData.addData(msgadd).then(function(data){
+                $scope.changeAlert(data.msg);
+            });
         quotationfootData.getData().then(function(data){
             $scope.foots = data.quotationfoots;
         })
@@ -3937,7 +3954,7 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
             var index = findIndex(value,$scope.foots);
             $scope.foots.splice(index,1);   //删除
             quotationfootData.deleteData(value).then(function(data){
-                $scope.changeAlert('删除成功！');
+                $scope.changeAlert(data.msg);
             })
             /* 更新数据value索引值 */
             $scope.foots.forEach( function(element, index) {
@@ -3945,6 +3962,9 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
                 quotationfootData.updateData(element);
             });
         }
+    }
+    $scope.changeAlert = function(title,content){
+        $alert({title: title, content: content, type: "info", show: true,duration:3});
     }
 }])
 

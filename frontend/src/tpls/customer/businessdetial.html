@@ -1,6 +1,8 @@
 <div ng-controller="BusinessDetialCtrl">
     <h2 class="page-header">项目详情
         <a href="javascript:window.history.go(-1)" type="button" class="btn btn-primary ml-20"><i class="fa fa-angle-left"></i> 返回</a>
+        <button type="button" class="btn btn-danger" ng-class="{true: 'pro-show', false: 'pro-hide'}[customer.isEdit]" ng-click="customer.isEdit = !customer.isEdit"><i class="fa fa-edit"></i> 编辑</button>
+        <button type="button" class="btn btn-success" ng-class="{true: 'pro-show', false: 'pro-hide'}[!customer.isEdit]" ng-click="customer.isEdit = !customer.isEdit;saveData(customer)"><i class="fa fa-save"></i> 保存</button>
     </h2>
     <form class="form-horizontal" name="customerForm" novalidate>
 

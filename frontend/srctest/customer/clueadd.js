@@ -102,10 +102,14 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
 
     $scope.saveData = function(value){
         clueData.addData(value).then(function (data) {
-            $scope.changeAlert(data.msg);
-            window.history.go(-1);
-            localStorage.removeItem("clue");
-            clearInterval(time);
+            if(data.status == 0){
+                $scope.changeAlert(data.msg);
+            }else{
+                 $scope.changeAlert(data.msg);
+                window.history.go(-1);
+                localStorage.removeItem("clue");
+                clearInterval(time);
+            }
         });
     }
     /*提示框*/

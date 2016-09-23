@@ -9,7 +9,6 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
         ];
-
     /* 客户设置 */
     $http({
         url:'data/customerSet.json',
@@ -53,8 +52,14 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
     $scope.saveData = function(value){
         if($scope.customer.isEdit === true){
             businessData.updateData(value).then(function(data){
-                $scope.changeAlert(data.msg)
-            })    
+                if(data.status == 0){
+                    $scope.changeAlert(data.msg);
+                    $scope.customer.isEdit = false;
+                }else{
+                    $scope.changeAlert(data.msg);
+                    
+                }
+            })
         }
         
         var id,

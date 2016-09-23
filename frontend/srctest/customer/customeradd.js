@@ -55,10 +55,15 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     });
     $scope.saveData = function(value){
         customerData.addData(value).then(function (data) {
-            $scope.changeAlert(data.msg);
-            window.history.go(-1)
-            localStorage.removeItem("customer");
-            clearInterval(time);
+            if(data.status == 0){
+                $scope.changeAlert(data.msg);
+            }else{
+                $scope.changeAlert(data.msg);
+                window.history.go(-1)
+                localStorage.removeItem("customer");
+                clearInterval(time);
+            }
+            
         });
     }
 
@@ -112,14 +117,6 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
     var date =  new Date();
     today = date.getTime();
     $scope.schedule = {"fromDate":null,"untilDate":null,"remind":[{"date":null}]};     //初始空数据
-    /* 客户设置 */
-    $http({
-        url:'data/person.json',
-        method:'GET'
-    }).success(function(data){
-        /*  添加日程 --联系人 */
-        $scope.person = data.person;
-    })
     /* 保存数据，并且添加到原始数据里 */
     $scope.saveSchedule = function(value){
         value.schedule.unshift($scope.schedule);

@@ -22,6 +22,9 @@ var _ = require('underscore')
 		var clueObj = req.body.clue 	//从路由传过来的 clue对象
 		var user = req.session.user
 		var _clue
+		if(!clueObj.companyName){
+			res.json({msg:"公司名不能为空",status: 0})
+		}else{
 			_clue = new Clue({
 				isTop: clueObj.isTop,
 				isChecked: clueObj.isChecked,
@@ -62,6 +65,8 @@ var _ = require('underscore')
 
 				}
 			})
+		}
+			
 	}
 	//潜在客户更新、新建
 	exports.update = function(req,res){

@@ -24,6 +24,9 @@ var _ = require('underscore')
 		var customerObj = req.body.customer 	//从路由传过来的 customer对象
 		var user = req.session.user
 		var _customer
+		if(!clueObj.companyName){
+			res.json({msg:"公司名不能为空",status: 0})
+		}else{
 			_customer = new Customer({
 				isTop: customerObj.isTop,
 				isChecked: customerObj.isChecked,
@@ -62,8 +65,10 @@ var _ = require('underscore')
 				}
 				res.json({msg:"添加成功",status: 1})
 			})
+		}
+			
 	}
-	//客户更新、新建
+	//客户更新
 	exports.update = function(req,res){
 		var id = req.body.customer._id
 		var customerObj = req.body.customer 	//从路由传过来的 customer对象
