@@ -8,10 +8,15 @@
 
 			},
 			success: function(data) {
-				$('#f-alert').html(data.msg).slideDown(300)
-				setTimeout(function(){
-					$('#f-alert').slideUp(300)
-				},3000)
+				if(data.status == 0){
+					$('#f-alert').html(data.msg).slideDown(300)
+					setTimeout(function(){
+						$('#f-alert').slideUp(300)
+					},3000)
+				}else{
+						window.location.href = "/successsend"
+						
+				}
 			}
 		});
 		return false;

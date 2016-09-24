@@ -19,6 +19,13 @@ var smtpTransport = require('nodemailer-smtp-transport')
 	    	title: '忘记密码'
 	  	})
 	}
+	exports.successSend = function(req, res) {
+		var email = req.session.emailforgot
+	  	res.render('successsend', {
+	    	title: '发送邮箱成功',
+	    	email:email
+	  	})
+	}
 	exports.resetpassword = function(req, res) {
 		var verify = req.params.verify
 	  	res.render('reset', {
@@ -104,7 +111,7 @@ var smtpTransport = require('nodemailer-smtp-transport')
 					        pass: "yfgdwkehkfcgbdcf"
 					    }
 					}))
-					var host = 'http://127.0.0.1:3000'
+					var host = 'http://60.205.157.200'
 					var mailOptions = {
 					    from: '呐呐科技<frankyoung@nanafly.com>', 
 					    to: user.email, 
@@ -115,6 +122,8 @@ var smtpTransport = require('nodemailer-smtp-transport')
 					    if(error){
 					        return console.log(error)
 					    }
+
+					    req.session.emailforgot = _user.email
 					    res.json({
 							status:1,
 							msg:"发送成功，请查收邮件。"
@@ -223,7 +232,7 @@ var smtpTransport = require('nodemailer-smtp-transport')
 								        pass: "yfgdwkehkfcgbdcf"
 								    }
 								}))
-								var host = 'http://127.0.0.1:3000'
+								var host = 'http://60.205.157.200'
 								var mailOptions = {
 								    from: '呐呐科技<frankyoung@nanafly.com>', // sender address 
 								    to: _user.email, // list of receivers 
@@ -283,6 +292,7 @@ var smtpTransport = require('nodemailer-smtp-transport')
 							})
 						}else{
 							console.log('激活成功')
+							delete req.session.emailVerify
 							res.redirect('/success')
 						}	
 						

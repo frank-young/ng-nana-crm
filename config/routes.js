@@ -35,6 +35,7 @@ module.exports = function(app){
   app.get('/success', User.signSuccess)
   app.get('/forgot', User.forgot)
   app.post('/forgotsend', User.forgotSend)
+  app.get('/successsend', User.successSend)
   app.get('/verify', User.signVerify)
   app.get('/resetpassword/:verify', User.resetpassword)
   app.post('/savepassword', User.savepassword)
