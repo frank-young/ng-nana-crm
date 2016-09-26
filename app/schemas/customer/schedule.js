@@ -3,7 +3,7 @@ var ScheduleSchema = new mongoose.Schema({
 	people:String,
 	from:Number,
 	until:Number,
-	remind:Number,
+	remind:Array,
 	content:String,
 	meta:{
 		createAt:{

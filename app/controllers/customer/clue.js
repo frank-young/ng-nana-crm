@@ -72,6 +72,7 @@ var _ = require('underscore')
 					people: value.selectPeople,
 					from: value.fromDate,
 					until: value.untilDate,
+					remind: value.remind.date,
 					content: value.content,
 					userlocal:user.email,
 					domainlocal:user.domain
