@@ -1,4 +1,5 @@
-var Customer = require('../../models/customer/customer')	//引入模型
+var Customer = require('../../models/customer/customer')	
+var Schedule = require('../../models/customer/schedule')	
 var _ = require('underscore')
 	
 	//客户列表页
@@ -24,7 +25,9 @@ var _ = require('underscore')
 		var customerObj = req.body.customer 	//从路由传过来的 customer对象
 		var user = req.session.user
 		var _customer
-		if(!clueObj.companyName){
+		
+
+		if(!customerObj.companyName){
 			res.json({msg:"公司名不能为空",status: 0})
 		}else{
 			_customer = new Customer({
@@ -65,6 +68,26 @@ var _ = require('underscore')
 				}
 				res.json({msg:"添加成功",status: 1})
 			})
+
+			customerObj.schedule.forEach(function(value,index){
+				var _schedule
+				_schedule = new Schedule({
+					people: value.selectPeople,
+					from: value.fromDate,
+					until: value.untilDate,
+					content: value.content,
+					userlocal:user.email,
+					domainlocal:user.domain
+				})
+				_schedule.save(function(err,customer){
+					if(err){
+						res.json({
+							msg:err
+						})
+					}
+				})
+			})
+			
 		}
 			
 	}

@@ -1,4 +1,5 @@
 var Clue = require('../../models/customer/clue')	//引入模型
+var Schedule = require('../../models/customer/schedule')
 var _ = require('underscore')
 	
 	//潜在客户列表页
@@ -63,6 +64,21 @@ var _ = require('underscore')
 				}else{
 					res.json({msg:"添加成功",status: 1})
 
+				}
+			})
+			_schedule = new Schedule({
+				people: clueObj.schedule.selectPeople,
+				from: clueObj.schedule.fromDate,
+				until: clueObj.schedule.untilDate,
+				content: clueObj.schedule.content,
+				userlocal:user.email,
+				domainlocal:user.domain
+			})
+			_schedule.save(function(err,customer){
+				if(err){
+					res.json({
+						msg:err
+					})
 				}
 			})
 		}

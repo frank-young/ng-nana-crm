@@ -77,9 +77,10 @@
     <div ui-view style="height:100%;background-color: #F5F7FA"></div>
 <!--     <script src="framework/socket.io/socket.io.js"></script>
     <script>
-        var socket = io.connect('ws://127.0.0.1:3000');
-        socket.emit('login',{"name":this.name}); //发送"login"信息，后面的对象为传递传递的信息对象
-        socket.on('login',function(obj){     
+        var socket = io()
+        socket.emit('nana',"app");
+        socket.on('nana',function(obj){    
+            console.log(obj) 
            //监听处理，监听服务器端发送"login"的信息，obj为服务器端传送的信息对象
         });
     </script> -->

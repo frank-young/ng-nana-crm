@@ -10,7 +10,7 @@ var cookieSession = require('cookie-session')
 var port = process.env.PORT || 3000	//设置端口
 var app = express()		//启动一个web服务器
 var dbUrl = 'mongodb://127.0.0.1/nanadb'
-// var io = require('socket.io')(http)
+
 mongoose.connect(dbUrl)
 
 app.set('views','./app/views/pages')	//设置视图根目录
@@ -36,7 +36,24 @@ app.use(cookieSession({
 require('./config/routes')(app)
 
 app.locals.moment = require('moment')
-app.listen(port)	//监听这个端口
+var server = app.listen(port)	//监听这个端口
 
-console.log('nodetest start on port '+port)
+// var io = require('socket.io').listen(server)
+// var onlineCount = 0;  
+// io.on('connection', function(socket){
+//   	onlineCount++;
+//   	socket.on('nana', function(msg){
+//     io.emit('nana', "当前在线人数"+onlineCount);
+//   });
+
+//   socket.on('disconnect', function() {	// 断开连接
+//         if(onlineCount > 0 ){  
+//             onlineCount--; 
+//             io.emit('nana', "当前在线人数"+onlineCount);
+//         }  
+//     }); 
+
+// });
+
+console.log('nanacrm start on port '+port)
 
