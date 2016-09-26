@@ -66,20 +66,23 @@ var _ = require('underscore')
 
 				}
 			})
-			_schedule = new Schedule({
-				people: clueObj.schedule.selectPeople,
-				from: clueObj.schedule.fromDate,
-				until: clueObj.schedule.untilDate,
-				content: clueObj.schedule.content,
-				userlocal:user.email,
-				domainlocal:user.domain
-			})
-			_schedule.save(function(err,customer){
-				if(err){
-					res.json({
-						msg:err
-					})
-				}
+			clueObj.schedule.forEach(function(value,index){
+				var _schedule
+				_schedule = new Schedule({
+					people: value.selectPeople,
+					from: value.fromDate,
+					until: value.untilDate,
+					content: value.content,
+					userlocal:user.email,
+					domainlocal:user.domain
+				})
+				_schedule.save(function(err,customer){
+					if(err){
+						res.json({
+							msg:err
+						})
+					}
+				})
 			})
 		}
 			
