@@ -128,9 +128,9 @@ angular.module('navleftMoudle',[]).controller('NavleftCtrl',
  */
 
 angular.module('navtopMoudle',[]).controller('NavtopCtrl', 
-	['$scope','feedbacklData',
+	['$scope','feedbacklData','scheduleData',
 	
-	function ($scope,feedbacklData) {
+	function ($scope,feedbacklData,scheduleData) {
 		$scope.content = "";
 		$scope.myaside = false;
 		$scope.send = function(value){
@@ -143,7 +143,18 @@ angular.module('navtopMoudle',[]).controller('NavtopCtrl',
 	        $alert({title: title, content: content, type: "info", show: true,duration:3});
 	    }
 
-}]);;/********************************************************************************************************************
+	    scheduleData.getData().then(function(data){
+	    	$scope.messages = data.schedules
+	    })
+
+	    $scope.readedMsg = function(value){
+	    	console.log(value)
+	    	value.forEach(function(val,index){
+	    		scheduleData.deleteData(val._id)
+	    	})
+	    }
+	}
+]);;/********************************************************************************************************************
  *                                                      项目列表页
  ********************************************************************************************************************/
 angular.module("businessMoudle", []).controller('BusinessCtrl', 

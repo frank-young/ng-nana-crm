@@ -10,9 +10,19 @@ var _ = require('underscore')
 					msg:err
 				})
 			}else{
-				res.json({
-					schedules:schedules
+				var date = new Date()
+
+				var arr = []
+				schedules.forEach(function(value,index){
+					if(value.from <= date.getTime()){	
+						arr.push(value)
+					}
 				})
+
+				res.json({
+					schedules:arr
+				})
+				
 			}
 		})
 	}
@@ -22,9 +32,12 @@ var _ = require('underscore')
 		var user = req.session.user
 		var _schedule
 			_schedule = new Schedule({
-				isEdit: scheduleObj.isEdit,
-				value:scheduleObj.value,
-				label:scheduleObj.label,
+
+				people: scheduleObj.selectPeople,
+				from: scheduleObj.fromDate,
+				until: scheduleObj.untilDate,
+				remind: scheduleObj.remind.date,
+				content: scheduleObj.content,
 				userlocal:user.email,
 				domainlocal:user.domain
 
@@ -82,6 +95,16 @@ var _ = require('underscore')
 				}
 			})
 		}
+	}
+
+	//日程详情页
+	exports.detail = function(req,res){
+		var id = req.params.id		//拿到id的值
+		Schedule.findById(id,function(err,schedule){
+			res.json({
+				schedule:schedule
+			})
+		})
 	}
 
 

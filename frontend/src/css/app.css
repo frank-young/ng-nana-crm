@@ -58,6 +58,30 @@
 
 }
 
+.f-msg{
+
+}
+.f-msg-blug{
+  position: relative;
+}
+.f-msg-blug:after{
+  content: attr(data-blug);
+  position: absolute;
+  display: block;
+  top: 8px;
+  right: 8px;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #EE3D3D;
+  text-align: center;
+  color: #fff;
+}
 
 /**
  * ************************************************************************************************

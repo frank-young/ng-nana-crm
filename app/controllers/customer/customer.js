@@ -59,16 +59,6 @@ var _ = require('underscore')
 				userlocal:user.email,
 				domainlocal:user.domain
 			})
-			_customer.save(function(err,customer){
-				if(err){
-					res.json({
-						msg:err
-					})
-					console.log(err)
-				}
-				res.json({msg:"添加成功",status: 1})
-			})
-
 			customerObj.schedule.forEach(function(value,index){
 				var _schedule
 				_schedule = new Schedule({
@@ -88,18 +78,51 @@ var _ = require('underscore')
 					}
 				})
 			})
+			_customer.save(function(err,customer){
+				if(err){
+					res.json({
+						msg:err
+					})
+					console.log(err)
+				}
+				res.json({msg:"添加成功",status: 1})
+			})
+
+			
 			
 		}
 			
 	}
 	//客户更新
 	exports.update = function(req,res){
+		var user = req.session.user
 		var id = req.body.customer._id
 		var customerObj = req.body.customer 	//从路由传过来的 customer对象
 		var _customer
 		if(id !=="undefined"){
 			Customer.findById(id,function(err,customer){
+				if(customerObj.schedule !== []){
+					customerObj.schedule.forEach(function(value,index){
+						var _schedule
+						_schedule = new Schedule({
+							people: value.selectPeople,
+							from: value.fromDate,
+							until: value.untilDate,
+							remind: value.remind.date,
+							content: value.content,
+							userlocal:user.email,
+							domainlocal:user.domain
+						})
+						_schedule.save(function(err,customer){
+							if(err){
+								res.json({
+									msg:err
+								})
+							}
 
+						})
+					})
+				}
 				_customer = _.extend(customer,customerObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
 				_customer.save(function(err,customer){
 					if(err){

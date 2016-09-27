@@ -33,13 +33,23 @@
                 </ul>
                 
                 <ul class="nav navbar-nav navbar-right phonenav" style="margin-right: 10px;">
-                    <li>
-                        <a href="">
+                    <li class="f-msg">
+                        <a href="javascript:;" ng-click="readedMsg(messages)" bs-dropdown aria-haspopup="true" aria-expanded="false" placement="bottom" data-blug="{{messages.length}}" ng-class="{true: 'f-msg-blug'}[messages.length!=0]">
                             <i class="fa fa-bell" style="font-size:18px;"></i>
                         </a>
+                        <ul class="dropdown-menu" role="menu" style="z-index:1100;width:250px;">
+                            <li ng-repeat="message in messages">
+                                <a href="">
+                                    <div class="f-msg-time">
+                                        {{message.from | schetime}} 至 {{message.until | schetime}}
+                                    </div>
+                                    <div class="f-msg-cont">{{message.content}}</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="" data-animation="am-flip-x"  bs-dropdown aria-haspopup="true" aria-expanded="false" placement="bottom" ><i class="fa fa-user" style="font-size:18px;"></i></a>
+                        <a href="javascript:;" bs-dropdown aria-haspopup="true" aria-expanded="false" placement="bottom" ><i class="fa fa-user" style="font-size:18px;"></i></a>
                         <ul class="dropdown-menu" role="menu" style="z-index:1100;">
                             <li>
                                 <a ui-sref="web.setting" >

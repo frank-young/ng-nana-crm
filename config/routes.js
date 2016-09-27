@@ -2,6 +2,7 @@ var Index = require('../app/controllers/index'),
     User = require('../app/controllers/user'),
     Domain = require('../app/controllers/domain'),
     Customer = require('../app/controllers/customer/customer'),
+    Schedule = require('../app/controllers/customer/schedule'),
     Clue = require('../app/controllers/customer/clue'),
     Business = require('../app/controllers/customer/business'),
     Group = require('../app/controllers/customer/group'),
@@ -42,7 +43,12 @@ module.exports = function(app){
   app.get('/successpassword', User.successpassword)
   app.get('/activation/:verify', User.signActivation)
   app.get('/admin/user/list', User.signinRequired,User.adminRequired, User.list)
-
+  
+  //日程消息提醒
+  app.get('/schedule', Schedule.list)
+  app.delete('/schedule/delete', Schedule.del)
+  app.get('/schedule/detail/:id', Schedule.detail)
+  
   // 域名信息设置
   app.get('/domain/add',User.signinRequired,Domain.domainRequired, Domain.add )
   app.post('/domain/addctrl',User.signinRequired,Domain.domainRequired, Domain.addctrl )
@@ -129,10 +135,5 @@ module.exports = function(app){
   app.get('/admin/feedbackl', User.signinRequired,User.adminRequired,Feedbackl.list)
   app.post('/feedbackl/add', Feedbackl.save)
   app.delete('/feedbackl/delete', User.signinRequired,User.adminRequired,Feedbackl.del)
-
-  // app.get('/admin/customer/update/:id',User.adminRequired,Customer.update)
-  // app.post('/admin/customer', User.adminRequired,Customer.save)
-  // app.get('/admin/customer/list',User.adminRequired,Customer.list)
-  // app.delete('/admin/customer/list',User.adminRequired,Customer.del)
   
 }

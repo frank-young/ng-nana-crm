@@ -5,6 +5,7 @@ var ScheduleSchema = new mongoose.Schema({
 	until:Number,
 	remind:Array,
 	content:String,
+	status:Number,
 	meta:{
 		createAt:{
 			type:Number,	

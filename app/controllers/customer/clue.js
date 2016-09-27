@@ -55,17 +55,7 @@ var _ = require('underscore')
 				userlocal:user.email,
 				domainlocal:user.domain
 			})
-			_clue.save(function(err,clue){
-				if(err){
-					res.json({
-						msg:err
-					})
-					console.log(err)
-				}else{
-					res.json({msg:"添加成功",status: 1})
 
-				}
-			})
 			clueObj.schedule.forEach(function(value,index){
 				var _schedule
 				_schedule = new Schedule({
@@ -83,14 +73,29 @@ var _ = require('underscore')
 							msg:err
 						})
 					}
+
 				})
 			})
+
+			_clue.save(function(err,clue){
+				if(err){
+					res.json({
+						msg:err
+					})
+					console.log(err)
+				}else{
+					res.json({msg:"添加成功",status: 1})
+
+				}
+			})
+
+			
 		}
 			
 	}
 	//潜在客户更新、新建
 	exports.update = function(req,res){
-
+		var user = req.session.user
 		var id = req.body.clue._id
 		var clueObj = req.body.clue 	//从路由传过来的 clue对象
 		var _clue
@@ -99,6 +104,29 @@ var _ = require('underscore')
 				if(err){
 					console.log(err)
 				}
+				if(clueObj.schedule !== []){
+					clueObj.schedule.forEach(function(value,index){
+						var _schedule
+						_schedule = new Schedule({
+							people: value.selectPeople,
+							from: value.fromDate,
+							until: value.untilDate,
+							remind: value.remind.date,
+							content: value.content,
+							userlocal:user.email,
+							domainlocal:user.domain
+						})
+						_schedule.save(function(err,customer){
+							if(err){
+								res.json({
+									msg:err
+								})
+							}
+
+						})
+					})
+				}
+
 				_clue = _.extend(clue,clueObj)	//复制对象的所有属性到目标对象上，覆盖已有属性 ,用来覆盖以前的数据，起到更新作用
 				_clue.save(function(err,clue){
 					if(err){
