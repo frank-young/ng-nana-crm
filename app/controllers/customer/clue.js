@@ -57,6 +57,7 @@ var _ = require('underscore')
 			})
 
 			clueObj.schedule.forEach(function(value,index){
+
 				var _schedule
 				_schedule = new Schedule({
 					people: value.selectPeople,
@@ -106,24 +107,27 @@ var _ = require('underscore')
 				}
 				if(clueObj.schedule !== []){
 					clueObj.schedule.forEach(function(value,index){
-						var _schedule
-						_schedule = new Schedule({
-							people: value.selectPeople,
-							from: value.fromDate,
-							until: value.untilDate,
-							remind: value.remind.date,
-							content: value.content,
-							userlocal:user.email,
-							domainlocal:user.domain
-						})
-						_schedule.save(function(err,customer){
-							if(err){
-								res.json({
-									msg:err
-								})
-							}
+						if(clueObj.schedule.length-1 == index ){
+							var _schedule
+							_schedule = new Schedule({
+								people: value.selectPeople,
+								from: value.fromDate,
+								until: value.untilDate,
+								remind: value.remind.date,
+								content: value.content,
+								userlocal:user.email,
+								domainlocal:user.domain
+							})
+							_schedule.save(function(err,customer){
+								if(err){
+									res.json({
+										msg:err
+									})
+								}
 
-						})
+							})
+						}
+						
 					})
 				}
 

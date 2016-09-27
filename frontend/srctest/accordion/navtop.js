@@ -26,9 +26,16 @@ angular.module('navtopMoudle',[]).controller('NavtopCtrl',
 	    $scope.readedMsg = function(value){
 	    	
 	    	value.forEach(function(val,index){
-	    		console.log(val)
 	    		scheduleData.deleteData(val)
+	    		
 	    	})
 	    }
+
+	    setInterval(function(){
+	    	scheduleData.getData().then(function(data){
+		    	$scope.messages = data.schedules
+		    })
+		    console.log('请求一次服务器')
+	    },60000)
 	}
 ]);

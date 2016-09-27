@@ -37,8 +37,11 @@
                         <a href="javascript:;" ng-click="readedMsg(messages)" bs-dropdown aria-haspopup="true" aria-expanded="false" placement="bottom" data-blug="{{messages.length}}" ng-class="{true: 'f-msg-blug'}[messages.length!=0]">
                             <i class="fa fa-bell" style="font-size:18px;"></i>
                         </a>
-                        <ul class="dropdown-menu" role="menu" style="z-index:1100;width:250px;">
-                            <li ng-repeat="message in messages">
+                        <ul class="dropdown-menu" role="menu" style="z-index:1100;width:250px;margin-right:40px;" ng-hide="messages.length==0">
+                            <li class="f-msg-item">
+                                <h4><i class="fa"></i>日程提醒</h4>
+                            </li>
+                            <li class="f-msg-item" ng-repeat="message in messages">
                                 <a href="">
                                     <div class="f-msg-time">
                                         {{message.from | schetime}} 至 {{message.until | schetime}}

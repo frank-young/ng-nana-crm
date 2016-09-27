@@ -61,6 +61,19 @@
 .f-msg{
 
 }
+.f-msg .f-msg-item{
+  border-bottom: 1px solid #e5e5e5;
+
+}
+.f-msg .f-msg-item a{
+  padding: 8px 20px;
+}
+.f-msg .f-msg-item h4{
+  color: #555;
+  font-size: 20px;
+  text-align: center;
+  display: block;
+} 
 .f-msg-blug{
   position: relative;
 }
