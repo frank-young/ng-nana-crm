@@ -148,9 +148,10 @@ angular.module('navtopMoudle',[]).controller('NavtopCtrl',
 	    })
 
 	    $scope.readedMsg = function(value){
-	    	console.log(value)
+	    	
 	    	value.forEach(function(val,index){
-	    		scheduleData.deleteData(val._id)
+	    		console.log(val)
+	    		scheduleData.deleteData(val)
 	    	})
 	    }
 	}
