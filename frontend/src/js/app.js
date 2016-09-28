@@ -64,10 +64,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('web', {
             url: '',
             templateUrl: 'tpls/nav.html'
+
         })
         .state('web.home', {
             url: '/index',
-            templateUrl: 'tpls/home/index.html'
+            templateUrl: 'tpls/home/index.html',
+            data:{
+                title:"首页"
+            }
         })
         .state('web.clue', {
             url: '/clue',

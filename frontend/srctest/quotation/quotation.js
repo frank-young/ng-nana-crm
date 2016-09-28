@@ -3,9 +3,10 @@
  ********************************************************************************************************************/
 
 angular.module("quotationMoudle", []).controller('QuotationCtrl', 
-    ['$scope', '$http', '$state','$alert','quotationData','customerData',
-    function($scope, $http, $state,$alert,quotationData,customerData) {
-	/* 顶部固定按钮 */
+    ['$scope','$window', '$http', '$state','$alert','quotationData','customerData',
+    function($scope,$window, $http, $state,$alert,quotationData,customerData) {
+	$window.document.title = "报价单-呐呐CRM";
+    /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
 	$scope.allShow = false;

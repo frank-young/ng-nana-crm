@@ -3,8 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("peopleDetailMoudle", []).controller('PeopleDetailCtrl', 
-    ['$scope', '$http', '$stateParams','customerData',
-    function($scope, $http, $stateParams,customerData) {
+    ['$scope','$window', '$http', '$stateParams','customerData',
+    function($scope,$window, $http, $stateParams,customerData) {
+    $window.document.title = "联系人详情-呐呐CRM";
     $scope.sexs = [
         {"value":"0","label":"男"},
         {"value":"1","label":"女"}

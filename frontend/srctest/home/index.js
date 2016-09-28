@@ -3,10 +3,10 @@
  ********************************************************************************************************************/
 
 angular.module("homeMoudle", []).controller('HomeCtrl', 
-  ['$scope','$compile', '$timeout', 'uiCalendarConfig','customerData','clueData','$interval',
-  function($scope, $compile, $timeout, uiCalendarConfig,customerData,clueData,$interval) {
+  ['$scope','$window','$compile', '$timeout', 'uiCalendarConfig','customerData','clueData','$interval',
+  function($scope,$window, $compile, $timeout, uiCalendarConfig,customerData,clueData,$interval) {
 
-	  
+	  $window.document.title = "首页-呐呐CRM";
     var createTime = function (value) {
       value = 0 || value;
       var date = new Date(value);

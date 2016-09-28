@@ -3,8 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl', 
-    ['$scope','$http', '$state','$alert','$stateParams','businessData','customerData',
-    function($scope, $http, $state,$alert,$stateParams,businessData,customerData) {
+    ['$scope','$window','$http', '$state','$alert','$stateParams','businessData','customerData',
+    function($scope,$window, $http, $state,$alert,$stateParams,businessData,customerData) {
+    $window.document.title = "项目详情-呐呐CRM";
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}

@@ -3,8 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("peopleMoudle", []).controller('PeopleCtrl', 
-    ['$scope', '$http', '$state','$alert','customerData',
-    function($scope, $http, $state,$alert,customerData) {
+    ['$scope','$window', '$http', '$state','$alert','customerData',
+    function($scope,$window, $http, $state,$alert,customerData) {
+    $window.document.title = "联系人-呐呐CRM";
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */

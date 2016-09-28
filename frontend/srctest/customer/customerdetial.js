@@ -2,8 +2,9 @@
  *                                                      客户详情页
  ********************************************************************************************************************/
 angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
-    ['$scope','$http','$alert','$state', '$stateParams','customerData','groupData','tagData',
-    function($scope, $http, $alert, $state, $stateParams,customerData,groupData,tagData) {
+    ['$scope','$window','$http','$alert','$state', '$stateParams','customerData','groupData','tagData',
+    function($scope,$window, $http, $alert, $state, $stateParams,customerData,groupData,tagData) {
+        $window.document.title = "客户详情-呐呐CRM";
         $scope.isEdit = true;
         $scope.sexs = [
             {"value":"0","label":"男"},

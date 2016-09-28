@@ -2,9 +2,9 @@
  *                                                      添加客户页面
  ********************************************************************************************************************/
 angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl', 
-    ['$scope', '$http','$alert', '$state', '$stateParams','customerData','groupData','tagData',
-    function($scope, $http,$alert, $state, $stateParams,customerData,groupData,tagData) {
-
+    ['$scope','$window', '$http','$alert', '$state', '$stateParams','customerData','groupData','tagData',
+    function($scope,$window, $http,$alert, $state, $stateParams,customerData,groupData,tagData) {
+    $window.document.title = "添加客户-呐呐CRM";
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}

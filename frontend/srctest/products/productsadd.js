@@ -3,9 +3,10 @@
  ********************************************************************************************************************/
 
 angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtrl', 
-    ['$scope', '$http', '$state','$alert','productData','cateData','Upload',
-    function($scope, $http, $state,$alert,productData,cateData,Upload) {
-	/*产品分类*/
+    ['$scope','$window', '$http', '$state','$alert','productData','cateData','Upload',
+    function($scope,$window, $http, $state,$alert,productData,cateData,Upload) {
+	$window.document.title = "添加产品-呐呐CRM";
+    /*产品分类*/
     cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })

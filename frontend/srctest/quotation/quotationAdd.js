@@ -3,9 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', 
-    ['$scope', '$http', '$state','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
-    function($scope, $http, $state,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
-	
+    ['$scope','$window', '$http', '$state','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
+    function($scope,$window, $http, $state,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
+	$window.document.title = "添加报价单-呐呐CRM";
     if(localStorage.quotation){
         $scope.quotation = JSON.parse(localStorage.quotation)
     }else{

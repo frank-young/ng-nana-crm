@@ -166,8 +166,9 @@ angular.module('navtopMoudle',[]).controller('NavtopCtrl',
  *                                                      项目列表页
  ********************************************************************************************************************/
 angular.module("businessMoudle", []).controller('BusinessCtrl', 
-    ['$scope', '$http', '$modal','businessData','groupData','tagData','customerData',
-    function($scope, $http, $modal,businessData,groupData,tagData,customerData) {
+    ['$scope','$window', '$http', '$modal','businessData','groupData','tagData','customerData',
+    function($scope,$window, $http, $modal,businessData,groupData,tagData,customerData) {
+        $window.document.title = "项目-呐呐CRM";
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -368,8 +369,9 @@ angular.module("businessMoudle", []).controller('BusinessCtrl',
  ********************************************************************************************************************/
 
 angular.module("businessaddMoudle", []).controller('BusinessAddCtrl', 
-    ['$scope','$http', '$state', '$stateParams','businessData','$alert','groupData','tagData','customerData',
-    function($scope, $http, $state, $stateParams,businessData,$alert,groupData,tagData,customerData) {
+    ['$scope','$window','$http', '$state', '$stateParams','businessData','$alert','groupData','tagData','customerData',
+    function($scope,$window, $http, $state, $stateParams,businessData,$alert,groupData,tagData,customerData) {
+    $window.document.title = "添加项目-呐呐CRM";
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
@@ -546,8 +548,9 @@ angular.module("businessaddMoudle", []).controller('BusinessAddCtrl',
  ********************************************************************************************************************/
 
 angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl', 
-    ['$scope','$http', '$state','$alert','$stateParams','businessData','customerData',
-    function($scope, $http, $state,$alert,$stateParams,businessData,customerData) {
+    ['$scope','$window','$http', '$state','$alert','$stateParams','businessData','customerData',
+    function($scope,$window, $http, $state,$alert,$stateParams,businessData,customerData) {
+    $window.document.title = "项目详情-呐呐CRM";
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
@@ -746,8 +749,9 @@ angular.module("businessdetialMoudle", []).controller('BusinessDetialCtrl',
 
 angular.module("customerSettingMoudle", ['ng-sortable'])
 .controller('CustomerSettingCtrl', 
-    ['$scope', '$http', '$state','groupData','tagData','$alert',
-    function($scope, $http, $state,groupData,tagData,$alert) {
+    ['$scope','$window', '$http', '$state','groupData','tagData','$alert',
+    function($scope,$window, $http, $state,groupData,tagData,$alert) {
+    $window.document.title = "项目设置-呐呐CRM";
     /* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -881,8 +885,9 @@ angular.module("customerSettingMoudle", ['ng-sortable'])
  *                                                      潜在客户列表页
  ********************************************************************************************************************/
 angular.module('clueMoudle',[]).controller('ClueCtrl',
-    ['$scope','$http','$alert','clueData','customerData','groupData','tagData',
-    function ($scope,$http,$alert,clueData,customerData,groupData,tagData) {
+    ['$scope','$window','$http','$alert','clueData','customerData','groupData','tagData',
+    function ($scope,$window,$http,$alert,clueData,customerData,groupData,tagData) {
+    $window.document.title = "潜在客户-呐呐CRM";
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -1110,8 +1115,9 @@ angular.module('clueMoudle',[]).controller('ClueCtrl',
  ********************************************************************************************************************/
 
 angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl', 
-    ['$scope', '$http', 'clueData','$alert','groupData','tagData',
-    function($scope, $http,clueData,$alert,groupData,tagData) {
+    ['$scope','$window', '$http', 'clueData','$alert','groupData','tagData',
+    function($scope,$window, $http,clueData,$alert,groupData,tagData) {
+    $window.document.title = "添加潜在客户-呐呐CRM";
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
@@ -1369,8 +1375,9 @@ angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl',
  ********************************************************************************************************************/
 
 angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl', 
-    ['$scope', '$http','$state','$alert','$stateParams','clueData','groupData','tagData',
-    function($scope, $http, $state,$alert,$stateParams,clueData,groupData,tagData) {
+    ['$scope','$window', '$http','$state','$alert','$stateParams','clueData','groupData','tagData',
+    function($scope,$window, $http, $state,$alert,$stateParams,clueData,groupData,tagData) {
+    $window.document.title = "潜在客户详情-呐呐CRM";
     $scope.isEdit = true;
     $scope.sexs = [
             {"value":"0","label":"男"},
@@ -1623,9 +1630,9 @@ angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl',
  ********************************************************************************************************************/
 
 angular.module('customerlistMoudle',[]).controller('CustomerCtrl', 
-    ['$scope','$http','$alert','customerData','groupData','tagData',
-    function ($scope,$http,$alert,customerData,groupData,tagData) {
-
+    ['$scope','$window','$http','$alert','customerData','groupData','tagData',
+    function ($scope,$window,$http,$alert,customerData,groupData,tagData) {
+        $window.document.title = "客户-呐呐CRM";
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -1822,9 +1829,9 @@ angular.module('customerlistMoudle',[]).controller('CustomerCtrl',
  *                                                      添加客户页面
  ********************************************************************************************************************/
 angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl', 
-    ['$scope', '$http','$alert', '$state', '$stateParams','customerData','groupData','tagData',
-    function($scope, $http,$alert, $state, $stateParams,customerData,groupData,tagData) {
-
+    ['$scope','$window', '$http','$alert', '$state', '$stateParams','customerData','groupData','tagData',
+    function($scope,$window, $http,$alert, $state, $stateParams,customerData,groupData,tagData) {
+    $window.document.title = "添加客户-呐呐CRM";
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}
@@ -2083,8 +2090,9 @@ angular.module("customeraddMoudle", ['ngSanitize']).controller('CustomerAddCtrl'
  *                                                      客户详情页
  ********************************************************************************************************************/
 angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
-    ['$scope','$http','$alert','$state', '$stateParams','customerData','groupData','tagData',
-    function($scope, $http, $alert, $state, $stateParams,customerData,groupData,tagData) {
+    ['$scope','$window','$http','$alert','$state', '$stateParams','customerData','groupData','tagData',
+    function($scope,$window, $http, $alert, $state, $stateParams,customerData,groupData,tagData) {
+        $window.document.title = "客户详情-呐呐CRM";
         $scope.isEdit = true;
         $scope.sexs = [
             {"value":"0","label":"男"},
@@ -2372,10 +2380,10 @@ angular.module("detialMoudle", ['ngSanitize']).controller('CustomerDetialCtrl',
  ********************************************************************************************************************/
 
 angular.module("homeMoudle", []).controller('HomeCtrl', 
-  ['$scope','$compile', '$timeout', 'uiCalendarConfig','customerData','clueData','$interval',
-  function($scope, $compile, $timeout, uiCalendarConfig,customerData,clueData,$interval) {
+  ['$scope','$window','$compile', '$timeout', 'uiCalendarConfig','customerData','clueData','$interval',
+  function($scope,$window, $compile, $timeout, uiCalendarConfig,customerData,clueData,$interval) {
 
-	  
+	  $window.document.title = "首页-呐呐CRM";
     var createTime = function (value) {
       value = 0 || value;
       var date = new Date(value);
@@ -2722,8 +2730,9 @@ angular.module("homeMoudle", []).controller('HomeCtrl',
  ********************************************************************************************************************/
 
 angular.module("peopleMoudle", []).controller('PeopleCtrl', 
-    ['$scope', '$http', '$state','$alert','customerData',
-    function($scope, $http, $state,$alert,customerData) {
+    ['$scope','$window', '$http', '$state','$alert','customerData',
+    function($scope,$window, $http, $state,$alert,customerData) {
+    $window.document.title = "联系人-呐呐CRM";
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
@@ -2875,8 +2884,9 @@ angular.module("peopleMoudle", []).controller('PeopleCtrl',
  ********************************************************************************************************************/
 
 angular.module("peopleDetailMoudle", []).controller('PeopleDetailCtrl', 
-    ['$scope', '$http', '$stateParams','customerData',
-    function($scope, $http, $stateParams,customerData) {
+    ['$scope','$window', '$http', '$stateParams','customerData',
+    function($scope,$window, $http, $stateParams,customerData) {
+    $window.document.title = "联系人详情-呐呐CRM";
     $scope.sexs = [
         {"value":"0","label":"男"},
         {"value":"1","label":"女"}
@@ -2904,9 +2914,10 @@ angular.module("peopleDetailMoudle", []).controller('PeopleDetailCtrl',
  ********************************************************************************************************************/
 
 angular.module("productsMoudle", []).controller('ProductsCtrl', 
-    ['$scope', '$http', '$state','$alert','productData','cateData',
-    function($scope, $http, $state,$alert,productData,cateData) {
-	/* 顶部固定按钮 */
+    ['$scope','$window', '$http', '$state','$alert','productData','cateData',
+    function($scope,$window, $http, $state,$alert,productData,cateData) {
+	$window.document.title = "产品-呐呐CRM";
+    /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
 	$scope.allShow = false;
@@ -3020,9 +3031,10 @@ angular.module("productsMoudle", []).controller('ProductsCtrl',
  ********************************************************************************************************************/
 
 angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtrl', 
-    ['$scope', '$http', '$state','$alert','productData','cateData','Upload',
-    function($scope, $http, $state,$alert,productData,cateData,Upload) {
-	/*产品分类*/
+    ['$scope','$window', '$http', '$state','$alert','productData','cateData','Upload',
+    function($scope,$window, $http, $state,$alert,productData,cateData,Upload) {
+	$window.document.title = "添加产品-呐呐CRM";
+    /*产品分类*/
     cateData.getData().then(function(data){
         $scope.cate=data.cates;
     })
@@ -3162,9 +3174,10 @@ angular.module("productsAddMoudle", ['ngFileUpload']).controller('ProductsAddCtr
  ********************************************************************************************************************/
 
 angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCtrl', 
-    ['$scope', '$http', '$alert','$state','cateData',
-    function($scope, $http,$alert, $state,cateData) {
-	/* 根据数组值找到索引*/
+    ['$scope','$window', '$http', '$alert','$state','cateData',
+    function($scope,$window, $http,$alert, $state,cateData) {
+	$window.document.title = "产品分类-呐呐CRM";
+    /* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
             if (obj[i] == current) {
@@ -3226,9 +3239,10 @@ angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCt
  ********************************************************************************************************************/
 
 angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', 
-    ['$scope', '$http', '$stateParams','$alert','productData','cateData','Upload',
-    function($scope, $http, $stateParams,$alert,productData,cateData, Upload) {
-	/* 是否可编辑 */
+    ['$scope','$window', '$http', '$stateParams','$alert','productData','cateData','Upload',
+    function($scope,$window, $http, $stateParams,$alert,productData,cateData, Upload) {
+	$window.document.title = "产品详情-呐呐CRM";
+    /* 是否可编辑 */
 	$scope.isEdit = true;
 	/*产品分类*/
     cateData.getData().then(function(data){
@@ -3344,9 +3358,10 @@ angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl',
  ********************************************************************************************************************/
 
 angular.module("quotationMoudle", []).controller('QuotationCtrl', 
-    ['$scope', '$http', '$state','$alert','quotationData','customerData',
-    function($scope, $http, $state,$alert,quotationData,customerData) {
-	/* 顶部固定按钮 */
+    ['$scope','$window', '$http', '$state','$alert','quotationData','customerData',
+    function($scope,$window, $http, $state,$alert,quotationData,customerData) {
+	$window.document.title = "报价单-呐呐CRM";
+    /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
 	$scope.allShow = false;
@@ -3485,9 +3500,9 @@ angular.module("quotationMoudle", []).controller('QuotationCtrl',
  ********************************************************************************************************************/
 
 angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl', 
-    ['$scope', '$http', '$state','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
-    function($scope, $http, $state,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
-	
+    ['$scope','$window', '$http', '$state','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
+    function($scope,$window, $http, $state,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
+	$window.document.title = "添加报价单-呐呐CRM";
     if(localStorage.quotation){
         $scope.quotation = JSON.parse(localStorage.quotation)
     }else{
@@ -3645,8 +3660,9 @@ angular.module("quotationAddMoudle", []).controller('QuotationAddCtrl',
 
 angular.module("quotationDetailMoudle", [])
 .controller('QuotationDetailCtrl', 
-    ['$scope', '$http', '$stateParams','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
-    function($scope, $http, $stateParams,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
+    ['$scope','$window', '$http', '$stateParams','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
+    function($scope,$window, $http, $stateParams,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
+    $window.document.title = "报价单详情-呐呐CRM";
     // cfpLoadingBar.start();  //进度条开始
 	$scope.isEdit = true; 
     quotationData.getIdData($stateParams.id).then(function (data) {
@@ -3784,9 +3800,10 @@ angular.module("quotationDetailMoudle", [])
 
 angular.module("quotationSettingMoudle", ['ng-sortable'])
 .controller('QuotationSettingCtrl', 
-    ['$scope', '$http', '$state','$alert','quotationheadData','quotationfootData','businessData',
-    function($scope, $http, $state, $alert,quotationheadData,quotationfootData,businessData) {
-	/* 根据数组值找到索引*/
+    ['$scope','$window', '$http', '$state','$alert','quotationheadData','quotationfootData','businessData',
+    function($scope,$window, $http, $state, $alert,quotationheadData,quotationfootData,businessData) {
+	$window.document.title = "报价单设置-呐呐CRM";
+    /* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
             if (obj[i] == current) {
@@ -3992,8 +4009,9 @@ angular.module("quotationSettingMoudle", ['ng-sortable'])
  ********************************************************************************************************************/
 
 angular.module("settingMoudle", []).controller('SettingCtrl', 
-	['$scope', '$http', '$state','$alert','settingData',
-	function($scope, $http, $state,$alert,settingData) {
+	['$scope','$window', '$http', '$state','$alert','settingData',
+	function($scope,$window, $http, $state,$alert,settingData) {
+	$window.document.title = "设置-呐呐CRM";
 	$scope.isEdit = true;
 	$scope.sexs = [
         {"value":"0","label":"男"},
@@ -4018,9 +4036,9 @@ angular.module("settingMoudle", []).controller('SettingCtrl',
  ********************************************************************************************************************/
 
 angular.module("teamMoudle", []).controller('TeamCtrl', 
-    ['$scope', '$http', '$state','$alert','settingData',
-    function($scope, $http, $state,$alert,settingData) {
-
+    ['$scope','$window', '$http', '$state','$alert','settingData',
+    function($scope,$window, $http, $state,$alert,settingData) {
+        $window.document.title = "团队成员-呐呐CRM";
     /* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
@@ -4105,8 +4123,9 @@ angular.module("teamMoudle", []).controller('TeamCtrl',
  ********************************************************************************************************************/
 
 angular.module("teamAddMoudle", []).controller('TeamAddCtrl', 
-    ['$scope', '$http', '$state','$alert','settingData',
-    function($scope, $http, $state,$alert,settingData) {
+    ['$scope','$window', '$http', '$state','$alert','settingData',
+    function($scope,$window, $http, $state,$alert,settingData) {
+    $window.document.title = "添加团队成员-呐呐CRM";
     $scope.sexs = [
         {"value":"0","label":"男"},
         {"value":"1","label":"女"}
@@ -4144,8 +4163,9 @@ angular.module("teamAddMoudle", []).controller('TeamAddCtrl',
  ********************************************************************************************************************/
 
 angular.module("teamDetailMoudle", []).controller('TeamDetailCtrl', 
-    ['$scope', '$http', '$stateParams','$alert','settingData',
-    function($scope, $http, $stateParams,$alert,settingData) {
+    ['$scope','$window', '$http', '$stateParams','$alert','settingData',
+    function($scope,$window, $http, $stateParams,$alert,settingData) {
+    $window.document.title = "团队成员详情-呐呐CRM";
     $scope.isEdit = true;
     $scope.sexs = [
         {"value":"0","label":"男"},

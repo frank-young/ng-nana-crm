@@ -3,9 +3,10 @@
  ********************************************************************************************************************/
 
 angular.module("productsMoudle", []).controller('ProductsCtrl', 
-    ['$scope', '$http', '$state','$alert','productData','cateData',
-    function($scope, $http, $state,$alert,productData,cateData) {
-	/* 顶部固定按钮 */
+    ['$scope','$window', '$http', '$state','$alert','productData','cateData',
+    function($scope,$window, $http, $state,$alert,productData,cateData) {
+	$window.document.title = "产品-呐呐CRM";
+    /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */
 	$scope.allShow = false;

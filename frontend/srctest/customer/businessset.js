@@ -4,8 +4,9 @@
 
 angular.module("customerSettingMoudle", ['ng-sortable'])
 .controller('CustomerSettingCtrl', 
-    ['$scope', '$http', '$state','groupData','tagData','$alert',
-    function($scope, $http, $state,groupData,tagData,$alert) {
+    ['$scope','$window', '$http', '$state','groupData','tagData','$alert',
+    function($scope,$window, $http, $state,groupData,tagData,$alert) {
+    $window.document.title = "项目设置-呐呐CRM";
     /* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){

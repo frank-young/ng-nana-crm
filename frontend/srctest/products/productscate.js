@@ -3,9 +3,10 @@
  ********************************************************************************************************************/
 
 angular.module("productsCateMoudle", ['ng-sortable']).controller('ProductsCateCtrl', 
-    ['$scope', '$http', '$alert','$state','cateData',
-    function($scope, $http,$alert, $state,cateData) {
-	/* 根据数组值找到索引*/
+    ['$scope','$window', '$http', '$alert','$state','cateData',
+    function($scope,$window, $http,$alert, $state,cateData) {
+	$window.document.title = "产品分类-呐呐CRM";
+    /* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){
             if (obj[i] == current) {

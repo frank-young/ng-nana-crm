@@ -3,8 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("cluedetialMoudle", ['ngSanitize']).controller('ClueDetialCtrl', 
-    ['$scope', '$http','$state','$alert','$stateParams','clueData','groupData','tagData',
-    function($scope, $http, $state,$alert,$stateParams,clueData,groupData,tagData) {
+    ['$scope','$window', '$http','$state','$alert','$stateParams','clueData','groupData','tagData',
+    function($scope,$window, $http, $state,$alert,$stateParams,clueData,groupData,tagData) {
+    $window.document.title = "潜在客户详情-呐呐CRM";
     $scope.isEdit = true;
     $scope.sexs = [
             {"value":"0","label":"男"},

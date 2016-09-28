@@ -3,8 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("teamAddMoudle", []).controller('TeamAddCtrl', 
-    ['$scope', '$http', '$state','$alert','settingData',
-    function($scope, $http, $state,$alert,settingData) {
+    ['$scope','$window', '$http', '$state','$alert','settingData',
+    function($scope,$window, $http, $state,$alert,settingData) {
+    $window.document.title = "添加团队成员-呐呐CRM";
     $scope.sexs = [
         {"value":"0","label":"男"},
         {"value":"1","label":"女"}

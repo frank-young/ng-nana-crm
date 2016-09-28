@@ -3,9 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module('customerlistMoudle',[]).controller('CustomerCtrl', 
-    ['$scope','$http','$alert','customerData','groupData','tagData',
-    function ($scope,$http,$alert,customerData,groupData,tagData) {
-
+    ['$scope','$window','$http','$alert','customerData','groupData','tagData',
+    function ($scope,$window,$http,$alert,customerData,groupData,tagData) {
+        $window.document.title = "客户-呐呐CRM";
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */

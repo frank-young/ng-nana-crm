@@ -2,8 +2,9 @@
  *                                                      潜在客户列表页
  ********************************************************************************************************************/
 angular.module('clueMoudle',[]).controller('ClueCtrl',
-    ['$scope','$http','$alert','clueData','customerData','groupData','tagData',
-    function ($scope,$http,$alert,clueData,customerData,groupData,tagData) {
+    ['$scope','$window','$http','$alert','clueData','customerData','groupData','tagData',
+    function ($scope,$window,$http,$alert,clueData,customerData,groupData,tagData) {
+    $window.document.title = "潜在客户-呐呐CRM";
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */

@@ -3,8 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("clueaddMoudle", ['ngSanitize']).controller('ClueAddCtrl', 
-    ['$scope', '$http', 'clueData','$alert','groupData','tagData',
-    function($scope, $http,clueData,$alert,groupData,tagData) {
+    ['$scope','$window', '$http', 'clueData','$alert','groupData','tagData',
+    function($scope,$window, $http,clueData,$alert,groupData,tagData) {
+    $window.document.title = "添加潜在客户-呐呐CRM";
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}

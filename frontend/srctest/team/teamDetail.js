@@ -3,8 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("teamDetailMoudle", []).controller('TeamDetailCtrl', 
-    ['$scope', '$http', '$stateParams','$alert','settingData',
-    function($scope, $http, $stateParams,$alert,settingData) {
+    ['$scope','$window', '$http', '$stateParams','$alert','settingData',
+    function($scope,$window, $http, $stateParams,$alert,settingData) {
+    $window.document.title = "团队成员详情-呐呐CRM";
     $scope.isEdit = true;
     $scope.sexs = [
         {"value":"0","label":"男"},

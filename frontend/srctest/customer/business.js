@@ -2,8 +2,9 @@
  *                                                      项目列表页
  ********************************************************************************************************************/
 angular.module("businessMoudle", []).controller('BusinessCtrl', 
-    ['$scope', '$http', '$modal','businessData','groupData','tagData','customerData',
-    function($scope, $http, $modal,businessData,groupData,tagData,customerData) {
+    ['$scope','$window', '$http', '$modal','businessData','groupData','tagData','customerData',
+    function($scope,$window, $http, $modal,businessData,groupData,tagData,customerData) {
+        $window.document.title = "项目-呐呐CRM";
     /* 顶部固定按钮 */
     $scope.pinShow = false;
     /* 栏目按钮显示隐藏 */

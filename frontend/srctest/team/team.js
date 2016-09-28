@@ -3,9 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("teamMoudle", []).controller('TeamCtrl', 
-    ['$scope', '$http', '$state','$alert','settingData',
-    function($scope, $http, $state,$alert,settingData) {
-
+    ['$scope','$window', '$http', '$state','$alert','settingData',
+    function($scope,$window, $http, $state,$alert,settingData) {
+        $window.document.title = "团队成员-呐呐CRM";
     /* 根据数组值找到索引*/
     function findIndex(current, obj){
         for(var i in obj){

@@ -4,8 +4,9 @@
 
 angular.module("quotationDetailMoudle", [])
 .controller('QuotationDetailCtrl', 
-    ['$scope', '$http', '$stateParams','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
-    function($scope, $http, $stateParams,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
+    ['$scope','$window', '$http', '$stateParams','$alert','quotationData','customerData','productData','cateData','quotationheadData','quotationfootData',
+    function($scope,$window, $http, $stateParams,$alert,quotationData,customerData, productData,cateData,quotationheadData,quotationfootData) {
+    $window.document.title = "报价单详情-呐呐CRM";
     // cfpLoadingBar.start();  //进度条开始
 	$scope.isEdit = true; 
     quotationData.getIdData($stateParams.id).then(function (data) {

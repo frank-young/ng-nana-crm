@@ -3,9 +3,10 @@
  ********************************************************************************************************************/
 
 angular.module("productsDetailMoudle", []).controller('ProductsDetailCtrl', 
-    ['$scope', '$http', '$stateParams','$alert','productData','cateData','Upload',
-    function($scope, $http, $stateParams,$alert,productData,cateData, Upload) {
-	/* 是否可编辑 */
+    ['$scope','$window', '$http', '$stateParams','$alert','productData','cateData','Upload',
+    function($scope,$window, $http, $stateParams,$alert,productData,cateData, Upload) {
+	$window.document.title = "产品详情-呐呐CRM";
+    /* 是否可编辑 */
 	$scope.isEdit = true;
 	/*产品分类*/
     cateData.getData().then(function(data){

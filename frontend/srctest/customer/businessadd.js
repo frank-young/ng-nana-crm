@@ -3,8 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("businessaddMoudle", []).controller('BusinessAddCtrl', 
-    ['$scope','$http', '$state', '$stateParams','businessData','$alert','groupData','tagData','customerData',
-    function($scope, $http, $state, $stateParams,businessData,$alert,groupData,tagData,customerData) {
+    ['$scope','$window','$http', '$state', '$stateParams','businessData','$alert','groupData','tagData','customerData',
+    function($scope,$window, $http, $state, $stateParams,businessData,$alert,groupData,tagData,customerData) {
+    $window.document.title = "添加项目-呐呐CRM";
     $scope.sexs = [
             {"value":"0","label":"男"},
             {"value":"1","label":"女"}

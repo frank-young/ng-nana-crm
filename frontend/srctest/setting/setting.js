@@ -3,8 +3,9 @@
  ********************************************************************************************************************/
 
 angular.module("settingMoudle", []).controller('SettingCtrl', 
-	['$scope', '$http', '$state','$alert','settingData',
-	function($scope, $http, $state,$alert,settingData) {
+	['$scope','$window', '$http', '$state','$alert','settingData',
+	function($scope,$window, $http, $state,$alert,settingData) {
+	$window.document.title = "设置-呐呐CRM";
 	$scope.isEdit = true;
 	$scope.sexs = [
         {"value":"0","label":"男"},
